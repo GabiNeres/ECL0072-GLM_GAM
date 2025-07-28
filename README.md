@@ -1,4 +1,4 @@
-# ECL0017 - 2025-2
+# ECL0017 (2025-2)
 
 [![Build Status](https://travis-ci.org/fernandomayer/disciplinas-template.svg)](https://travis-ci.org/fernandomayer/disciplinas-template)
 
