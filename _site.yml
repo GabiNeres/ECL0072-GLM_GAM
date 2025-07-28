@@ -3,7 +3,7 @@ output_dir: "."
 exclude: ["README.md"]
 output:
   html_document:
-    theme: flatly
+    theme: journal #flatly
     highlight: default
     code_folding: hide
     number_sections: false
@@ -16,26 +16,55 @@ output:
       in_header: analytics.html
       after_body: footer.html
 navbar:
-  title: "CE000"
+  title: "ECL0017"
+  type: inverse
   left:
     - text: "Home"
       href: index.html
-    - text: "Aulas"
-      href: aulas.html
+    # - text: "Aulas"
+    #   href: aulas.html
     - text: "Referências"
       href: referencias.html
-    - text: "Programas"
-      href: recursos.html
-    - text: "Materiais"
+    # - text: "Programas"
+    #   href: recursos.html
+    - text: "Aulas"
       menu:
-      - text: "Tópico 1"
-      - text: "Página A"
+      - text: "Dia 1"
+      - text: "LM"
         href: pagA.html
       - text: "----------"
-      - text: "Tópico 2"
-      - text: "Página B"
+      - text: "Dia 2"
+      - text: "Métodos de inferência"
         href: pagB.html
+      - text: "----------"
+      - text: "Dia 3"
+      - text: "GLM para dados binário"
+        href: pagC.html
+      - text: "----------"
+      - text: "Dia 4"
+      - text: "GLM para dados discretos"
+        href: pagD.html
+      - text: "----------"
+      - text: "Dia 5"
+      - text: "GLM para dados contínuos"
+        href: pagE.html
+      - text: "----------"
+      - text: "Dia 6"
+      - text: "GLM para dados categóricos"
+        href: pagF.html
+      - text: "----------"
+      - text: "Dia 7"
+      - text: "Dist. prob complementares"
+        href: pagG.html
+      - text: "----------"
+      - text: "Dia 8"
+      - text: "GAM"
+        href: pagH.html
+      - text: "----------"
+      - text: "Dia 9"
+      - text: "GAMLSS"
+        href: pagI.html
   right:
     - text: GitHub
       icon: fa-github fa-lg
-      href: https://github.com/fernandomayer
+      href: https://github.com/mcruf
