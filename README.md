@@ -1,27 +1,37 @@
-# CE000 - 2016-2
+# ECL0017 - 2025-2
 
 [![Build Status](https://travis-ci.org/fernandomayer/disciplinas-template.svg)](https://travis-ci.org/fernandomayer/disciplinas-template)
 
-## CE000 - Nome de Disciplina
 
-Repositório da disciplina CE000 - Nome da Disciplina, ministrada na UFPR, no
-segundo semestre de 2016, para o curso de CURSO (T).
+## Tópicos Especiais em Ecologia - Modelos Lineares Generalizados e Aditivos para Dados Ecológicos
 
-Este repositório contém todo o material de aula e os arquivos
-necessários para gerar a página da disciplina, disponível em:
-(INSERIR LINK)
+Curso ministrado para o Programa de Pós-Graduação em Ecologia (PPGECO) na UFRN, durante o segundo semestre de 2025.
 
-### Para gerar o site
+Este repositório contém todo o material de aula e os arquivos necessários para gerar a página da disciplina, disponível em: 
+http://leg.ufpr.br/~fernandomayer/aulas/ce083/
 
-O site é todo construído usando apenas o [R Markdown][], por isso, o
-código fonte está nos arquivos `Rmd`. Para gerar o site você precisará
+
+
+### Para acessar o conteúdo do curso
+
+A página do curso é toda construída usando apenas o [R Markdown][] e, por isso, o código fonte pode ser acessado nos arquivos `Rmd`. Para gerar o site você precisará
 das versões mais recentes dos pacotes `rmarkdown` e `knitr`.
 
 1. Copie (ou fork) esse repositório
 2. Apague o diretório `site_libs/`
 3. Abra o R nesse diretório, carregue os pacotes e renderize o site com
    `render_site()`
+   
 ```r
+
+# Atualizando os pacotes
+#~~~~~~~~~~~~~~~~~~~~~~~~
+update.packages(knitr)
+update.packages(rmarkdown)
+
+
+# Compila o site da disciplina
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 library(knitr)
 library(rmarkdown)
 render_site()
