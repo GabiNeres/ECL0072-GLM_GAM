@@ -3,6 +3,7 @@
 .RData
 .Ruserdata
 Rplots.pdf
+Script_anonimo/
 cache/
 auto/
 .synctex.gz
@@ -12,3 +13,4 @@ auto/
 .out
 .snm
 .toc
+.DS_Store
