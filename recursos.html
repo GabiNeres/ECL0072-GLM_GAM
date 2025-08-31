@@ -325,4 +325,124 @@ $(document).ready(function () {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expa
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Recursos computacionais</h1>
+
+</div>
+
+
+<p>O curso não prevê conteúdo computacional. Entretanto todo o conteúdo
+abordado pode ser tratado computacionalmente por planilhas eletrônicas
+(como por exemplo o LibreOffice), linguagens ou programas
+estatísticos.</p>
+<p>Nas páginas do curso, você verá um botão escrito <code>Code</code>
+acima de algumas tabelas e gráficos. Ao clicar nesse botão, é revelado o
+código que foi utilizado para gerar aquele resultado, em linguagem
+R.</p>
+<p>O uso de programas computacionais pode auxiliar o entendimento do
+conteúdo do curso, e os códigos em R servem como ilustração para os
+alunos interessados, mas não será parte da avaliação.</p>
+<div id="programa-para-estatística" class="section level2">
+<h2>Programa para estatística</h2>
+<ul>
+<li><a href="http://www.r-project.org">The R project for Statistical
+Computing</a>: página do programa <strong>R</strong> - <a
+href="sofware:material-r">Curso sobre o uso do R</a> no LEG - <a
+href="http://git.leg.ufpr.br/fernandomayer/R-rautu">R-rautu</a> uma
+introdução ao uso do R - <a href="http://www.rstudio.org">R-Studio</a>
+um ambiente para facilitar uso do R - <a
+href="https://listas.inf.ufpr.br/cgi-bin/mailman/listinfo/r-br">R-br</a>
+é a lista de discussão em português sobre o uso do R</li>
+</ul>
+</div>
+<div id="programas-para-matemática-simbólica" class="section level2">
+<h2>Programas para matemática simbólica</h2>
+<ul>
+<li><a href="http://www.wolframalpha.com">Wolfram alpha</a></li>
+<li><a href="http://maxima.sourceforge.net">Maxima</a> (e interface <a
+href="http://andrejv.github.com/wxmaxima/">wxmaxima</a>)</li>
+<li><a href="http://yacas.sourceforge.net">Yacas</a></li>
+</ul>
+</div>
+<div id="outros-recursos" class="section level2">
+<h2>Outros recursos</h2>
+<ul>
+<li><a href="https://pt-br.libreoffice.org">LibreOffice</a> suíte de
+programas semelhante ao MS-Office (editor de texto, banco de dados,
+apresentação e planilha) gratuito</li>
+<li><a href="https://www.google.com/sheets/about">Google sheets</a>.
+Para instalar o <em>add-on</em> de estatística: - Add-Ons -&gt; Get
+Add-Ons -&gt; Procure por “Statistics” -&gt; Procure o add-on de “Google
+Statisticians and Engineers”</li>
+</ul>
+</div>
+
+<center>
+  <hr width="100%" size="3px">
+  <p> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+      <img src="img/CC_by-nc-sa_80x15.png" alt="Licença Creative Commons 4.0"> </a>
+  </p>
+  <p> <font size="2"> Este conteúdo
+      está disponível por meio da Licença Creative Commons 4.0 </font>
+  </p>
+</center>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

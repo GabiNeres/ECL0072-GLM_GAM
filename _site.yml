@@ -4,6 +4,7 @@ exclude: ["README.md"]
 output:
   html_document:
     theme: journal #flatly
+   # css: styles.css
     highlight: default
     code_folding: hide
     number_sections: false
@@ -16,7 +17,7 @@ output:
       in_header: analytics.html
       after_body: footer.html
 navbar:
-  title: "ECL0017"
+  title: "ECL0072"
   type: inverse
   left:
     - text: "Home"
@@ -31,7 +32,7 @@ navbar:
       menu:
       - text: "Dia 1"
       - text: "LM"
-        href: pagA.html
+        href: Aulas/Aula_01.html
       - text: "----------"
       - text: "Dia 2"
       - text: "Métodos de inferência"

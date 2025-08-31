@@ -1,5 +1,5 @@
 ---
-title: "Tópricos Especias em Ecologia"
+title: "Tópicos Especias em Ecologia"
 output:
   html_document:
     toc: false
@@ -28,7 +28,7 @@ source("setup_knitr.R")
 - **Contato:** macrufener@gmail.com
 
 - **Horário e Sala:**
-    - Segunda à Sexta, 08:30 - 12:00h, [**VER A SALA DE AULA**]{style="color: #dda15e;"}
+    - Segunda à Sexta, 08:00 - 12:00h; Laboratório Didático I
     
 <br>
 
@@ -85,14 +85,14 @@ Pós-graduandos e pesquisadores interessados em estatística aplicada e programa
 ## Plano de aula
 
 - **Aula 1:** LM \& RMarkdown
-- **Aula 2:** Métodos de inferência
+- **Aula 2:** Métodos de inferência & Validação de modelos
 - **Aula 3:** GLM para dados binários
 - **Aula 4:** GLM para dados discretos
 - **Aula 5:** GLM para dados contínuos
 - **Aula 6:** GLM para dados categóricos
 - **Aula 7:** Distribuições de probabilidade complementares
 - **Aula 8:** GAM
-- **Aula 9:** GAMLSS
+- ~~**Aula 9:** GAMLSS~~ (Aula cancelada devido ao feriado de 03/10!)
 - **Aula 10:** Aula prática: projetos
 
 Cada dia da disciplina será dividida entre aulas teóricas e práticas, de forma que se aprenda a associar a teoria estatística por meio de exercícios práticos.
@@ -101,18 +101,22 @@ Cada dia da disciplina será dividida entre aulas teóricas e práticas, de form
 
 ## Avaliação
 
-A avaliação da disciplina será baseada na elaboração de um relatório em formato **RMarkdown**, no qual o(a) discente deverá desenvolver um guia prático que cubra todos os tópicos abordados ao longo da disciplina. Para cada tópico, espera-se uma breve exposição teórica, seguida da aplicação prática para a qual o(a) discente deva utilizar preferencialmente seus próprios dados. Além disso, o relatório deverá conter o código comentado, gráficos relevantes e interpretação dos resultados observados.
+A avaliação da disciplina será baseada na elaboração de um relatório em formato **RMarkdown**, no qual os discentes deverão desenvolver um guia prático baseado nos tópicos abordados ao longo da disciplina. 
 
-Caso o(a) discente não disponha de dados próprios, poderá selecionar um dado dentro do conjunto de dados disponibilizados pela professora. 
+Para cada tópico, espera-se uma breve exposição teórica, seguida de uma aplicação prática para a qual os discentes deverão utilizar os dados disponibilizados na disciplina ou seus próprios dados (preferencialmente). 
+
+O relatório pode ser realizado em **grupos de 2-3 pessoas** e deverá conter o código comentado, gráficos relevantes e interpretação dos resultados observados.
+
+-  <span style="color: #ee6c4d;"><u>**Entrega do relatório:</u> 12/10/25**</span>
+
+
 
 <br>
 
 ## Dúvidas
-Envie sua dúvida de programação na sessão [Issues][https://github.com/mcruf/ECL0017-GLM_GAM/issues] do repositório da disciplina no GitHub. Essa abordagem permitirá que suas dúvidas (e respectivas respostas) fiquem disponíveis para os demais discentes, promovendo dessa forma o aprendizado coletivo.
+Envie sua dúvida de programação na sessão [Issues](https://github.com/mcruf/ECL0072-GLM_GAM/issues) do repositório da disciplina no GitHub. Essa abordagem permitirá que suas dúvidas (e respectivas respostas) fiquem disponíveis para os demais discentes, promovendo dessa forma o aprendizado coletivo.
 
 Envie apenas perguntas que possam ser respondidas com uma mensagem breve. Dúvidas que demandem respostas mais detalhadas deverão ser discutidas presencialmente em horário previamente marcado com a professora via e-mail. 
-
-Durante a disciplina, a sessão de `Issues` será verificada diariamente, de segunda a sexta-feira, com uma resposta esperada dentro das primeiras 24 horas.
 
 
 
