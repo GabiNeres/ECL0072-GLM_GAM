@@ -7,8 +7,7 @@
 
 Curso ministrado para o Programa de Pós-Graduação em Ecologia (PPGECO) na UFRN, durante o segundo semestre de 2025.
 
-Este repositório contém todo o material de aula e os arquivos necessários para gerar a página da disciplina, disponível em: 
-http://leg.ufpr.br/~fernandomayer/aulas/ce083/
+Este repositório contém todo o material de aula e os arquivos necessários para gerar a página da disciplina.
 
 
 
