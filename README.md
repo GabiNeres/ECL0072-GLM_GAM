@@ -1,7 +1,8 @@
 # ECL0072 (2025-2)
 
-![whatever](Figuras/detetive_ecologico.png) 
-
+<p align="center">
+<img src="Figuras/detetive_ecologico.png" alt="Figuras/detetive_ecologico.png" width="400"/>
+</p>
 
 
 ## Tópicos Especiais em Ecologia - Modelos Lineares Generalizados e Aditivos para Dados Ecológicos
