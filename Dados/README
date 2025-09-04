@@ -15,7 +15,7 @@ Abaixo, uma breve descrição de cada dado.
 
 
 
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # palmerpenguins_extended.csv
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -28,3 +28,13 @@ Também disponível via pacote do r: https://allisonhorst.github.io/palmerpengui
 Os dados foram coletados no Arquipélago Palmer, próximo à Antártida, ao longo dos anos 2021-2025. Esses dados fornecem informações sobre três espécies de pinguins, incluindo pinguins-de-adélia, pinguins-gentoo e pinguins-de-barbicha, e inclui variáveis biológicas, como dimensões do bico e massa corporal.
 
 Além disso, o banco de dados conta com variáveis adicionais, como dieta, ano de observação, estágio de vida e indicadores de saúde. Esse conjunto de informação permitem uma compreensão mais detalhada da biologia e ecologia dos pinguins.
+
+
+
+
+#~~~~~~~~~~~~~~~
+# fisheries.rds
+#~~~~~~~~~~~~~~~
+
+Banco de dados simulando a pesca de espinhal de atum no Brasil.
+
