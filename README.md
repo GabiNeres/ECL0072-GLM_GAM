@@ -1,6 +1,7 @@
 # ECL0072 (2025-2)
 
-[![Build Status](https://travis-ci.org/fernandomayer/disciplinas-template.svg)](https://travis-ci.org/fernandomayer/disciplinas-template)
+![whatever](Figuras/detetive_ecologico.png) 
+
 
 
 ## Tópicos Especiais em Ecologia - Modelos Lineares Generalizados e Aditivos para Dados Ecológicos
