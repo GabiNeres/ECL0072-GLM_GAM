@@ -44,7 +44,7 @@ class: inverse, center, middle
 ## <span style="color: #ee6c4d;">Dados discretos </span>
 
 
-Tipo de informação que assume apenas valores inteiros e contáveis
+Tipo de informação que assume apenas valores inteiros e contáveis (e.g., 12, 35, 283, ....)
   - Número de ocorrência que um determinado evento ocorre no tempo  
 
 <br>
@@ -54,14 +54,31 @@ Tipo de informação que assume apenas valores inteiros e contáveis
 knitr::include_graphics("../Figuras/Exemplo_dado_contagem.png")
 ```
 
+---
+## <span style="color: #ee6c4d;">Dados discretos </span>
+
+Distribuições de probabilidade discretas:
+
+- Bernoulli/Binomial
+- Multinomial
+- Poisson 
+- Binomial Negativa 
+- Poisson/ Binomial Negativa zero-inflacionado*
+- Geométrica
+- Hipergeométrica*
+
+
+.footnote[*Não pertence à família exponencial de distribuições]
+
+
 
 ---
 ## <span style="color: #ee6c4d;">Exemplo prático </span>
 
-A pesca atuneira resulta muitas vezes na captura incidental de espécies não-alvo
-  - Em cada evento de pesca (pescaria) são registrados as espécies que foram capturadas (além de muitas outras informações....)
+A pesca de espinhel costuma ser utilizada para capturar grandes espécies pelágicas, com destaque para os atuns.
+  - Em cada evento de pesca (pescaria) são registrados as espécies que foram capturadas, sejam estas alvo ou não-alvo, além de muitas outras informações auxiliares.  
   
-    > **Pergunta:** A captura incidental de espécies não-alvo muda ao longo do ano?
+    > **Pergunta:** há uma época do ano em que se captura mais atuns?
 
 
 ```{r echo=FALSE, out.width ="90%", fig.align ='center'}
@@ -76,10 +93,12 @@ class: inverse, center, middle
 ---
 ## <span style="color: #ee6c4d;">Distribuição Poisson </span>
 
-#### Traduzindo para o matematiquês
 
-Dados de contagem são frequentemente modelados via uma **distribuição Poisson** 
+Definida sob variáveis discretas positivas 
+  - $Y \in \text{{0, 1, 2, 3, ...}}$
 
+
+<br>
 
 $$\large y_i \sim Poisson(\lambda_i) ~~~ (\lambda_i  \geq 0)$$
 
@@ -89,7 +108,6 @@ $$E[Y] = \lambda, ~~~~~Var(Y) = \lambda$$
 $\large \lambda_i$: numéro médio de eventos (e.g., número médio de espécies não-alvo por pescaria)
 
 
-<br>
 
 --
 
@@ -104,9 +122,6 @@ Assume que a média = variância!
 ---
 ## <span style="color: #ee6c4d;">Distribuição Poisson </span>
 
-
-#### Traduzindo para o matematiquês
-
 A distribuição Poisson pode assumir vários formatos
 
 
@@ -118,8 +133,6 @@ knitr::include_graphics("../Figuras/Distribuicao_Poisson.png")
 ---
 
 ## <span style="color: #ee6c4d;">Distribuição Poisson </span>
-
-#### Traduzindo para o matematiquês
 
 Podemos relacionar a média de eventos $\lambda_i$ a um conjunto de covariáveis conforme a relação:
 
@@ -434,7 +447,14 @@ O que significa quando $\alpha \rightarrow \infty$?
 knitr::include_graphics("../Figuras/Distribuicao_BN.png")
 ```
 
-
-
-
 ---
+
+## <span style="color: #ee6c4d;">Prática no R </span>
+
+
+<br>
+<br>
+
+```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_04.R <br>", fig.topcaption=F}
+knitr::include_graphics("../Figuras/Rlogo.png")
+```

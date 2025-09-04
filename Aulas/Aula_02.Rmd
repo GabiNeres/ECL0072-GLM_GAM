@@ -24,13 +24,18 @@ output:
 
 **1. Métodos de inferência**  
 
-**2. Pressupostos, diagnósticos e avaliação de modelos** 
+**2. Validação de modelos** 
 
 <br>
 
 - Sugestão de leitura:
   - Cap. 11: regression and other stories (Gelman)
   -
+
+---
+class: inverse, center, middle
+
+#  Métodos de inferência
 
 ---
 ### <span style="color: #ee6c4d;">**Métodos de inferência** </span>
@@ -209,9 +214,9 @@ $$\large \varepsilon_i = y_i - f(x_i|\theta)$$
 $$\large \text{SQR} = \underbrace{min \sum_{i=1}^{n} (y_i - f(x_i|\theta))^2}_
 {\text{Diferenciar a função em relação a }\ \theta}$$
 
-$\large \widehat{\beta_0} = \overline{y} - \widehat{\beta_1}~\overline{x}$
+$\widehat{\beta_0} = \overline{y} - \widehat{\beta_1}~\overline{x}$
 
-$\large \widehat{\beta_1} = r \frac{\sigma_y}{\sigma_x}$
+$\widehat{\beta_1} = r \frac{\sigma_y}{\sigma_x}$
 
 .footnote[ **r** = coeficiente de correlação;  **σ** = desvio padrão.]
 
@@ -464,6 +469,25 @@ plot_ly(
 ]
 
 
+---
+### <span style="color: #ee6c4d;">**Métodos de inferência** </span><span style="color: #3e5c76;">| Máxima verossimilhança  </span> 
+
+
+<p class="comment">
+<b>ATENÇÃO</b>
+</p>
+
+$$\large \text{Verossimilhança} \neq \text{Probabilidade}$$ 
+
+
+---
+### <span style="color: #ee6c4d;">**Métodos de inferência** </span><span style="color: #3e5c76;">| Máxima verossimilhança  </span> 
+
+
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
+knitr::include_graphics("../Figuras/Probabilidade_verossimilhanca.png")
+```
+
 
 
 ---
@@ -597,57 +621,14 @@ $$\large L(\mu, \sigma^2 \mid Y) = \prod_{i=1}^n \color{Tomato}{\frac{1}{\sqrt{2
 knitr::include_graphics("../Figuras/Rlogo.png")
 ```
 
+---
+class: inverse, center, middle
+
+#  Validação de modelos
+
 
 ---
 
+### <span style="color: #ee6c4d;">**Validação de modelos** </span>
 
 
----
-### <span style="color: #ee6c4d;">**Métodos de inferência** </span><span style="color: #3e5c76;">| Máxima verossimilhança  </span> 
-
-
-#### Exemplo prático
-
-
-
-
----
-### <span style="color: #ee6c4d;">**Métodos de inferência** </span><span style="color: #3e5c76;">| Máxima verossimilhança  </span> 
-
-
-<p class="comment">
-<b>ATENÇÃO</b>
-</p>
-
-$$\large \text{Verossimilhança} \neq \text{Probabilidade}$$ 
-
---
-
-.pull-left[
-
-<center><span style="color: #ee6c4d;"><b> Verossimilhança </b></span> </center>
-
-**O que é fixo:** os dados observados ($y$)
-
-**O que é variável:** os parâmetros da distribuição ($\theta$)
-
-**Raciocínio:** Dado as observações $y$, quão plausível são os diferentes valores dos parâmetros $\theta$?
-
-] 
-
---
-
-.pull-right[
-
-<center><span style="color: #ee6c4d;"><b> Probabilidade </b></span> </center>
-
-**O que é fixo:** os parâmetros da distribuição ($\theta$)
-
-**O que é variável:** os dados observados ($y$)
-
-**Raciocínio:** Dado que conheço os parâmetros $\theta$, qual a *probabilidade* de observar os dados $y$?
-
-]
-
-
----

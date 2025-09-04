@@ -56,7 +56,7 @@ class: inverse, center, middle
 ## &lt;span style="color: #ee6c4d;"&gt;Dados discretos &lt;/span&gt;
 
 
-Tipo de informação que assume apenas valores inteiros e contáveis
+Tipo de informação que assume apenas valores inteiros e contáveis (e.g., 12, 35, 283, ....)
   - Número de ocorrência que um determinado evento ocorre no tempo  
 
 &lt;br&gt;
@@ -64,14 +64,31 @@ Tipo de informação que assume apenas valores inteiros e contáveis
 
 &lt;img src="../Figuras/Exemplo_dado_contagem.png" width="100%" style="display: block; margin: auto;" /&gt;
 
+---
+## &lt;span style="color: #ee6c4d;"&gt;Dados discretos &lt;/span&gt;
+
+Distribuições de probabilidade discretas:
+
+- Bernoulli/Binomial
+- Multinomial
+- Poisson 
+- Binomial Negativa 
+- Poisson/ Binomial Negativa zero-inflacionado*
+- Geométrica
+- Hipergeométrica*
+
+
+.footnote[*Não pertence à família exponencial de distribuições]
+
+
 
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Exemplo prático &lt;/span&gt;
 
-A pesca atuneira resulta muitas vezes na captura incidental de espécies não-alvo
-  - Em cada evento de pesca (pescaria) são registrados as espécies que foram capturadas (além de muitas outras informações....)
+A pesca de espinhel costuma ser utilizada para capturar grandes espécies pelágicas, com destaque para os atuns.
+  - Em cada evento de pesca (pescaria) são registrados as espécies que foram capturadas, sejam estas alvo ou não-alvo, além de muitas outras informações auxiliares.  
   
-    &gt; **Pergunta:** A captura incidental de espécies não-alvo muda ao longo do ano?
+    &gt; **Pergunta:** há uma época do ano em que se captura mais atuns?
 
 
 &lt;img src="../Figuras/Longline_fisheries.png" width="90%" style="display: block; margin: auto;" /&gt;
@@ -84,10 +101,12 @@ class: inverse, center, middle
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Poisson &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
-Dados de contagem são frequentemente modelados via uma **distribuição Poisson** 
+Definida sob variáveis discretas positivas 
+  - `\(Y \in \text{{0, 1, 2, 3, ...}}\)`
 
+
+&lt;br&gt;
 
 `$$\large y_i \sim Poisson(\lambda_i) ~~~ (\lambda_i  \geq 0)$$`
 
@@ -97,7 +116,6 @@ Dados de contagem são frequentemente modelados via uma **distribuição Poisson
 `\(\large \lambda_i\)`: numéro médio de eventos (e.g., número médio de espécies não-alvo por pescaria)
 
 
-&lt;br&gt;
 
 --
 
@@ -112,9 +130,6 @@ Assume que a média = variância!
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Poisson &lt;/span&gt;
 
-
-#### Traduzindo para o matematiquês
-
 A distribuição Poisson pode assumir vários formatos
 
 
@@ -124,8 +139,6 @@ A distribuição Poisson pode assumir vários formatos
 ---
 
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Poisson &lt;/span&gt;
-
-#### Traduzindo para o matematiquês
 
 Podemos relacionar a média de eventos `\(\lambda_i\)` a um conjunto de covariáveis conforme a relação:
 
@@ -430,10 +443,18 @@ O que significa quando `\(\alpha \rightarrow \infty\)`?
 
 &lt;img src="../Figuras/Distribuicao_BN.png" width="80%" style="display: block; margin: auto;" /&gt;
 
-
-
-
 ---
+
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;
+
+
+&lt;br&gt;
+&lt;br&gt;
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="../Figuras/Rlogo.png" alt="Pratica_aula_04.R &amp;lt;br&amp;gt;" width="25%" /&gt;
+&lt;p class="caption"&gt;Pratica_aula_04.R &lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

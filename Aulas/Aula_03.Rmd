@@ -652,7 +652,7 @@ A comparação entre os modelos não pode ser feita mediante o teste de razão d
 </p>
 
 ---
-## <span style="color: #ee6c4d;">Exemplo prático </span>
+## <span style="color: #ee6c4d;">Prática no R </span>
 
 
 <br>

@@ -41,7 +41,7 @@ p1 <- ggplot(df_pois, aes(x = x, y = y, fill = lambda)) +
   #geom_point(size = 2) +
   geom_col(position = "identity", alpha = 0.6, width = 0.7, col = 'white') +
   theme_minimal(base_size = 14) +
-  scale_fill_brewer(palette = "Spectral") +
+  scale_fill_brewer(palette = "Spectral",direction = -1) +
  #scale_color_brewer(palette = "Spectral") +
   
   theme_minimal(base_size = 16) +

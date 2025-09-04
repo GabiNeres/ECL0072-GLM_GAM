@@ -35,36 +35,32 @@ navbar:
         href: Aulas/Aula_01.html
       - text: "----------"
       - text: "Dia 2"
-      - text: "Métodos de inferência"
-        href: pagB.html
+      - text: "Métodos de inferência & Validação"
+        href: Aulas/Aula_02.html
       - text: "----------"
       - text: "Dia 3"
-      - text: "GLM para dados binário"
-        href: pagC.html
+      - text: "GLM para dados binários"
+        href: Aulas/Aula_03.html
       - text: "----------"
       - text: "Dia 4"
       - text: "GLM para dados discretos"
-        href: pagD.html
+        href: Aulas/Aula_04.html
       - text: "----------"
       - text: "Dia 5"
       - text: "GLM para dados contínuos"
-        href: pagE.html
+        href: Aulas/Aula_05.html
       - text: "----------"
       - text: "Dia 6"
       - text: "GLM para dados categóricos"
-        href: pagF.html
+        href: Aulas/Aula_06.html
       - text: "----------"
       - text: "Dia 7"
       - text: "Dist. prob complementares"
-        href: pagG.html
+        href: Aulas/Aula_07.html
       - text: "----------"
       - text: "Dia 8"
       - text: "GAM"
-        href: pagH.html
-      - text: "----------"
-      - text: "Dia 9"
-      - text: "GAMLSS"
-        href: pagI.html
+        href: Aulas/Aula_08.html
   right:
     - text: GitHub
       icon: fa-github fa-lg
