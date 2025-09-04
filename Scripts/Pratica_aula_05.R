@@ -359,7 +359,7 @@ dfpred_full <- rbind(dfpred_lat, dfpred_latb)
 ### Plot
 ggplot(dfpred_full, aes(x = Lat, y = fit, col= Modelo, group = Modelo)) +
   #geom_point() +
-  geom_ribbon(aes(ymin = lower, ymax = upper, fill= Modelo), alpha = 0.2) +
+  geom_ribbon(aes(ymin = lower, ymax = upper, fill= Modelo), alpha = 0.2, color = NA) +
   geom_line(size = 1) +
   labs(y = "BPUE (predito)",
        x = "Latitude") +

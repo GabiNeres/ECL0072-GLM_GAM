@@ -23,7 +23,7 @@
 <meta name="author" content="Marie-Christine Rufener" />
 
 
-<meta name="date" content="2025-08-26" />
+<meta name="date" content="2025-09-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,10 +267,16 @@ code span.wa { color: #bf0303; } /* Warning */
 <span id="cb7-3"><a href="glm-para-dados-binários.html#cb7-3" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="glm-para-dados-binários.html#cb7-4" tabindex="-1"></a>dados2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(dados, <span class="sc">!</span>(health_metrics <span class="sc">==</span> <span class="st">&quot;underweight&quot;</span>))</span>
 <span id="cb7-5"><a href="glm-para-dados-binários.html#cb7-5" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="glm-para-dados-binários.html#cb7-6" tabindex="-1"></a><span class="fu">table</span>(dados2<span class="sc">$</span>health_metrics) <span class="co"># 42% dos pinguins são obesos!</span></span></code></pre></div>
-<pre><code>## 
-##     healthy  overweight underweight 
-##        1550        1167           0</code></pre>
+<span id="cb7-6"><a href="glm-para-dados-binários.html#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="glm-para-dados-binários.html#cb7-7" tabindex="-1"></a>dados2 <span class="sc">%&gt;%</span></span>
+<span id="cb7-8"><a href="glm-para-dados-binários.html#cb7-8" tabindex="-1"></a>  <span class="fu">group_by</span>(health_metrics) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href="glm-para-dados-binários.html#cb7-9" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Npinguins =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb7-10"><a href="glm-para-dados-binários.html#cb7-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Proporcao =</span> Npinguins <span class="sc">/</span> <span class="fu">sum</span>(Npinguins)) <span class="co">#43% dos pinguins são obesos!</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   health_metrics Npinguins Proporcao
+##   &lt;fct&gt;              &lt;int&gt;     &lt;dbl&gt;
+## 1 healthy             1550     0.570
+## 2 overweight          1167     0.430</code></pre>
 <p>Agora podemos avaliar a relação dessas categorias em função de algumas covariáveis inclusas no banco de dados.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="glm-para-dados-binários.html#cb9-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb9-2"><a href="glm-para-dados-binários.html#cb9-2" tabindex="-1"></a></span>
@@ -427,7 +433,9 @@ code span.wa { color: #bf0303; } /* Warning */
 <p>De acordo com a tabela, constata-se que o modelo que usou todas as covariávies (mod5), incluindo o termo quadrático para a massa corporal, foi o que apresentou o melhor ajuste uma vez que apresentou o menor valor de AIC quando comparado aos demais modelos.</p>
 <p>Antes de prosseguirmos com a validação visual do modelo escolhido, vamos comparar se esse modelo difere significativamente do segundo melhor modelo (mod4).</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="glm-para-dados-binários.html#cb17-1" tabindex="-1"></a><span class="do">## Teste de razão de verossimilhança ##</span></span>
-<span id="cb17-2"><a href="glm-para-dados-binários.html#cb17-2" tabindex="-1"></a><span class="fu">anova</span>(mod4, mod5, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<span id="cb17-2"><a href="glm-para-dados-binários.html#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="glm-para-dados-binários.html#cb17-3" tabindex="-1"></a><span class="co">#lmtest::lrtest(mod4, mod5) # mesma coisa</span></span>
+<span id="cb17-4"><a href="glm-para-dados-binários.html#cb17-4" tabindex="-1"></a><span class="fu">anova</span>(mod4, mod5, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: categoria ~ body_mass_g + species + sex + diet
@@ -449,18 +457,20 @@ code span.wa { color: #bf0303; } /* Warning */
 <span id="cb19-8"><a href="glm-para-dados-binários.html#cb19-8" tabindex="-1"></a></span>
 <span id="cb19-9"><a href="glm-para-dados-binários.html#cb19-9" tabindex="-1"></a><span class="fu">plot</span>(resid_sim)</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Embora o teste de Kolmogorov–Smirnov aponte que os resíduos não estão uniformemente distribuídos conforme o modelo proposto, a avaliação gráfica revela que não há violações aparentes - i.e., os resíduos não sinalizam nenhum viés sistemático.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="glm-para-dados-binários.html#cb20-1" tabindex="-1"></a><span class="do">## Teste de uniformidade dos resíduos</span></span>
 <span id="cb20-2"><a href="glm-para-dados-binários.html#cb20-2" tabindex="-1"></a><span class="fu">testUniformity</span>(resid_sim) </span></code></pre></div>
-<p><img src="relatorio_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<p><img src="relatorio_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <pre><code>## 
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
 ## 
 ## data:  simulationOutput$scaledResiduals
 ## D = 0.028148, p-value = 0.02699
 ## alternative hypothesis: two-sided</code></pre>
+<p>No que diz respeito ao teste de sobredispersão, constata-se que os resíduos não apresentam sobredispersão:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="glm-para-dados-binários.html#cb22-1" tabindex="-1"></a><span class="do">## Teste de sobredispersão</span></span>
 <span id="cb22-2"><a href="glm-para-dados-binários.html#cb22-2" tabindex="-1"></a><span class="fu">testDispersion</span>(resid_sim) <span class="co"># se p&gt;0.05, não há sobredispersão</span></span></code></pre></div>
-<p><img src="relatorio_files/figure-html/unnamed-chunk-14-3.png" width="672" /></p>
+<p><img src="relatorio_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <pre><code>## 
 ##  DHARMa nonparametric dispersion test via sd of residuals fitted vs.
 ##  simulated
@@ -468,23 +478,26 @@ code span.wa { color: #bf0303; } /* Warning */
 ## data:  simulationOutput
 ## dispersion = 0.99806, p-value = 0.922
 ## alternative hypothesis: two.sided</code></pre>
+<p>Os resíduos mostram-se levemente correlacionados</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="glm-para-dados-binários.html#cb24-1" tabindex="-1"></a><span class="do">## Teste de autocorrelação</span></span>
 <span id="cb24-2"><a href="glm-para-dados-binários.html#cb24-2" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
 <span id="cb24-3"><a href="glm-para-dados-binários.html#cb24-3" tabindex="-1"></a><span class="fu">check_autocorrelation</span>(mod5)</span></code></pre></div>
-<pre><code>## Warning: Autocorrelated residuals detected (p &lt; .001).</code></pre>
+<pre><code>## Warning: Autocorrelated residuals detected (p = 0.002).</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="glm-para-dados-binários.html#cb26-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(mod5))</span></code></pre></div>
+<p><img src="relatorio_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>De modo geral, o modelo escolhido se ajustou bem aos dados. Exceto pelo pressuposto da independência residual, todos os demais pressupostos foram atendidos.</p>
 <p>A violação da independência não deve ser negligenciada, porque indica que os dados são correlacionados entre si. Ignorar esse problema pode resultar não apenas em estimativas de erros padrões inválidas, como também em interpretações errada dos parâmetros.</p>
 <p><br></p>
 <blockquote>
-<p><strong>Atenção:</strong> Para vias de prática, vamos ignorar esse probelma e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs. submissão do indivíduo em e o acesso à
+<p><strong>Atenção:</strong> Para vias de prática, vamos ignorar esse probelma, mesmo porque a violação foi mínima, e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs. submissão do indivíduo em e o acesso à
 áreas de alimentações mais nutritivas). Esses problemas podem ser abordados via <em>Modelos Hierárquicos</em>.</p>
 </blockquote>
 <p><br></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="glm-para-dados-binários.html#cb26-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb26-2"><a href="glm-para-dados-binários.html#cb26-2" tabindex="-1"></a><span class="co"># 6) Analsiando os resultados</span></span>
-<span id="cb26-3"><a href="glm-para-dados-binários.html#cb26-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb26-4"><a href="glm-para-dados-binários.html#cb26-4" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="glm-para-dados-binários.html#cb26-5" tabindex="-1"></a><span class="fu">summary</span>(mod5)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="glm-para-dados-binários.html#cb27-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-2"><a href="glm-para-dados-binários.html#cb27-2" tabindex="-1"></a><span class="co"># 6) Analsiando os resultados</span></span>
+<span id="cb27-3"><a href="glm-para-dados-binários.html#cb27-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-4"><a href="glm-para-dados-binários.html#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="glm-para-dados-binários.html#cb27-5" tabindex="-1"></a><span class="fu">summary</span>(mod5)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = categoria ~ poly(body_mass_g, 2) + species + sex + 
@@ -604,6 +617,51 @@ code span.wa { color: #bf0303; } /* Warning */
 <ul>
 <li><code>dietsquid</code>: interpretação similar à dieta à base de krill.</li>
 </ul>
+<p><br></p>
+<p>Por fim, podemos visualizar os resultados do modelo ajustado.
+A ideia é usar o modelo ajustado para predizer novos valores de y baseado nas covariáveis que estão no modelo.</p>
+<p>Para tanto, precisamos montar um data frame no qual se cria uma sequência de valores
+de massa corporal, e replica as demais covariáveis.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="glm-para-dados-binários.html#cb29-1" tabindex="-1"></a><span class="do">## Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)</span></span>
+<span id="cb29-2"><a href="glm-para-dados-binários.html#cb29-2" tabindex="-1"></a>massas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-3"><a href="glm-para-dados-binários.html#cb29-3" tabindex="-1"></a>              <span class="fu">max</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb29-4"><a href="glm-para-dados-binários.html#cb29-4" tabindex="-1"></a>              <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb29-5"><a href="glm-para-dados-binários.html#cb29-5" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="glm-para-dados-binários.html#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="glm-para-dados-binários.html#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="glm-para-dados-binários.html#cb29-8" tabindex="-1"></a><span class="do">## Gerando um data frame de predição</span></span>
+<span id="cb29-9"><a href="glm-para-dados-binários.html#cb29-9" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">body_mass_g =</span>  massas,</span>
+<span id="cb29-10"><a href="glm-para-dados-binários.html#cb29-10" tabindex="-1"></a>                      <span class="at">species =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>species),</span>
+<span id="cb29-11"><a href="glm-para-dados-binários.html#cb29-11" tabindex="-1"></a>                      <span class="at">sex =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>sex),</span>
+<span id="cb29-12"><a href="glm-para-dados-binários.html#cb29-12" tabindex="-1"></a>                      <span class="at">diet =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>diet))</span>
+<span id="cb29-13"><a href="glm-para-dados-binários.html#cb29-13" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="glm-para-dados-binários.html#cb29-14" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="glm-para-dados-binários.html#cb29-15" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="glm-para-dados-binários.html#cb29-16" tabindex="-1"></a><span class="do">## Predizendo na escala logit (necessario para calcular os ICs)</span></span>
+<span id="cb29-17"><a href="glm-para-dados-binários.html#cb29-17" tabindex="-1"></a>predicoes <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod5, <span class="at">newdata =</span> dfpred , <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-18"><a href="glm-para-dados-binários.html#cb29-18" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="glm-para-dados-binários.html#cb29-19" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> dfpred <span class="sc">%&gt;%</span></span>
+<span id="cb29-20"><a href="glm-para-dados-binários.html#cb29-20" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">link =</span> predicoes<span class="sc">$</span>fit,</span>
+<span id="cb29-21"><a href="glm-para-dados-binários.html#cb29-21" tabindex="-1"></a>                 <span class="at">se =</span> predicoes<span class="sc">$</span>se.fit,</span>
+<span id="cb29-22"><a href="glm-para-dados-binários.html#cb29-22" tabindex="-1"></a>                 <span class="at">prob =</span> <span class="fu">plogis</span>(link),</span>
+<span id="cb29-23"><a href="glm-para-dados-binários.html#cb29-23" tabindex="-1"></a>                 <span class="at">lwr =</span> <span class="fu">plogis</span>(link <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb29-24"><a href="glm-para-dados-binários.html#cb29-24" tabindex="-1"></a>                 <span class="at">upr =</span> <span class="fu">plogis</span>(link <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se))</span>
+<span id="cb29-25"><a href="glm-para-dados-binários.html#cb29-25" tabindex="-1"></a></span>
+<span id="cb29-26"><a href="glm-para-dados-binários.html#cb29-26" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="glm-para-dados-binários.html#cb29-27" tabindex="-1"></a></span>
+<span id="cb29-28"><a href="glm-para-dados-binários.html#cb29-28" tabindex="-1"></a><span class="do">## Plotando....</span></span>
+<span id="cb29-29"><a href="glm-para-dados-binários.html#cb29-29" tabindex="-1"></a><span class="fu">ggplot</span>(dfpred, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> prob, <span class="at">color =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb29-30"><a href="glm-para-dados-binários.html#cb29-30" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> dados2, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> categoria),</span>
+<span id="cb29-31"><a href="glm-para-dados-binários.html#cb29-31" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-32"><a href="glm-para-dados-binários.html#cb29-32" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb29-33"><a href="glm-para-dados-binários.html#cb29-33" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-34"><a href="glm-para-dados-binários.html#cb29-34" tabindex="-1"></a>  <span class="fu">facet_grid</span>(diet <span class="sc">~</span> species) <span class="sc">+</span></span>
+<span id="cb29-35"><a href="glm-para-dados-binários.html#cb29-35" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidade de sobrepeso&quot;</span>,</span>
+<span id="cb29-36"><a href="glm-para-dados-binários.html#cb29-36" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Massa corporal (g)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb29-37"><a href="glm-para-dados-binários.html#cb29-37" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb29-38"><a href="glm-para-dados-binários.html#cb29-38" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)<span class="sc">+</span></span>
+<span id="cb29-39"><a href="glm-para-dados-binários.html#cb29-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#D8B365&quot;</span>, <span class="st">&quot;#5AB4AC&quot;</span>))</span></code></pre></div>
+<p><img src="relatorio_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 
 </div>
 </div>

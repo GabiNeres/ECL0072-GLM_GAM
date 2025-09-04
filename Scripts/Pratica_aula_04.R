@@ -21,7 +21,7 @@ library(ggeffects) #para plotar os resultados
 library(performance) #avaliação dos residuos
 
 
-
+## Definindo diretório base
 setwd("~/OneDrive/Arbeit/Lectures_and_Talks/UFRN/Lectures/ECL0072-GLM_GAM/")
 
 

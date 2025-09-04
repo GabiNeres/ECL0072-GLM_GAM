@@ -90,7 +90,13 @@ library(dplyr)
 
 dados2 <- filter(dados, !(health_metrics == "underweight"))
 
-table(dados2$health_metrics) # 42% dos pinguins são obesos!
+
+dados2 %>%
+  group_by(health_metrics) %>% 
+  summarise(Npinguins = n()) %>%
+  mutate(Proporcao = Npinguins / sum(Npinguins)) #43% dos pinguins são obesos!
+
+
 ```
 
 
@@ -300,9 +306,11 @@ Antes de prosseguirmos com a validação visual do modelo escolhido, vamos compa
 ```{r echo = T}
 
 ## Teste de razão de verossimilhança ##
-anova(mod4, mod5, test = "Chisq")
 
+#lmtest::lrtest(mod4, mod5) # mesma coisa
+anova(mod4, mod5, test = "Chisq")
 ```
+
 
 Como o p-valor < 0.05, conclui-se que o modelo mais complexo é significativamente melhor do que o modelo que não usa o termo quadrático do peso corporal.
 
@@ -322,17 +330,32 @@ resid_sim <- simulateResiduals(mod5, n=1000)
 
 plot(resid_sim)
 
+```
+
+Embora o teste de Kolmogorov–Smirnov aponte que os resíduos não estão uniformemente distribuídos conforme o modelo proposto, a avaliação gráfica revela que não há violações aparentes - i.e., os resíduos não sinalizam nenhum viés sistemático.
+
+
+```{r echo=T, message=F}
 ## Teste de uniformidade dos resíduos
 testUniformity(resid_sim) 
+```
 
 
+No que diz respeito ao teste de sobredispersão, constata-se que os resíduos não apresentam sobredispersão:
+
+```{r echo=T, message=F}
 ## Teste de sobredispersão
 testDispersion(resid_sim) # se p>0.05, não há sobredispersão
+```
+
+Os resíduos mostram-se levemente correlacionados
 
 
+```{r echo=T, message=F, warning=F}
 ## Teste de autocorrelação
 library(performance)
 check_autocorrelation(mod5)
+acf(residuals(mod5))
 
 ```
 
@@ -343,12 +366,12 @@ A violação da independência não deve ser negligenciada, porque indica que os
 
 <br>
 
-  > **Atenção:** Para vias de prática, vamos ignorar esse probelma e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs. submissão do indivíduo em e o acesso à 
+  > **Atenção:** Para vias de prática, vamos ignorar esse probelma, mesmo porque a violação foi mínima, e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs. submissão do indivíduo em e o acesso à 
 áreas de alimentações mais nutritivas). Esses problemas podem ser abordados via *Modelos Hierárquicos*.
 
 <br>
 
-```{r echo=T}
+```{r echo=T, warning=F, message=F}
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 6) Analsiando os resultados
@@ -429,3 +452,62 @@ Avaliando individualmente os valores estimados para cada covariável, observamos
 <br>
 
 - `dietsquid`: interpretação similar à dieta à base de krill.
+
+
+
+<br>
+
+Por fim, podemos visualizar os resultados do modelo ajustado.
+A ideia é usar o modelo ajustado para predizer novos valores de y baseado nas covariáveis que estão no modelo.
+
+Para tanto, precisamos montar um data frame no qual se cria uma sequência de valores
+de massa corporal, e replica as demais covariáveis.
+
+
+```{r echo=T, warning=F, message=F}
+
+## Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)
+massas <- seq(min(dados2$body_mass_g, na.rm = TRUE),
+              max(dados2$body_mass_g, na.rm = TRUE),
+              length.out = 100)
+
+
+
+## Gerando um data frame de predição
+dfpred <- expand.grid(body_mass_g =  massas,
+                      species = unique(dados2$species),
+                      sex = unique(dados2$sex),
+                      diet = unique(dados2$diet))
+
+
+
+## Predizendo na escala logit (necessario para calcular os ICs)
+predicoes <- predict(mod5, newdata = dfpred , type = "link", se.fit = TRUE)
+
+dfpred <- dfpred %>%
+          mutate(link = predicoes$fit,
+                 se = predicoes$se.fit,
+                 prob = plogis(link),
+                 lwr = plogis(link - 1.96 * se),
+                 upr = plogis(link + 1.96 * se))
+
+
+
+## Plotando....
+ggplot(dfpred, aes(x = body_mass_g, y = prob, color = sex, fill = sex)) +
+  geom_point(data = dados2, aes(x = body_mass_g, y = categoria),
+             inherit.aes = FALSE, alpha = 0.1, col = "gray40") +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, color = NA) +
+  geom_line(size = 1) +
+  facet_grid(diet ~ species) +
+  labs(y = "Probabilidade de sobrepeso",
+       x = "Massa corporal (g)") +
+  theme_minimal() +
+  theme(legend.position = "bottom")+
+  scale_color_manual(values = c("#D8B365", "#5AB4AC"))
+   
+
+
+```
+
+
