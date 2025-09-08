@@ -44,8 +44,10 @@ library(dplyr)
 
 **2. Modelos lineares (LM)** 
 
-**3. RMarkdown (relatório)**  
+  > 2.1. Prática 
 
+**3. RMarkdown (relatório)**  
+  > 3.1. Prática 
 
 ---
 class: inverse, center, middle
@@ -58,49 +60,50 @@ class: inverse, center, middle
 
 .pull-left[
 
-<br>
 
 ### <span style="color: #ee6c4d;">Ementa</span>
 - **29/09 -** LM & RMarkdown
-- **30/09 -** Métodos de inferência
+- **30/09 -** Métodos de inferência, seleção & diagnóstico de modelos
 - **01/10 -** GLM para dados binários
 - **02/10 -** GLM para dados discretos
-- **03/10 -** GLM para dados contínuos
-- **06/10 -** GLM para dados categóricos
-- **07/10 -** Distribuições de probabilidade complementares
-- **08/10 -** GAM
-- ~~**09/10 -** GAMLSS~~
+- <span style="color: #ee9b00;">**03/10 -** Feriado<span style="color: #ee6c4d;">
+- **06/10 -** GLM para dados contínuos
+- **07/10 -** GLM para dados categóricos
+- **08/10 -** Distribuições de probabilidade complementares
+- **09/10 -** GAM
 - **10/10 -** Aula prática: projetos
 
 ]
 
 .pull-right[
 
-<br>
-
 ### <span style="color: #ee6c4d;">Horário</span>
 8h00 - 12h00 (15 min de intervalo)
+
+- 1h30 - aula teórica
+- 1h - prática guiada
+- 1h30 - prática individual/em grupo
+
 
 ---------
 
 ### <span style="color: #ee6c4d;">Avaliação </span>
 Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
-- Relatório em formato `Bookdown (RMarkdown)`
+- Relatório em formato `RMarkdown (Bookdown)`
 
--  <span style="color: red;">**Entrega: 17/10** </span> 
-
+>  <span style="color: #ee6c4d;"><u>**Entrega: 12/10**</u></span> 
 ]
 
 ---
 
 ### <span style="color: #ee6c4d;">Dúvidas</span>
 
-#### Programação: 
-- https://github.com/mcruf/ECL0072-GLM_GAM/issues
+- Durante as práticas
 
-#### Estatística: 
-- Horário marcado via email: [macrufener@gmail.com]()
+- https://github.com/mcruf/ECL0072-GLM_GAM/issues (programação)
+
+- email: [macrufener@gmail.com]()
 
 
 -------
@@ -252,31 +255,11 @@ knitr::include_graphics("../Figuras/tipos_de_correlacoes.png")
 
 
 ---
-
-
-.pull-left[
-
 <br>
 
-```{r echo=FALSE, out.width ="70%", fig.align ='center', fig.cap="George P. Box (1919-2013)", fig.topcaption=F}
-knitr::include_graphics("../Figuras/GeorgeEPBox.jpg")
+```{r echo=FALSE, out.width ="60%", fig.align ='center', fig.topcaption=F}
+knitr::include_graphics("../Figuras/horse_meme.jpg")
 ```
-
-
-]
-
-.pull-right[
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-> <font size="6"><center> <span style="color: #ee6c4d;">Essentially, <b>all models are wrong</b>, but <b>some are useful</b></center></font></span> 
-
-]
-
 
 ---
 
@@ -618,7 +601,7 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 
 ]
@@ -647,7 +630,7 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
@@ -683,7 +666,7 @@ dados %>%
 
 ]
 .pull-right[
-$Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
@@ -744,7 +727,31 @@ dados %>%
 .pull-right[
 
 $Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
+]
 
+---
+### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Por trás dos bastidores </span>
+
+#### ANOVA (um fator)
+
+<br>
+
+.pull-left[
+```{r echo=F, message=F, warning=F}
+
+set.seed(123)
+dados %>%
+  group_by(species) %>%
+  sample_n(size =2) %>%
+  select(c("bill_length_mm","body_mass_g")) %>%
+  kable(align = "ccc")
+
+```
+]
+
+.pull-right[
+
+$Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
 
 <p class="comment">
 <span style="color: #ee6c4d;"><b> ATENÇÃO </b> </span> 
@@ -877,6 +884,7 @@ $$
 \end{bmatrix}
 \cdot
 \begin{bmatrix}
+\beta_0 \\
 \beta_1 \\
 \beta_2
 \end{bmatrix}
@@ -924,35 +932,25 @@ Todo modelo estatístico é baseado em um conjunto de pressupostos
 <br>
 - **Resíduos**
   - Independentes 
-  - Homocedásticos (variância constante)
-  - Normalidade
+  - Homocedásticos (variância constante)*
+  - Normalidade*
+
+
+.footnote[*Apenas válido para modelos lineares!]
+
 
 ---
-### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Pressupostos </span>
+## <span style="color: #ee6c4d;">Prática no R </span>
 
-#### Independência residual
 
-```{r echo=FALSE, fig.align ='center', out.width = "100%"}
-knitr::include_graphics("../Figuras/acf_plots.png")
+<br>
+<br>
+
+```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_01.R", fig.topcaption=F}
+knitr::include_graphics("../Figuras/Rlogo.png")
 ```
 
----
-### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Pressupostos </span>
 
-#### Homocedasticidade
-
-```{r echo=FALSE, fig.align ='center', out.width = "100%"}
-knitr::include_graphics("../Figuras/heterocedasticidade_plots.png")
-```
-
----
-### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Pressupostos </span>
-
-#### Normalidade
-
-```{r echo=FALSE, fig.align ='center', out.width = "70%"}
-knitr::include_graphics("../Figuras/normalidade_plots.png")
-```
 
 
 ---

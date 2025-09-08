@@ -1,7 +1,7 @@
 ##########################
-#			 #
+#			                   #
 #     Dados ecológicos   # 
-#			 #
+#			                   #
 ##########################
 
 
@@ -30,11 +30,47 @@ Os dados foram coletados no Arquipélago Palmer, próximo à Antártida, ao long
 Além disso, o banco de dados conta com variáveis adicionais, como dieta, ano de observação, estágio de vida e indicadores de saúde. Esse conjunto de informação permitem uma compreensão mais detalhada da biologia e ecologia dos pinguins.
 
 
-
+###########################################################################
 
 #~~~~~~~~~~~~~~~
 # fisheries.rds
 #~~~~~~~~~~~~~~~
 
-Banco de dados simulando a pesca de espinhal de atum no Brasil.
+Banco de dados fictício que simula uma típica pesca de espinhel.
+
+
+
+
+
+###########################################################################
+
+
+
+#~~~~~~~~~~~~~~~~~
+# Salamanders.rds
+#~~~~~~~~~~~~~~~~~
+Dado extraído do pacote glmmTMB - data("Salamanders").
+Cedido originalmente por Price et al. (2015, 2016).
+
+- Price SJ, Muncy BL, Bonner SJ, Drayer AN, Barton CD (2016) Effects of mountaintop removal mining and valley filling on the occupancy and abundance of stream salamanders. Journal of Applied Ecology 53 459–468. doi:10.1111/1365-2664.12585
+- Price SJ, Muncy BL, Bonner SJ, Drayer AN, Barton CD (2015) Data from: Effects of mountaintop removal mining and valley filling on the occupancy and abundance of stream salamanders. Dryad Digital Repository. doi:10.5061/dryad.5m8f6
+
+O dado reúne informações sobre a contagem de diversas espécies de salamandras, com amostragens realizadas ao longo de 23 rios.
+Algumas espécies possuem estágio larval e adulto.
+
+> Informações incluídas:
+- @site: Local de amostragem 
+- @mined: Região que sofreu ou não mineração
+- @cover: No. de objetos cobrindo a região (pedras, troncos de madeira, etc.; padronizado)
+- @sample: No. da amostra (4 réplicas dentro de cada 'site')
+- @DOP: Dias transcorridos desde a última precipitação (padronizado)
+- @Wtemp: Temperatura da água (padronizada)
+- @DOY: Dia do ano (padronizado)
+
+
+IMPORTANTE: todas as covariáveis foram padronizadas (z-score)
+
+
+
+
 

@@ -5,6 +5,14 @@
 ####################################
 
 
+# O script abordará:
+
+# 1 - LM com preditor numérico 
+# 2 - LM com preditor categórico (teste-t)
+# 3 - LM com preditor categórico (ANOVA)
+
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~
 # Carregando os pacotes
 #~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,22 +24,26 @@ library(ggplot2)
 #~~~~~~~~~~~~~~~~~~~~~
 
 ## Definindo diretório base
-setwd("~/Library/CloudStorage/OneDrive-Personal/Arbeit/Lectures_and_talks/UFRN/Lectures/ECL0072-GLM_GAM/")
+setwd("~/OneDrive/Arbeit/Lectures_and_talks/UFRN/Lectures/ECL0072-GLM_GAM/")
+
 
 ## Carregando os dados
-dados <- read.csv("Dados/palmerpenguins_extended.csv")
+dados <- read.csv("Dados/palmerpenguins_extended.csv") #Pinguins de Palmer
+
+
+#<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
 
 
-#~~~~~~~~~~~~~~~~~~~~
-# Analisando os dados
-#~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1) Análise exploratória
+#~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Resumo geral dos dados
 #~~~~~~~~~~~~~~~~~~~~~~~~~
 str(dados)
 summary(dados) 
-glimpse(dados)
+#dplyr::glimpse(dados)
 
 
 
@@ -58,7 +70,7 @@ dotchart(dados$body_mass_g, main = "Dotchart")
 par(mfrow = c(1,1))
 
 
-### Variável preditora
+### Variável preditora (numérica)
 par(mfrow = c(1,3))
 hist(dados$bill_length_mm, main = "Histograma")
 boxplot(dados$bill_length_mm, main = "Boxplot")
@@ -73,14 +85,28 @@ cor(dados$body_mass_g, dados$bill_length_mm) #Correlação de pearson
 
 
 
+### Variável preditora (categórica)
+plot(dados$body_mass_g~dados$species)
+plot(dados$body_mass_g~dados$sex)
+
+
+
+#~~~~~~~~~~~~~
+# 2) Modelos
+#~~~~~~~~~~~~~
+
+
+# 2.1) Modelo linear (LM)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Avaliando a relação entre peso vs. comprimento do bico
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Rodando o modelo linear
 mod1 <- lm(body_mass_g ~ bill_length_mm, dados)
+#mod1b <- lm(body_mass_g/1000 ~ bill_length_mm, dados) #Alternativa para quando as variáveis são números muito grandes (não é o caso daqui)
 
 
-## O que tem dentro do obje
+
+## O que tem dentro do objeto mod1?
 names(mod1)
 
 
@@ -96,4 +122,34 @@ summary(mod1)
 par(mfrow=c(2,2))
 plot(mod1)
 par(mfrow=c(1,1))
+
+
+
+
+# 2.2) Teste-t
+#~~~~~~~~~~~~~~
+# Há diferenças de peso entre pinguins femeas e machos?
+
+mod2 <- lm(body_mass_g ~ sex, data = dados)
+summary(mod2)
+
+
+## Comparando com a função padrão
+t.test(body_mass_g ~ sex, data = dados)
+
+
+
+# 2.3) ANOVA (1 fator)
+#~~~~~~~~~~~~~~~~~~~~~~~~~
+# Há diferenças de peso entre as diferentes espécies?
+
+mod3 <- lm(body_mass_g ~ species, data = dados)
+
+head(model.matrix(dados$body_mass_g ~ dados$species)) #Matriz 
+
+summary(mod3)
+
+
+## ANOVA tradicional
+summary(aov(body_mass_g ~ species, data = dados))
 

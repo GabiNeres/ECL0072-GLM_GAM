@@ -51,8 +51,10 @@ text-align: center
 
 **2. Modelos lineares (LM)** 
 
-**3. RMarkdown (relatório)**  
+  &gt; 2.1. Prática 
 
+**3. RMarkdown (relatório)**  
+  &gt; 3.1. Prática 
 
 ---
 class: inverse, center, middle
@@ -65,49 +67,50 @@ class: inverse, center, middle
 
 .pull-left[
 
-&lt;br&gt;
 
 ### &lt;span style="color: #ee6c4d;"&gt;Ementa&lt;/span&gt;
 - **29/09 -** LM &amp; RMarkdown
-- **30/09 -** Métodos de inferência
+- **30/09 -** Métodos de inferência, seleção &amp; diagnóstico de modelos
 - **01/10 -** GLM para dados binários
 - **02/10 -** GLM para dados discretos
-- **03/10 -** GLM para dados contínuos
-- **06/10 -** GLM para dados categóricos
-- **07/10 -** Distribuições de probabilidade complementares
-- **08/10 -** GAM
-- ~~**09/10 -** GAMLSS~~
+- &lt;span style="color: #ee9b00;"&gt;**03/10 -** Feriado&lt;span style="color: #ee6c4d;"&gt;
+- **06/10 -** GLM para dados contínuos
+- **07/10 -** GLM para dados categóricos
+- **08/10 -** Distribuições de probabilidade complementares
+- **09/10 -** GAM
 - **10/10 -** Aula prática: projetos
 
 ]
 
 .pull-right[
 
-&lt;br&gt;
-
 ### &lt;span style="color: #ee6c4d;"&gt;Horário&lt;/span&gt;
 8h00 - 12h00 (15 min de intervalo)
+
+- 1h30 - aula teórica
+- 1h - prática guiada
+- 1h30 - prática individual/em grupo
+
 
 ---------
 
 ### &lt;span style="color: #ee6c4d;"&gt;Avaliação &lt;/span&gt;
 Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
-- Relatório em formato `Bookdown (RMarkdown)`
+- Relatório em formato `RMarkdown (Bookdown)`
 
--  &lt;span style="color: red;"&gt;**Entrega: 17/10** &lt;/span&gt; 
-
+&gt;  &lt;span style="color: #ee6c4d;"&gt;&lt;u&gt;**Entrega: 12/10**&lt;/u&gt;&lt;/span&gt; 
 ]
 
 ---
 
 ### &lt;span style="color: #ee6c4d;"&gt;Dúvidas&lt;/span&gt;
 
-#### Programação: 
-- https://github.com/mcruf/ECL0072-GLM_GAM/issues
+- Durante as práticas
 
-#### Estatística: 
-- Horário marcado via email: [macrufener@gmail.com]()
+- https://github.com/mcruf/ECL0072-GLM_GAM/issues (programação)
+
+- email: [macrufener@gmail.com]()
 
 
 -------
@@ -247,32 +250,9 @@ $$P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I}
 
 
 ---
-
-
-.pull-left[
-
 &lt;br&gt;
 
-&lt;div class="figure" style="text-align: center"&gt;
-&lt;img src="../Figuras/GeorgeEPBox.jpg" alt="George P. Box (1919-2013)" width="70%" /&gt;
-&lt;p class="caption"&gt;George P. Box (1919-2013)&lt;/p&gt;
-&lt;/div&gt;
-
-
-]
-
-.pull-right[
-
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-&lt;br&gt;
-
-&gt; &lt;font size="6"&gt;&lt;center&gt; &lt;span style="color: #ee6c4d;"&gt;Essentially, &lt;b&gt;all models are wrong&lt;/b&gt;, but &lt;b&gt;some are useful&lt;/b&gt;&lt;/center&gt;&lt;/font&gt;&lt;/span&gt; 
-
-]
-
+&lt;img src="../Figuras/horse_meme.jpg" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -595,7 +575,7 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i\)`
+`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 
 ]
@@ -623,7 +603,7 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i\)`
+`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 &lt;br&gt;
 
@@ -658,7 +638,7 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 ]
 .pull-right[
-`\(Peso_i = \beta_0 + \beta_1LarguraBico_i + \varepsilon_i\)`
+`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 &lt;br&gt;
 
@@ -718,7 +698,30 @@ $$
 .pull-right[
 
 `\(Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
+]
 
+---
+### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Por trás dos bastidores &lt;/span&gt;
+
+#### ANOVA (um fator)
+
+&lt;br&gt;
+
+.pull-left[
+
+|  species  | bill_length_mm | body_mass_g |
+|:---------:|:--------------:|:-----------:|
+|  Adelie   |      30.5      |    5330     |
+|  Adelie   |      58.3      |    5126     |
+| Chinstrap |      33.6      |    3392     |
+| Chinstrap |      27.6      |    4194     |
+|  Gentoo   |      57.2      |    7482     |
+|  Gentoo   |      75.0      |    7306     |
+]
+
+.pull-right[
+
+`\(Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
 
 &lt;p class="comment"&gt;
 &lt;span style="color: #ee6c4d;"&gt;&lt;b&gt; ATENÇÃO &lt;/b&gt; &lt;/span&gt; 
@@ -848,6 +851,7 @@ $$
 \end{bmatrix}`
 \cdot
 `\begin{bmatrix}
+\beta_0 \\
 \beta_1 \\
 \beta_2
 \end{bmatrix}`
@@ -895,29 +899,26 @@ Todo modelo estatístico é baseado em um conjunto de pressupostos
 &lt;br&gt;
 - **Resíduos**
   - Independentes 
-  - Homocedásticos (variância constante)
-  - Normalidade
+  - Homocedásticos (variância constante)*
+  - Normalidade*
+
+
+.footnote[*Apenas válido para modelos lineares!]
+
 
 ---
-### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos &lt;/span&gt;
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;
 
-#### Independência residual
 
-&lt;img src="../Figuras/acf_plots.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;br&gt;
+&lt;br&gt;
 
----
-### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos &lt;/span&gt;
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="../Figuras/Rlogo.png" alt="Pratica_aula_01.R" width="25%" /&gt;
+&lt;p class="caption"&gt;Pratica_aula_01.R&lt;/p&gt;
+&lt;/div&gt;
 
-#### Homocedasticidade
 
-&lt;img src="../Figuras/heterocedasticidade_plots.png" width="100%" style="display: block; margin: auto;" /&gt;
-
----
-### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos &lt;/span&gt;
-
-#### Normalidade
-
-&lt;img src="../Figuras/normalidade_plots.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 
 ---

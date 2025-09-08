@@ -1,6 +1,6 @@
 ---
 title: "Modelos Lineares Generalizados e Aditivos para Dados Ecológicos (ECL0072)"
-subtitle: "Aula 02: Métodos de inferência & validação de modelos"
+subtitle: "Aula 02: Métodos de inferência, diagnóstico & seleção de modelos"
 author: "Marie-Christine Rufener"
 #institute: "macrufener@gmail.com"
 #date: "2016/12/12 (updated: `r Sys.Date()`)"
@@ -24,13 +24,21 @@ output:
 
 **1. Métodos de inferência**  
 
-**2. Validação de modelos** 
+  > 1.1. Prática 
+
+**2. Diagnóstico de modelos** 
+
+
+**3. Seleção de modelos** 
+
+  > 3.1. Prática 
 
 <br>
 
+
 - Sugestão de leitura:
-  - Cap. 11: regression and other stories (Gelman)
-  -
+  - Cap. 11: Regression and other stories (Gelman)
+  - Cap. 6: Linear Models with R (Faraway, 2014)
 
 ---
 class: inverse, center, middle
@@ -83,8 +91,8 @@ knitr::include_graphics("../Figuras/LM_ajustado2.png")
 - **2) Identificar possíveis valores para os parâmetros desconhecidos do modelo**
 
     - Método dos momentos
-    - Método dos mínimos quadrados
-    - Método de máxima verossimilhança
+    - <span style="color: #ee6c4d;">Método dos mínimos quadrados</span>
+    - <span style="color: #ee6c4d;">Método de máxima verossimilhança</span>
     - Método bayesiano
 
 ---
@@ -214,11 +222,28 @@ $$\large \varepsilon_i = y_i - f(x_i|\theta)$$
 $$\large \text{SQR} = \underbrace{min \sum_{i=1}^{n} (y_i - f(x_i|\theta))^2}_
 {\text{Diferenciar a função em relação a }\ \theta}$$
 
-$\widehat{\beta_0} = \overline{y} - \widehat{\beta_1}~\overline{x}$
+---
+### <span style="color: #ee6c4d;">**Métodos de inferência** </span><span style="color: #3e5c76;">| Mínimos quadrados (OLS)  </span> 
 
-$\widehat{\beta_1} = r \frac{\sigma_y}{\sigma_x}$
+**Solução analítica:**
 
-.footnote[ **r** = coeficiente de correlação;  **σ** = desvio padrão.]
+$$\large \hat{\beta_0} = (X^TX)^{-1}X^Ty ~~\color{gray}{(= \overline{y} - \widehat{\beta_1}~\overline{x})}$$
+--
+
+<br>
+
+$$\large \hat{\beta_1} = X(X^TX)^{-1}X^Ty ~~\color{gray}{(= r \frac{\sigma_y}{\sigma_x})}$$
+
+--
+
+<br>
+
+$$\large \hat{y} = Hy ~~\color{gray}{(= \hat{\beta_1})}$$
+
+
+
+
+.footnote[**H** = matriz 'hat'; **r** = coeficiente de correlação;  **σ** = desvio padrão]
 
 
 ---
@@ -228,13 +253,14 @@ $\widehat{\beta_1} = r \frac{\sigma_y}{\sigma_x}$
 
 .pull-left[
 <br>
-<br>
 
 - Formalizou a teoria de máxima verossimilhança 
   - **estatística frequentista**
       - <span style="color: #ee6c4d;">Intervalo de confiança</span>
       - <span style="color: #ee6c4d;">Teste de hipótese (p-valor...)</span>
       - <span style="color: #ee6c4d;">Comparação entre modelos</span>
+
+
 
 ]
 
@@ -621,14 +647,274 @@ $$\large L(\mu, \sigma^2 \mid Y) = \prod_{i=1}^n \color{Tomato}{\frac{1}{\sqrt{2
 knitr::include_graphics("../Figuras/Rlogo.png")
 ```
 
+
 ---
 class: inverse, center, middle
 
-#  Validação de modelos
+#  Diagnóstico de modelos
+---
+
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span>
+
+
+Tem por objetivo avaliar os pressupostos e a qualidade do ajuste do modelo
+- o quão bem o modelo se ajustou aos dados
+
+--
+
+<br>
+
+Realizado mediante a análise residual
+
+.pull-left[
+- LM $\neq$ GLM
+
+- No caso de LM:
+  - Independência
+  - Homocedasticidade
+  - Normalidade
+]
+
+--
+
+.pull-right[
+
+**Métodos de diagnóstico**
+
+- Numérico (validação estatística)
+- Gráfico (validação visual)
+
+]
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Homocedasticidade</span> 
+
+A constância da $\sigma^2$ implica que os resíduos precisam estar simetricamente distribuídos em torno da linha horizonthal $y=0$ 
+
+```{r echo=FALSE, out.width ="90%", fig.align ='center'}
+knitr::include_graphics("../Figuras/heterocedasticidade_plots.png")
+```
+
+
+
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Independência</span> 
+
+<br>
+
+$$\Large \epsilon \overset{\mathrm{iid}}{\sim} N(0,\sigma^2)$$
+
+<br>
+
+A violação da independência ocorre frequentemente por dados com estrutura:
+- espacial
+- temporal
+- em blocos
 
 
 ---
 
-### <span style="color: #ee6c4d;">**Validação de modelos** </span>
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Independência</span> 
 
 
+Se os dados foram coletados no espaço geográfico (long/lat), deve-se avaliar como os resíduos se comportam espacialmente
+  - **Validação visual:** *bubbleplot*
+  - **Validação estatística:** Morans' I 
+
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Independência</span> 
+
+
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
+knitr::include_graphics("../Figuras/corr_espacial.png")
+```
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Independência</span> 
+
+Caso a coleta de dados foi realizada ao longo do tempo, avalia-se o padrão temporal dos resíduos
+
+  - **Validação visual:** ACF plot
+  - **Validação estatística:** Durbin-Watson
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Independência</span> 
+
+<br>
+
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
+knitr::include_graphics("../Figuras/corr_temporal.png")
+```
+
+---
+### <span style="color: #ee6c4d;">**Diagnóstico de modelos** </span><span style="color: #3e5c76;">| Normalidade</span> 
+
+
+<br>
+
+```{r echo=FALSE, out.width ="90%", fig.align ='center'}
+knitr::include_graphics("../Figuras/normalidade_plots.png")
+```
+
+
+---
+class: inverse, center, middle
+
+#  Seleção de modelos
+
+
+---
+
+### <span style="color: #ee6c4d;">**Seleção de modelos** </span>
+
+
+.pull-left[
+
+<br>
+
+```{r echo=FALSE, out.width ="60%", fig.align ='center', fig.cap="George P. Box (1919-2013)", fig.topcaption=F}
+knitr::include_graphics("../Figuras/GeorgeEPBox.jpg")
+```
+
+
+]
+
+.pull-right[
+
+<br>
+<br>
+<br>
+<br>
+
+> <font size="6"><center> <span style="color: #ee6c4d;">Essentially, <b>all models are wrong</b>, but <b>some are useful</b></center></font></span> 
+
+]
+
+---
+
+### <span style="color: #ee6c4d;">**Seleção de modelos** </span>
+
+Baseado no *princípio da parcimônia*
+  - Modelo mais simples com maior poder explicativo
+
+--
+
+<br>
+
+Existem diversas métricas que podem ser utilizadas para comparar diferentes modelos:
+
+- Deviance
+- Teste da razão de verossimilhança (LRT)
+- Critérios de informação (AIC, BIC)
+- Ajuste gráfico
+
+
+---
+
+### <span style="color: #ee6c4d;">**Seleção de modelos** </span><span style="color: #3e5c76;">| Deviance  </span>
+
+
+Generalização da soma dos quadrados dos resíduos (RSS):
+
+<br>
+
+$$\large D = 2 \times (logL_{saturado}- logL_{proposto})$$
+- $logL_{saturado}$: log-verossimilhança modelo saturado (ajuste perfeito)
+- $logL_{proposto}$: log-verossimilhança modelo proposto
+
+<br>
+
+--
+
+> <span style="color: #ee6c4d;">**Interpretação:** quanto menor a deviance, mais próximo o modelo está do ajuste perfeito</p>
+
+<br>
+
+--
+
+Deviance nula *vs.* deviance residual
+
+---
+
+### <span style="color: #ee6c4d;">**Seleção de modelos** </span><span style="color: #3e5c76;">| Teste da razão de verossimilhança  </span>
+
+
+Usado para comparar modelos aninhados
+
+- $\text{modelo A:}~~~ \large y_i = \beta_0 + \beta_1x_{i_1}$
+
+- $\text{modelo B:}~~~ \large y_i = \beta_0 + \beta_1x_{i_1} + \beta_2x_{i_2}$
+
+
+--
+
+
+Baseado na estatística do teste da razão de verossimilhança:
+
+.pull-left[
+$$G^2 = 2 \times log\Biggl(\frac{L_B}{L_A}\Biggr)$$
+$$G^2 = \underbrace{2 \times (logL_A - logL_B)}_\text{Deviance}$$
+
+]
+.pull-right[
+
+- $G^2$ segue uma distribuição do qui-quadrado ($\chi^2$) com n = ($n_{p_A} - n_{p_B}$) graus de liberdade
+
+]
+
+--
+
+> <span style="color: #ee6c4d;">**Interpretação:** se p < 0.05 rejeita-se a hipótese nula (modelo mais simples); modelo mais complexo se ajusta melhor aos dados!</p>
+
+
+---
+
+### <span style="color: #ee6c4d;">**Seleção de modelos** </span><span style="color: #3e5c76;">| Critérios de informação  </span>
+
+
+Avalia não apenas o ajuste do modelo, como também a sua complexidade
+  - penalização pelo número de parâmetros
+
+
+--
+
+.pull-left[
+
+**AIC (Akaike Information Criterion)**
+
+<br>
+
+$$\large AIC = -2log(L_{modelo}) + 2k$$
+$k:$ número de parâmetros
+
+
+>   <span style="color: #ee6c4d;">**Interpretação:** quanto menor AIC, melhor o ajuste</p>
+
+]
+
+--
+
+.pull-right[
+
+**BIC (Bayesian Information Criterion)**
+
+<br>
+
+$$\large BIC = -2log(L_{modelo}) + k~ log(n)$$
+$n:$ número de observações
+
+
+>  <span style="color: #ee6c4d;">**Interpretação:** quanto menor BIC, melhor o ajuste</p>
+
+]
+
+---
+
+```{r echo=FALSE, out.width ="80%", fig.align ='center'}
+knitr::include_graphics("../Figuras/modelling_workflow.png")
+```
+
+
+---
