@@ -5,6 +5,17 @@
 #                                  #
 ####################################
 
+# Este script abordará dois métodos de estimação de parâmetros:
+# 1) mínimos quadrados (ols - ordinary least squares)
+# 2) máxima verossimilhança (ml - maximum likelihood)
+# Para cada um dos métodos, será mostrado como se pode esimtar os 
+# parâmetros manualmente e via funções específicas (lm/glm).
+
+# Para vias de exemplo prático, usaremos o banco de dados
+# dos pinguins de palmer.
+
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~
 # Carregando os pacotes
 #~~~~~~~~~~~~~~~~~~~~~~~
