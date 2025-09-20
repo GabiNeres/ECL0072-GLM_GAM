@@ -98,12 +98,26 @@ Definida sob variáveis discretas positivas
   - $Y \in \text{{0, 1, 2, 3, ...}}$
 
 
+$$\large f(y; \lambda) = \frac{\lambda^y e^{-\lambda}}{y!}$$
+
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
+knitr::include_graphics("../Figuras/Distribuicao_Poisson.png")
+```
+
+
+
+---
+## <span style="color: #ee6c4d;">Distribuição Poisson </span>
+
 <br>
 
 $$\large y_i \sim Poisson(\lambda_i) ~~~ (\lambda_i  \geq 0)$$
 
-$$E[Y] = \lambda, ~~~~~Var(Y) = \lambda$$
+<br>
 
+$$\large E[Y] = \lambda, ~~~~~Var(Y) = \lambda$$
+
+<br>
 
 $\large \lambda_i$: numéro médio de eventos (e.g., número médio de espécies não-alvo por pescaria)
 
@@ -118,17 +132,6 @@ $\large \lambda_i$: numéro médio de eventos (e.g., número médio de espécies
 Assume que a média = variância! 
 </p>
 
-
----
-## <span style="color: #ee6c4d;">Distribuição Poisson </span>
-
-A distribuição Poisson pode assumir vários formatos
-
-
-
-```{r echo=FALSE, out.width ="75%", fig.align ='center'}
-knitr::include_graphics("../Figuras/Distribuicao_Poisson.png")
-```
 
 ---
 
@@ -441,9 +444,11 @@ O que significa quando $\alpha \rightarrow \infty$?
 ---
 ## <span style="color: #ee6c4d;">Distribuição Binomial Negativa </span>
 
+Assim como a distribuição Poisson, a distribuição BN apresenta forte assimetria à direita
+
 <br>
 
-```{r echo=FALSE, out.width ="80%", fig.align ='center'}
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
 knitr::include_graphics("../Figuras/Distribuicao_BN.png")
 ```
 

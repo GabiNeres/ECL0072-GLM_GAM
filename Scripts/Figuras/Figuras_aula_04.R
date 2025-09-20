@@ -24,7 +24,9 @@ setwd("~/OneDrive/Arbeit/Lectures_and_Talks/UFRN/Lectures/ECL0072-GLM_GAM/")
 
 
 ## Definindo o parâmetro (lambda) ##
-lambdas <- c(4, 10, 15, 30)
+#lambdas <- c(4, 10, 15, 30)
+lambdas <- c(4, 10, 30)
+
 
 ## Simulando os dados ##
 df_pois <- lapply(lambdas, function(lambda) {
@@ -38,16 +40,16 @@ df_pois <- lapply(lambdas, function(lambda) {
 ## Plot
 p1 <- ggplot(df_pois, aes(x = x, y = y, fill = lambda)) +
   #geom_line(linewidth = 1.2) +
-  #geom_point(size = 2) +
-  geom_col(position = "identity", alpha = 0.6, width = 0.7, col = 'white') +
+  geom_col(position = "identity",col = 'white') +
   theme_minimal(base_size = 14) +
-  scale_fill_brewer(palette = "Spectral",direction = -1) +
- #scale_color_brewer(palette = "Spectral") +
-  
-  theme_minimal(base_size = 16) +
+  #scale_fill_brewer(palette = "Spectral",direction = -1) +
+  scale_fill_manual(values = c("#0a9396", "#bf4342", "#ee9b00")) +
+  facet_wrap(lambda ~ . ) +
+  theme_minimal(base_size = 13) +
   labs( x = "Contagem",
         y = "Probabilidade",
-        fill = expression(lambda))
+        fill = expression(lambda)) +
+  theme(strip.text = element_blank())
 p1
 
 # ## Simulando os dados ##
@@ -90,8 +92,8 @@ p1
 
 ggsave(plot = p1,
        filename ="Figuras/Distribuicao_Poisson.png", 
-       width = 15,
-       height = 8,
+       width = 6,
+       height = 2,
        dpi = 350)
 
 
@@ -207,24 +209,31 @@ nb_data <- function(mu, sizes, prob_cutoff = 0.995) {
 
 ## Definindo os parâmetros ##
 mu <- 10
-alpha <- c(0.5, 1, 2, 5, 20, 1000)
+#alpha <- c(0.5, 1, 2, 5, 20, 1000)
+alpha <- c(0.5, 2, 20)
+
+
 
 # Gerando os dados
 df <- nb_data(mu, alpha, prob_cutoff = 0.99) # cut tail at 99% mass
 
 ## Plot
-p4 <- ggplot(df, aes(x = x, y = y, color = size)) +
-      geom_line(linewidth = 1.2) +
-      geom_point(size = 2) +
-      theme_minimal(base_size = 16) +
-      scale_color_brewer(palette = "Spectral") +
-      labs(
-        x = "Contagem",
-        y = "Probabilidade",
-        color = expression(alpha))
+df$size <- as.factor(df$size)
+p4 <- ggplot(df, aes(x = x, y = y, fill = size)) +
+      geom_col(position = "identity") +
+      theme_minimal(base_size = 14) +
+      #scale_fill_brewer(palette = "Spectral",direction = -1) +
+      scale_fill_manual(values = c("#0a9396", "#bf4342", "#ee9b00")) +
+      facet_wrap(size ~ . ) +
+      theme_minimal(base_size = 13) +
+      labs( x = "Contagem",
+            y = "Probabilidade",
+            fill = expression(size)) +
+      theme(strip.text = element_blank())
+
 
 ggsave(plot = p4,
        filename ="Figuras/Distribuicao_BN.png", 
-       width = 8,
-       height = 5,
+       width = 6,
+       height = 2,
        dpi = 350)

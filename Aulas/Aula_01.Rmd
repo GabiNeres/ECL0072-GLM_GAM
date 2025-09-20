@@ -119,7 +119,7 @@ Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
 
 ```{r echo=FALSE, fig.align ='center', out.width = "70%"}
-knitr::include_graphics("../Figuras/bandas.png")
+knitr::include_graphics("Figuras/bandas.png")
 ```
 
 
@@ -1007,7 +1007,19 @@ knitr::include_graphics("../Figuras/Rmarkdown_workflow.png")
 
 ### <span style="color: #ee6c4d;">**Qual a importância?** </span> 
 
+<br>
 
+**Reprodutibilidade:** 
+- Importante em estudos acadêmicos, uma vez que outros pesquisadores podem querer replicar a metodologia do estudo em questão.
+    - Um documento que une o código às explicações pode ser útil
+
+--
+
+--------
+
+**Relatórios/manuscritos parametrizados:** 
+
+- O RMarkdown permite a criação de relatórios/manuscritos padronizados, tal que as informações apresentadas são atualizadas automaticamente sempre que os dados forem atualizados.
 
 
 ---

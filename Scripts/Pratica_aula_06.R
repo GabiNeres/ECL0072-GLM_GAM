@@ -157,7 +157,7 @@ preds_full <- do.call("rbind", preds_full)
 
 ## Plotando...
 ggplot(preds_full, aes(x = body_mass_g, y = Prob, color = dieta, fill = dieta)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   geom_ribbon(aes(ymin = IC_lower, ymax = IC_upper), alpha = 0.2, color = NA) +
   labs(title = "",
        x = "Massa Corporal (g)",

@@ -29,6 +29,7 @@ output:
 
 - Sugestão de leitura:
   - Cap. 7: Extending the Linear model with R (Faraway)
+  - Cap. 6: Foundations of Linear and Generalized Linear Models (Agresti, 2015)
 
 ---
 class: inverse, center, middle
@@ -121,11 +122,11 @@ $$\large Y = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\Y_K  \end{bmatrix}, ~~ \text
 ## <span style="color: #ee6c4d;">Distribuição Multinomial </span>
 
 $$\large f(\mathbf{y};\,n,\mathbf{p}) \;=\; \frac{n!}{y_1!\,y_2!\,\cdots\,y_k!}\;
-\prod_{j=1}^k p_i^{\,y_i}$$
+{p_1}^{y_1}{p_2}^{y_2} \dots {p_K}^{y_K}$$
 
 <br>
 
-- $\large y = (y_1, y_2, \dots ,y_k):$ número de amostras em cada categoira 
+- $\large y = (y_1, y_2, \dots ,y_k):$ número de amostras em cada categoira $k$
 - $\large p = (p_1, p_2, \dots, p_k):$ probabilidades de cada categoria
   - $\large p_1 + p_2 + \dots, + ~ p_k = 1$
 
@@ -146,12 +147,62 @@ $$\large \underbrace{f(y;\,n,p) = \binom{n}{y} p^y (1-p)^{n-y}}_{Distribuição 
 knitr::include_graphics("../Figuras/Distribuicao_Multinomial.png")
 ```
 
+
+---
+## <span style="color: #ee6c4d;">Distribuição Multinomial </span>
+
+A distribuição multinomial pode ser considerada uma distribuição conjunta de várias distribuições poisson
+  - total de contagens $n$ é fixo
+
+<br>
+
+$$\large Y_k \sim Poisson(\lambda_k), ~~~~ k=1,\dots,K$$
+
+
+
+$$\large P(Y_1=y_1,\dots,Y_K=y_K) = \prod_{k=1}^K \frac{e^{-\lambda_k} \lambda_k^{y_k}}{y_k!}$$
+
+
+$$\large N = \sum_{k=1}^K Y_k \sim \text{Poisson}\!\left(\sum_{k=1}^K \lambda_k \right)$$
+
+
+---
+## <span style="color: #ee6c4d;">Distribuição Multinomial </span>
+
+Quando condicionada a um total fixo de contagens $N=n$, o conjunto das distribuicões poisson resulta em uma distribuição multinomial
+
+<br>
+
+$$\large (Y_1, \dots, Y_K) \mid N=n \sim \text{Multinomial}\!\left(n; \pi_1,\dots,p_K\right)$$
+
+
+$$\large p_k = \frac{\lambda_k}{\sum_{j=1}^K \lambda_j}.$$
+
+<p class="comment">
+<b>ATENÇÃO</b>
+<br>
+
+A probabilidade de uma categoria é a sua taxa de ocorrência relativa ao total de todas as taxas.
+
+</p>
+
 ---
 ## <span style="color: #ee6c4d;">Distribuição Multinomial </span>
 
 <br>
 
-$$\large Y \sim MultiNomial(n, \mathbf{p)}$$
+```{r echo=FALSE, out.width ="40%", fig.align ='center'}
+knitr::include_graphics("../Figuras/PoissonMultionomial.png")
+```
+
+
+
+---
+## <span style="color: #ee6c4d;">Distribuição Multinomial </span><span style="color: #3e5c76;">| Nominal </span> 
+
+<br>
+
+$$\large Y \sim Multinomial(n, \mathbf{p)}$$
 
 
 $$\large E[Y_k] = np_k, ~~~~~Var(Y_k) =np_k(1-p_k)$$
@@ -182,6 +233,15 @@ $$\large p_k = \frac{\text{exp}(\eta_k)}{1+\sum_{j=2}^{K}\text{exp}(\eta_j)}$$
 ]
 
 ---
+## <span style="color: #ee6c4d;">Distribuição Multinomial </span><span style="color: #3e5c76;">| Ordinal </span> 
+
+Quando a ordem das categorias importa, o modelo multinomial passa a ser expresso em termos de probabilidades acumuladas
+- estima a probabilidade de uma categoria ser igual ou menor que outra categoria
+
+
+
+$$\log\frac{P(Y \leq k)}{1-P(Y \leq k)} = \theta_k - \beta X, \quad k=1,\dots,K-1$$
+
 
 
 
