@@ -30,6 +30,8 @@ output:
 
 - Clark, M. & Berry, S. (2025) [Models Demystified: A practical guide from linear regression to deep learning](https://m-clark.github.io/book-of-models/) [**Ebook**]
 
+- Da Silva F. R et al. (2022)[Análises Ecológicas no R](https://analises-ecologicas.com/)[**Ebooks**]
+
 - Gelman, A. et al. (2020). [Regression and Other Stories](https://avehtari.github.io/ROS-Examples/). Cambridge University Press.
 
 <!-- - Stasinopoulos et al. (2017). [Flexible Regression and Smoothing -->
