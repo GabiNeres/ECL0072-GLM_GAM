@@ -6,7 +6,7 @@
 
 
 
-A maioria dos dados incluídos na presente pasta foram extraídos de diversas fontes públicas.
+A maioria dos dados incluídos nesta pasta foram extraídos de diversas fontes públicas.
 Cada dado descreve uma situação ecológica distinta.
 
 
@@ -59,13 +59,13 @@ O dado reúne informações sobre a contagem de diversas espécies de salamandra
 Algumas espécies possuem estágio larval e adulto.
 
 > Informações incluídas:
-- @site: Local de amostragem 
-- @mined: Região que sofreu ou não mineração
-- @cover: No. de objetos cobrindo a região (pedras, troncos de madeira, etc.; padronizado)
-- @sample: No. da amostra (4 réplicas dentro de cada 'site')
-- @DOP: Dias transcorridos desde a última precipitação (padronizado)
-- @Wtemp: Temperatura da água (padronizada)
-- @DOY: Dia do ano (padronizado)
+- site: Local de amostragem 
+- mined: Região que sofreu ou não mineração
+- cover: No. de objetos cobrindo a região (pedras, troncos de madeira, etc.; padronizado)
+- sample: No. da amostra (4 réplicas dentro de cada 'site')
+- DOP: Dias transcorridos desde a última precipitação (padronizado)
+- Wtemp: Temperatura da água (padronizada)
+- DOY: Dia do ano (padronizado)
 
 
 IMPORTANTE: todas as covariáveis foram padronizadas (z-score)
@@ -73,4 +73,53 @@ IMPORTANTE: todas as covariáveis foram padronizadas (z-score)
 
 
 
+###########################################################################
+
+#~~~~~~~~~~~~~~~~~~
+# mammal_sleep.rds
+#~~~~~~~~~~~~~~~~~~
+
+Dado extraído do pacote 'faraway', que retirou as informações do trabalho publicado por Allison & Cicchetti (1976).
+
+- Allison, T. and Cicchetti, D.V. (1976). Sleep in mammals: ecological and constitutional correlates. Science, 194(4266), pp.732-734. doi: 10.1126/science.982039 
+
+Todas as espécies de mamíferos passam algum tempo dormindo, com algumas espécies passando grande parte de suas vidas nesse estado.
+Podemos supor que o sono desempenha alguma função biológica (ainda desconhecida), mas, se for o caso, por que as necessidades de sono 
+variam tanto de espécie para espécie? 
+
+Esse dado, reúne informações sobre hábitos de sono e outras características de espécies adaptadas a uma ampla variedade de nichos ecológicos.
+
+> Informações presentes:
+- mammals: os diferentes grupos de mamíferos (39 espécies; 13 ordens)
+- body: massa corporal (g)
+- bain: massa cerebral (g)
+- nondream: número de horas em estado 'não-sonhando'
+- dream: número de horas em estado 'sonhando'
+- sleep: número total de horas dormidas (nondream + dream)
+- lifespan: tempo de vida máximo (anos)
+- gestation: tempo de gestação (dias)
+- predation: índice de predação: 1 =  mínimo (menos provável de ser predado) a 5 = máximo (mais provável de ser predado)
+- exposure: índice de exposição ao sono: 1 = menos exposto (o animal dorme em uma toca bem protegida) 5 = mais exposto
+- danger: índice de perigo: 1 = menor perigo (de outros animais) 5 = maior perigo (de outros animais) 
+
+
+###########################################################################
+
+#~~~~~~~~~~~~~~~~~~~~~
+# plant_herbivore.rds
+#~~~~~~~~~~~~~~~~~~~~~
+
+Dados disponibilizados por Moreno et al. (2019) e baixados em:
+https://ddd.uab.cat/record/194390
+
+- Moreno et al. (2019). What does a zero mean? Understanding false, random and structural zeros in ecology. https://doi.org/10.1111/2041-210X.13185
+
+> Informações presentes:
+
+- Subject: número que identifica cada planta individual
+- Location: fator que identifica os locais de coleta	
+- Species: fator que identifica as espécies de plantas
+- Damaged: número de cabeças predadas em uma planta individual
+- Dissected: número de cabeças dissecadas em uma planta individual
+- Total_heads: número total de cabeças em uma planta individual
 

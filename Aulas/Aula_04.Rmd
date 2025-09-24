@@ -404,14 +404,34 @@ Alternativa quando os dados apresentam sobredispersão
 
 $$\large Y \sim Poisson(\color{Tomato}\lambda)$$
 
-$$\large \color{Tomato}\lambda \sim Gama(\alpha, \beta)$$
+$$\large \color{Tomato}\lambda \sim Gama(k, \beta)$$
 
 
 
 A média da distribuição Poisson ($\lambda$) não é mais assumida como fixa
   - variável aleatória que segue uma distribuição Gama
-  
-$$E[Y] = \frac{\alpha}{\beta} = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{\alpha}$$
+
+--
+
+<br>
+
+
+> <span style="color: #ee6c4d;">A distribuição Binomial Negativa é uma distribuição composta (Poisson + Gama). </span>
+
+
+---
+## <span style="color: #ee6c4d;">Distribuição Binomial Negativa </span>
+
+Assim como a distribuição Poisson, a distribuição BN apresenta forte assimetria à direita
+
+
+$$\large f(y; \mu, k) = \frac{\Gamma(y+k)}{\Gamma(k)\times\Gamma(y+1)} \times \left (\frac{k}{\mu + k}\right)^k \times \left(1 - \frac{k}{\mu + k}\right)^y$$
+
+
+
+```{r echo=FALSE, out.width ="100%", fig.align ='center'}
+knitr::include_graphics("../Figuras/Distribuicao_BN.png")
+```
 
 
 
@@ -422,13 +442,13 @@ $$E[Y] = \frac{\alpha}{\beta} = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{\alpha}$$
 Podemos resumir o modelo conforme
 
 
-$$\large Y \sim BN(\mu, \alpha)$$
+$$\large Y \sim BN(\mu, k)$$
 
-$$E[Y] = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{\alpha}$$
+$$E[Y] = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{k}$$
 
 onde:
 - $\mu$: média da distribuição BN
-- $\alpha$: parâmetro de dispersão (forma/*shape*)
+- $k$: parâmetro de dispersão (forma/*shape*)
 
 --
 
@@ -437,20 +457,9 @@ onde:
 <b>ATENÇÃO</b>
 <br>
 
-O que significa quando $\alpha \rightarrow \infty$?
+O que significa quando $k \rightarrow \infty$?
 
 </p>
-
----
-## <span style="color: #ee6c4d;">Distribuição Binomial Negativa </span>
-
-Assim como a distribuição Poisson, a distribuição BN apresenta forte assimetria à direita
-
-<br>
-
-```{r echo=FALSE, out.width ="100%", fig.align ='center'}
-knitr::include_graphics("../Figuras/Distribuicao_BN.png")
-```
 
 ---
 

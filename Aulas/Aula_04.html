@@ -402,14 +402,32 @@ Alternativa quando os dados apresentam sobredispersão
 
 `$$\large Y \sim Poisson(\color{Tomato}\lambda)$$`
 
-`$$\large \color{Tomato}\lambda \sim Gama(\alpha, \beta)$$`
+`$$\large \color{Tomato}\lambda \sim Gama(k, \beta)$$`
 
 
 
 A média da distribuição Poisson (`\(\lambda\)`) não é mais assumida como fixa
   - variável aleatória que segue uma distribuição Gama
-  
-`$$E[Y] = \frac{\alpha}{\beta} = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{\alpha}$$`
+
+--
+
+&lt;br&gt;
+
+
+&gt; &lt;span style="color: #ee6c4d;"&gt;A distribuição Binomial Negativa é uma distribuição composta (Poisson + Gama). &lt;/span&gt;
+
+
+---
+## &lt;span style="color: #ee6c4d;"&gt;Distribuição Binomial Negativa &lt;/span&gt;
+
+Assim como a distribuição Poisson, a distribuição BN apresenta forte assimetria à direita
+
+
+`$$\large f(y; \mu, k) = \frac{\Gamma(y+k)}{\Gamma(k)\times\Gamma(y+1)} \times \left (\frac{k}{\mu + k}\right)^k \times \left(1 - \frac{k}{\mu + k}\right)^y$$`
+
+
+
+&lt;img src="../Figuras/Distribuicao_BN.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 
 
@@ -420,13 +438,13 @@ A média da distribuição Poisson (`\(\lambda\)`) não é mais assumida como fi
 Podemos resumir o modelo conforme
 
 
-`$$\large Y \sim BN(\mu, \alpha)$$`
+`$$\large Y \sim BN(\mu, k)$$`
 
-`$$E[Y] = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{\alpha}$$`
+`$$E[Y] = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{k}$$`
 
 onde:
 - `\(\mu\)`: média da distribuição BN
-- `\(\alpha\)`: parâmetro de dispersão (forma/*shape*)
+- `\(k\)`: parâmetro de dispersão (forma/*shape*)
 
 --
 
@@ -435,18 +453,9 @@ onde:
 &lt;b&gt;ATENÇÃO&lt;/b&gt;
 &lt;br&gt;
 
-O que significa quando `\(\alpha \rightarrow \infty\)`?
+O que significa quando `\(k \rightarrow \infty\)`?
 
 &lt;/p&gt;
-
----
-## &lt;span style="color: #ee6c4d;"&gt;Distribuição Binomial Negativa &lt;/span&gt;
-
-Assim como a distribuição Poisson, a distribuição BN apresenta forte assimetria à direita
-
-&lt;br&gt;
-
-&lt;img src="../Figuras/Distribuicao_BN.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 

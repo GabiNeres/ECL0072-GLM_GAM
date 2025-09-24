@@ -238,12 +238,12 @@ p2 <- data %>%
 
 
 # Combine them
-full_p <- (p1 / p2 ) 
+full_p <- p1 + p2
 
 ggsave(plot = full_p,
        filename ="Figuras/exemplo_regressoes.png", 
-       width = 5.5,
-       height = 10,
+       width = 8,
+       height = 4,
        dpi = 350)
 
 

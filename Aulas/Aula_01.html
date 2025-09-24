@@ -43,28 +43,6 @@ text-align: center
 
 
 
-## &lt;span style="color: #ee6c4d;"&gt;Conteúdo programático &lt;/span&gt; 
-
-&lt;br&gt;
-
-**1. Introdução à disciplina**  
-
-**2. Modelos lineares (LM)** 
-
-  &gt; 2.1. Prática 
-
-**3. RMarkdown (relatório)**  
-  &gt; 3.1. Prática 
-
----
-class: inverse, center, middle
-
-# Introdução à disciplina
-
----
-
-
-
 .pull-left[
 
 
@@ -85,24 +63,28 @@ class: inverse, center, middle
 .pull-right[
 
 ### &lt;span style="color: #ee6c4d;"&gt;Horário&lt;/span&gt;
-8h00 - 12h00 (15 min de intervalo)
+**8h00 - 12h00** (15 min de intervalo)
 
 - 1h30 - aula teórica
 - 1h - prática guiada
 - 1h30 - prática individual/em grupo
+]
 
 
----------
 
+---
 ### &lt;span style="color: #ee6c4d;"&gt;Avaliação &lt;/span&gt;
 Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
+- Abordar todos os tópicos cobertos entre os dias 01/10-09/10 (GLM para dados binários até GAM)
+
+
 - Relatório em formato `RMarkdown (Bookdown)`
 
-&gt;  &lt;span style="color: #ee6c4d;"&gt;&lt;u&gt;**Entrega: 12/10**&lt;/u&gt;&lt;/span&gt; 
-]
 
----
+&gt;  &lt;span style="color: #ee6c4d;"&gt;&lt;u&gt;**Entrega: 12/10**&lt;/u&gt;&lt;/span&gt; 
+
+----
 
 ### &lt;span style="color: #ee6c4d;"&gt;Dúvidas&lt;/span&gt;
 
@@ -113,11 +95,48 @@ Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 - email: [macrufener@gmail.com]()
 
 
--------
+---
 
-### &lt;span style="color: #ee6c4d;"&gt;Material&lt;/span&gt;
+### &lt;span style="color: #ee6c4d;"&gt;Material do curso&lt;/span&gt;
 
-- Página da disciplina: https://github.com/mcruf/ECL0072-GLM_GAM
+O curso foi todo construído usando apenas o R Markdown e, por isso, todo o código fonte e o material pode ser acessado via
+
+https://github.com/mcruf/ECL0072-GLM_GAM
+
+
+---
+
+## &lt;span style="color: #ee6c4d;"&gt;Conteúdo programático &lt;/span&gt; 
+
+&lt;br&gt;
+
+
+**1. Modelos lineares (LM)** 
+
+  &gt; Prática 
+
+**2. RMarkdown (relatório)**  
+  &gt; Prática 
+
+
+---
+## &lt;span style="color: #ee6c4d;"&gt;Leitura recomendada &lt;/span&gt; 
+
+
+**Livros**
+- **Caps. 6, 7 &amp; 10:** Gelman et al. (2020)
+- **Cap. 2:** Faraway et al. (2014)
+- **Cap. 2 &amp; 3:** Clark &amp; Berry (2025)
+
+-----
+**Artigos**
+
+- Hampton, S.E., et al. (2013). Big data and the future of ecology. Frontiers in Ecology and the Environment, doi:10.1890/120103 
+
+---
+class: inverse, center, middle
+
+# Modelos Lineares
 
 
 ---
@@ -137,13 +156,6 @@ Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
 &lt;img src="../Figuras/ecology_and_big_data.png" width="85%" style="display: block; margin: auto;" /&gt;
 
-
-
----
-
-class: inverse, center, middle
-
-# Modelos Lineares
 
 ---
 
@@ -168,13 +180,13 @@ class: inverse, center, middle
 
 &lt;br&gt;
 
-$$P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I} - {\color{Tomato} E} $$
+$$\Large P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I} - {\color{Tomato} E} $$
 &lt;br&gt;
 
-`$$\Delta P = N-M$$` 
+`$$\Large \Delta P = N-M$$` 
 &lt;br&gt;
 
-`$$\frac{dP}{dt} = rN$$` 
+`$$\Large \frac{dP}{dt} = rN$$` 
 
 ]
 
@@ -291,11 +303,10 @@ $$P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I}
 
 ### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt; 
 
-&lt;br&gt;
 Base para a maioria dos modelos mais complexos
 
 
-&lt;img src="../Figuras/visao_geral_lm.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="../Figuras/visao_geral_lm.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -305,22 +316,22 @@ Base para a maioria dos modelos mais complexos
 &lt;br&gt;
 
 
-`$$\large Y = f(X_1) + \varepsilon$$`
+`$$\Large Y = f(X) + \varepsilon$$`
 --
 
-`$$(\large  y_i = f(x_i|\theta) + \varepsilon_i)$$`
+`$$(\Large  y_i = f(x_i|\theta) + \varepsilon_i)$$`
 --
 
 &lt;br&gt;
 
-`$$\large f(X_1) = \beta_0 + \beta_1X_1 + \varepsilon$$`
+`$$\Large f(X) = \beta_0 + \beta_1X_1 + \varepsilon$$`
 
 
-- `\(\beta_0\)` - intercepto
-- `\(\beta_1\)` - parâmetro (coeficiente, peso, ...)
-- `\(X_1\)` - covariável (variável independente, preditora, input, ... )
-- `\(Y\)` - variável resposta (variável dependente, output, ...)
-- `\(\varepsilon\)` - resíduo (erro)
+- `\(\large \beta_0\)` - intercepto
+- `\(\large \beta_1\)` - parâmetro (coeficiente, peso, ...)
+- `\(\large X_1\)` - covariável (variável independente, preditora, input, ... )
+- `\(\large Y\)` - variável resposta (variável dependente, output, ...)
+- `\(\large \varepsilon\)` - resíduo (erro)
 
 
 ---
@@ -346,28 +357,13 @@ Base para a maioria dos modelos mais complexos
 ### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt; &lt;span style="color: #3e5c76;"&gt;| Visão geral  &lt;/span&gt; 
 
 
-.pull-left[
-
-&lt;br&gt;
-&lt;br&gt;
-
-&lt;p class="comment"&gt;
-&lt;span style="color: #ee6c4d;"&gt;&lt;b&gt; ATENÇÃO &lt;/b&gt; &lt;/span&gt; 
+**ATENÇÃO:** O termo &lt;i&gt;linear &lt;/i&gt; está relacionado na &lt;b&gt;linearidade entre os parâmetros&lt;/b&gt; (`\(\beta\)`) do modelo, e não em relação às variáveis preditoras (jeitão do gráfico)
 
 &lt;br&gt;
 
-&lt;br&gt;
+&lt;img src="../Figuras/exemplo_regressoes.png" width="80%" style="display: block; margin: auto;" /&gt;
 
-O termo &lt;i&gt;linear &lt;/i&gt; está relacionado na &lt;b&gt;linearidade entre os parâmetros&lt;/b&gt; (`\(\beta\)`) do modelo, e não em relação às variáveis preditoras (jeitão do gráfico)
-&lt;/p&gt;
 
-]
-
-.pull-right[
-
-&lt;img src="../Figuras/exemplo_regressoes.png" width="65%" style="display: block; margin: auto auto auto 0;" /&gt;
-
-]
 
 ---
 
@@ -378,30 +374,30 @@ O termo &lt;i&gt;linear &lt;/i&gt; está relacionado na &lt;b&gt;linearidade ent
 &lt;br&gt;
 
 .pull-left[
-- `\(y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon\)`
+- `\(\Large y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon\)`
 
 &lt;br&gt;
 
-- `\(y = \beta_0 + \beta_1 \beta_2 x + \varepsilon\)`
+- `\(\Large y = \beta_0 + \beta_1 \beta_2 x + \varepsilon\)`
 
 &lt;br&gt;
 
-- `\(y = \beta_0 + \beta_1log(x_1) + \varepsilon\)`
+- `\(\Large y = \beta_0 + \beta_1log(x_1) + \varepsilon\)`
 ]
 
 --
 
 .pull-right[
 
-- `\(y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon\)`
+- `\(\Large y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon\)`
 
 &lt;br&gt;
 
-- `\(y = \beta_0 + e^{\beta_1x_1} + \varepsilon\)`
+- `\(\Large y = \beta_0 + e^{\beta_1x_1} + \varepsilon\)`
 
 &lt;br&gt;
 
-- `\(y = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} + \varepsilon\)`
+- `\(\Large y = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} + \varepsilon\)`
 
 ]
 
@@ -446,18 +442,15 @@ O termo &lt;i&gt;linear &lt;/i&gt; está relacionado na &lt;b&gt;linearidade ent
 
 .pull-right[
 
-
-#### &lt;span style="color: #ee6c4d;"&gt;LM &lt;/span&gt;
-
-- Quando `\(X\)` reúne apenas variáveis *quantitativas*
-
--------
+&lt;br&gt;
+&lt;br&gt;
 
 #### &lt;span style="color: #ee6c4d;"&gt;ANOVA &lt;/span&gt;
 
 - Quando `\(X\)` reúne apenas variáveis *qualitativas*
 
 -------
+
 
 #### &lt;span style="color: #ee6c4d;"&gt;ANCOVA &lt;/span&gt;
 
@@ -474,18 +467,21 @@ O termo &lt;i&gt;linear &lt;/i&gt; está relacionado na &lt;b&gt;linearidade ent
 &lt;br&gt;
 &lt;br&gt;
 
-`$$Y = \beta_0 + \beta_1{X_1} + \color{Tomato}\varepsilon$$`
+`$$\Large Y = \beta_0 + \beta_1{X_1} + \color{Tomato}\varepsilon$$`
 
 
 
-$$\varepsilon \sim N(0, \sigma^2) $$
+$$\Large \varepsilon \sim N(0, \sigma^2) $$
 
-&lt;p class="comment"&gt;
+-------
+
+Mesma equação, representação diferente
+&lt;br&gt;
 
 
-`$$\large y|\mathbf{X},\beta,\sigma =  N(\mu, \sigma^2)$$`
+`$$\Large y|\mathbf{X},\beta,\sigma =  N(\mu, \sigma^2)$$`
 
-&lt;/p&gt;
+
 
 
 
@@ -508,14 +504,14 @@ $$\varepsilon \sim N(0, \sigma^2) $$
 
 &lt;br&gt;
 
-Todo modelo estatísitico pode ser formulado por matrizes
+Todo modelo estatístico pode ser formulado por matrizes
 
 - Permite usar álgebra linear para resolver os modelos
 - Facilita a implementação computacional e otimizações
 
 &lt;br&gt;
 
-&lt;center&gt; `\(\Large \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}\)` &lt;/center&gt;
+`$$\huge \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$$`
 
 &lt;br&gt;
 
@@ -575,7 +571,7 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
+`\(\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 
 ]
@@ -603,15 +599,15 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
+`\(\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 &lt;br&gt;
 
-`$$\color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$`
+`$$\Large  \color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$`
   
-`$$\color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$`
+`$$\Large  \color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$`
     
-`$$\color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$`
+`$$\Large  \color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$`
 
 
 ]
@@ -638,7 +634,7 @@ Todo modelo estatísitico pode ser formulado por matrizes
 
 ]
 .pull-right[
-`\(Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
+`\(\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i\)`
 
 &lt;br&gt;
 
@@ -697,7 +693,7 @@ $$
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
+`\(\large Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
 ]
 
 ---
@@ -721,10 +717,10 @@ $$
 
 .pull-right[
 
-`\(Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
+`\(\large Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i\)`
 
 &lt;p class="comment"&gt;
-&lt;span style="color: #ee6c4d;"&gt;&lt;b&gt; ATENÇÃO &lt;/b&gt; &lt;/span&gt; 
+&lt;b&gt; ATENÇÃO &lt;/b&gt;
 
 &lt;br&gt;
 
@@ -758,15 +754,15 @@ O primeiro nível do fator é sempre absorvido pelo intercepto `\(\beta_0\)` - i
 .pull-right[
 
 
-`$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
+`$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
 
 &lt;br&gt;
 
-`\(\small Adelie\)` como nível de referência
+`\(\large Adelie\)` como nível de referência
 
-`\(\small Especie_{i,1}\)` = 1 se *Chinstrap*, 0 contrário
+`\(\large Especie_{i,1}\)` = 1 se *Chinstrap*, 0 contrário
 
-`\(\small Especie_{i,2}\)` = 1 se *Gentoo*, 0 contrário
+`\(\large Especie_{i,2}\)` = 1 se *Gentoo*, 0 contrário
 
 ]
 
@@ -791,16 +787,16 @@ O primeiro nível do fator é sempre absorvido pelo intercepto `\(\beta_0\)` - i
 
 .pull-right[
 
-`$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
+`$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
 
 &lt;br&gt;
 
-`$$\color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$`
+`$$\large \color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$`
   
-`$$\color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$`
+`$$\large \color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$`
 
 
-`$$\color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$`
+`$$\large \color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$`
 
 
 ]
@@ -827,7 +823,7 @@ O primeiro nível do fator é sempre absorvido pelo intercepto `\(\beta_0\)` - i
 
 .pull-right[
 
-`$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
+`$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$`
 
 &lt;br&gt;
 
@@ -872,7 +868,6 @@ $$
 ---
 ### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos &lt;/span&gt;
 
-&lt;br&gt;
 
 Todo modelo estatístico é baseado em um conjunto de pressupostos
 
@@ -892,7 +887,6 @@ Todo modelo estatístico é baseado em um conjunto de pressupostos
 ---
 ### &lt;span style="color: #ee6c4d;"&gt;**Modelo linear** &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos &lt;/span&gt;
 
-&lt;br&gt;
 
 Todo modelo estatístico é baseado em um conjunto de pressupostos
 

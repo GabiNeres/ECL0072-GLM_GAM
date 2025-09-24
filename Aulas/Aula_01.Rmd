@@ -36,28 +36,6 @@ library(dplyr)
 ```
 
 
-## <span style="color: #ee6c4d;">Conteúdo programático </span> 
-
-<br>
-
-**1. Introdução à disciplina**  
-
-**2. Modelos lineares (LM)** 
-
-  > 2.1. Prática 
-
-**3. RMarkdown (relatório)**  
-  > 3.1. Prática 
-
----
-class: inverse, center, middle
-
-# Introdução à disciplina
-
----
-
-
-
 .pull-left[
 
 
@@ -78,24 +56,28 @@ class: inverse, center, middle
 .pull-right[
 
 ### <span style="color: #ee6c4d;">Horário</span>
-8h00 - 12h00 (15 min de intervalo)
+**8h00 - 12h00** (15 min de intervalo)
 
 - 1h30 - aula teórica
 - 1h - prática guiada
 - 1h30 - prática individual/em grupo
+]
 
 
----------
 
+---
 ### <span style="color: #ee6c4d;">Avaliação </span>
 Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
+- Abordar todos os tópicos cobertos entre os dias 01/10-09/10 (GLM para dados binários até GAM)
+
+
 - Relatório em formato `RMarkdown (Bookdown)`
 
->  <span style="color: #ee6c4d;"><u>**Entrega: 12/10**</u></span> 
-]
 
----
+>  <span style="color: #ee6c4d;"><u>**Entrega: 12/10**</u></span> 
+
+----
 
 ### <span style="color: #ee6c4d;">Dúvidas</span>
 
@@ -106,11 +88,48 @@ Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 - email: [macrufener@gmail.com]()
 
 
--------
+---
 
-### <span style="color: #ee6c4d;">Material</span>
+### <span style="color: #ee6c4d;">Material do curso</span>
 
-- Página da disciplina: https://github.com/mcruf/ECL0072-GLM_GAM
+O curso foi todo construído usando apenas o R Markdown e, por isso, todo o código fonte e o material pode ser acessado via
+
+https://github.com/mcruf/ECL0072-GLM_GAM
+
+
+---
+
+## <span style="color: #ee6c4d;">Conteúdo programático </span> 
+
+<br>
+
+
+**1. Modelos lineares (LM)** 
+
+  > Prática 
+
+**2. RMarkdown (relatório)**  
+  > Prática 
+
+
+---
+## <span style="color: #ee6c4d;">Leitura recomendada </span> 
+
+
+**Livros**
+- **Caps. 6, 7 & 10:** Gelman et al. (2020)
+- **Cap. 2:** Faraway et al. (2014)
+- **Cap. 2 & 3:** Clark & Berry (2025)
+
+-----
+**Artigos**
+
+- Hampton, S.E., et al. (2013). Big data and the future of ecology. Frontiers in Ecology and the Environment, doi:10.1890/120103 
+
+---
+class: inverse, center, middle
+
+# Modelos Lineares
 
 
 ---
@@ -119,7 +138,7 @@ Guia prático sobre os tópicos da disciplina (grupo de **02-03 pessoas**)
 
 
 ```{r echo=FALSE, fig.align ='center', out.width = "70%"}
-knitr::include_graphics("Figuras/bandas.png")
+knitr::include_graphics("../Figuras/bandas.png")
 ```
 
 
@@ -134,13 +153,6 @@ knitr::include_graphics("Figuras/bandas.png")
 knitr::include_graphics("../Figuras/ecology_and_big_data.png")
 ```
 
-
-
----
-
-class: inverse, center, middle
-
-# Modelos Lineares
 
 ---
 
@@ -167,13 +179,13 @@ knitr::include_graphics("../Figuras/dinamica_pop.png")
 
 <br>
 
-$$P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I} - {\color{Tomato} E} $$
+$$\Large P_{t+1} = P_t + {\color{#4C7B31} N} - {\color{Tomato} M} + {\color{#4C7B31} I} - {\color{Tomato} E} $$
 <br>
 
-$$\Delta P = N-M$$ 
+$$\Large \Delta P = N-M$$ 
 <br>
 
-$$\frac{dP}{dt} = rN$$ 
+$$\Large \frac{dP}{dt} = rN$$ 
 
 ]
 
@@ -297,11 +309,10 @@ knitr::include_graphics("../Figuras/Edwards_Demming.png")
 
 ### <span style="color: #ee6c4d;">**Modelo linear** </span> 
 
-<br>
 Base para a maioria dos modelos mais complexos
 
 
-```{r echo=FALSE, out.width ="60%", fig.align ='center'}
+```{r echo=FALSE, out.width ="70%", fig.align ='center'}
 knitr::include_graphics("../Figuras/visao_geral_lm.png")
 ```
 
@@ -313,22 +324,22 @@ knitr::include_graphics("../Figuras/visao_geral_lm.png")
 <br>
 
 
-$$\large Y = f(X_1) + \varepsilon$$
+$$\Large Y = f(X) + \varepsilon$$
 --
 
-$$(\large  y_i = f(x_i|\theta) + \varepsilon_i)$$
+$$(\Large  y_i = f(x_i|\theta) + \varepsilon_i)$$
 --
 
 <br>
 
-$$\large f(X_1) = \beta_0 + \beta_1X_1 + \varepsilon$$
+$$\Large f(X) = \beta_0 + \beta_1X_1 + \varepsilon$$
 
 
-- $\beta_0$ - intercepto
-- $\beta_1$ - parâmetro (coeficiente, peso, ...)
-- $X_1$ - covariável (variável independente, preditora, input, ... )
-- $Y$ - variável resposta (variável dependente, output, ...)
-- $\varepsilon$ - resíduo (erro)
+- $\large \beta_0$ - intercepto
+- $\large \beta_1$ - parâmetro (coeficiente, peso, ...)
+- $\large X_1$ - covariável (variável independente, preditora, input, ... )
+- $\large Y$ - variável resposta (variável dependente, output, ...)
+- $\large \varepsilon$ - resíduo (erro)
 
 
 ---
@@ -355,30 +366,15 @@ knitr::include_graphics("../Figuras/Exemplo_Gauss_alturas.png")
 ### <span style="color: #ee6c4d;">**Modelo linear** </span> <span style="color: #3e5c76;">| Visão geral  </span> 
 
 
-.pull-left[
-
-<br>
-<br>
-
-<p class="comment">
-<span style="color: #ee6c4d;"><b> ATENÇÃO </b> </span> 
+**ATENÇÃO:** O termo <i>linear </i> está relacionado na <b>linearidade entre os parâmetros</b> ($\beta$) do modelo, e não em relação às variáveis preditoras (jeitão do gráfico)
 
 <br>
 
-<br>
-
-O termo <i>linear </i> está relacionado na <b>linearidade entre os parâmetros</b> ($\beta$) do modelo, e não em relação às variáveis preditoras (jeitão do gráfico)
-</p>
-
-]
-
-.pull-right[
-
-```{r echo=FALSE, out.width ="65%", fig.align ='left'}
+```{r echo=FALSE, out.width ="80%", fig.align ='center'}
 knitr::include_graphics("../Figuras/exemplo_regressoes.png")
 ```
 
-]
+
 
 ---
 
@@ -389,30 +385,30 @@ knitr::include_graphics("../Figuras/exemplo_regressoes.png")
 <br>
 
 .pull-left[
-- $y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon$
+- $\Large y = \beta_0 + \beta_1 x + \beta_2 x^2 + \varepsilon$
 
 <br>
 
-- $y = \beta_0 + \beta_1 \beta_2 x + \varepsilon$
+- $\Large y = \beta_0 + \beta_1 \beta_2 x + \varepsilon$
 
 <br>
 
-- $y = \beta_0 + \beta_1log(x_1) + \varepsilon$
+- $\Large y = \beta_0 + \beta_1log(x_1) + \varepsilon$
 ]
 
 --
 
 .pull-right[
 
-- $y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon$
+- $\Large y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon$
 
 <br>
 
-- $y = \beta_0 + e^{\beta_1x_1} + \varepsilon$
+- $\Large y = \beta_0 + e^{\beta_1x_1} + \varepsilon$
 
 <br>
 
-- $y = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} + \varepsilon$
+- $\Large y = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x)}} + \varepsilon$
 
 ]
 
@@ -461,18 +457,15 @@ knitr::include_graphics("../Figuras/tipos_de_variaveis.png")
 
 .pull-right[
 
-
-#### <span style="color: #ee6c4d;">LM </span>
-
-- Quando $X$ reúne apenas variáveis *quantitativas*
-
--------
+<br>
+<br>
 
 #### <span style="color: #ee6c4d;">ANOVA </span>
 
 - Quando $X$ reúne apenas variáveis *qualitativas*
 
 -------
+
 
 #### <span style="color: #ee6c4d;">ANCOVA </span>
 
@@ -489,18 +482,21 @@ knitr::include_graphics("../Figuras/tipos_de_variaveis.png")
 <br>
 <br>
 
-$$Y = \beta_0 + \beta_1{X_1} + \color{Tomato}\varepsilon$$
+$$\Large Y = \beta_0 + \beta_1{X_1} + \color{Tomato}\varepsilon$$
 
 
 
-$$\varepsilon \sim N(0, \sigma^2) $$
+$$\Large \varepsilon \sim N(0, \sigma^2) $$
 
-<p class="comment">
+-------
+
+Mesma equação, representação diferente
+<br>
 
 
-$$\large y|\mathbf{X},\beta,\sigma =  N(\mu, \sigma^2)$$
+$$\Large y|\mathbf{X},\beta,\sigma =  N(\mu, \sigma^2)$$
 
-</p>
+
 
 
 
@@ -525,14 +521,14 @@ knitr::include_graphics("../Figuras/Exemplo_residuo.jpeg")
 
 <br>
 
-Todo modelo estatísitico pode ser formulado por matrizes
+Todo modelo estatístico pode ser formulado por matrizes
 
 - Permite usar álgebra linear para resolver os modelos
 - Facilita a implementação computacional e otimizações
 
 <br>
 
-<center> $\Large \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$ </center>
+$$\huge \mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}$$
 
 <br>
 
@@ -601,7 +597,7 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 
 ]
@@ -630,15 +626,15 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
-$$\color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$
+$$\Large  \color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$
   
-$$\color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$
+$$\Large  \color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$
     
-$$\color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$
+$$\Large  \color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$
 
 
 ]
@@ -666,7 +662,7 @@ dados %>%
 
 ]
 .pull-right[
-$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$\Large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
@@ -726,7 +722,7 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
+$\large Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
 ]
 
 ---
@@ -751,10 +747,10 @@ dados %>%
 
 .pull-right[
 
-$Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
+$\large Peso_i = \beta_0 + \sum_{j=1}^{J-1} \beta_j \cdot Especie_{i,j} + \varepsilon_i$
 
 <p class="comment">
-<span style="color: #ee6c4d;"><b> ATENÇÃO </b> </span> 
+<b> ATENÇÃO </b>
 
 <br>
 
@@ -789,15 +785,15 @@ dados %>%
 .pull-right[
 
 
-$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
+$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
-$\small Adelie$ como nível de referência
+$\large Adelie$ como nível de referência
 
-$\small Especie_{i,1}$ = 1 se *Chinstrap*, 0 contrário
+$\large Especie_{i,1}$ = 1 se *Chinstrap*, 0 contrário
 
-$\small Especie_{i,2}$ = 1 se *Gentoo*, 0 contrário
+$\large Especie_{i,2}$ = 1 se *Gentoo*, 0 contrário
 
 ]
 
@@ -823,16 +819,16 @@ dados %>%
 
 .pull-right[
 
-$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
+$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
-$$\color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$
+$$\large \color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$
   
-$$\color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$
+$$\large \color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$
 
 
-$$\color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$
+$$\large \color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$
 
 
 ]
@@ -860,7 +856,7 @@ dados %>%
 
 .pull-right[
 
-$$\small Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
+$$\large Peso_i = \beta_0 + \beta_1 \cdot \text{Chinstrap}_i + \beta_2 \cdot \text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
@@ -905,7 +901,6 @@ $$
 ---
 ### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Pressupostos </span>
 
-<br>
 
 Todo modelo estatístico é baseado em um conjunto de pressupostos
 
@@ -925,7 +920,6 @@ Todo modelo estatístico é baseado em um conjunto de pressupostos
 ---
 ### <span style="color: #ee6c4d;">**Modelo linear** </span><span style="color: #3e5c76;">| Pressupostos </span>
 
-<br>
 
 Todo modelo estatístico é baseado em um conjunto de pressupostos
 

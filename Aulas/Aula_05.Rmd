@@ -100,9 +100,8 @@ class: inverse, center, middle
 ## <span style="color: #ee6c4d;">Distribuição Gama </span>
 
 Definida sob variáveis contínuas estritamente positivas
-  - $Y > 0$
 
-$$f(y; \alpha, \beta) = \frac{\beta^{\alpha} y^{\alpha - 1} e^{-\beta y}}{\Gamma(\alpha)}, \quad y > 0$$
+$$\large f(y; \alpha, \beta) = \frac{\beta^{\alpha} y^{\alpha - 1} e^{-\beta y}}{\Gamma(\alpha)}, \quad y > 0$$
 
 ```{r echo=FALSE, out.width ="85%", fig.align ='center'}
 knitr::include_graphics("../Figuras/Distribuicao_Gamma.png")
@@ -149,7 +148,7 @@ plot(dgamma(x = y, shape = 2, rate = 15), type = 'l')
 
 $$\large Y \sim Gama(\alpha, \beta)$$
 
-$$\large E[Y] = \frac{\alpha}{\beta}, ~~~~~Var(Y) = \frac{\alpha}{\beta^2}$$
+$$\large E(Y) = \frac{\alpha}{\beta}, ~~~~~Var(Y) = \frac{\alpha}{\beta^2}$$
 
 --
 
