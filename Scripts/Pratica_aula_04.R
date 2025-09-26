@@ -67,7 +67,7 @@ plot(dados$Thunnus_albacares ~ dados$Long)
 
 
 ## Dinâmica ambiental
-#pairs(dados[, 34:28])
+#pairs(dados[, 28:33])
 
 
 ### Centralizando as covariáveis numéricas
@@ -83,7 +83,7 @@ ggpairs(dados,
 
 m_cor <- cor(dados[, 28:33])
 
-corrplot(m_cor, method = 'ellipse', diag = FALSE)
+corrplot(m_cor, method = 'ellipse', diag = FALSE, type = 'lower')
 #corrplot.mixed(m_cor)
 
 
@@ -99,7 +99,7 @@ corrplot(m_cor, method = 'ellipse', diag = FALSE)
 
 
 ## Modelo apenas com variáveis ambientais ##
-mod_1 <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL,
+mod_1 <- glm(Thunnus_albacares ~ sst + sal + depth + il,
                     data = dados,
                     family = "poisson")
 
@@ -113,7 +113,7 @@ mod_1$deviance/mod_1$df.residual #há sobredispersão -> phi >> 1
 
 
 ## Modelo ambiental com offset ##
-mod_2 <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL + offset(log(N_anzol)),
+mod_2 <- glm(Thunnus_albacares ~ sst + sal + depth + il + offset(log(N_anzol)),
              data = dados,
              family = "poisson")
 
@@ -139,7 +139,7 @@ check_overdispersion(mod_2)
 # Será que melhoramos o ajuste adicionando o efeito de sazonalidade (mes)?
 
 ## Modelo ambiental + offset + tempo ##
-mod_3 <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes + offset(log(N_anzol)),
+mod_3 <- glm(Thunnus_albacares ~  sst + sal + depth + il + Mes + offset(log(N_anzol)),
              data = dados,
              family = "poisson")
 
@@ -156,7 +156,7 @@ check_overdispersion(mod_3)
 
 
 # Talvez melhoramos mais adicionando o efeito da pesca?
-mod_4 <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes + Barco + offset(log(N_anzol)),
+mod_4 <- glm(Thunnus_albacares ~ sst + sal + depth + il + Mes + Barco + offset(log(N_anzol)),
              data = dados,
              family = "poisson")
 
@@ -175,21 +175,17 @@ ggpredict(mod_4) %>% plot()
 
 
 # Os dados continuam com elevada sobredispersão....
-
 check_overdispersion(mod_4)
 
 
 
 # 3.1) Distribuição Binomial Negativa
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-mod_5 <- glm.nb(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes + Barco + offset(log(N_anzol)),
+mod_5 <- glm.nb(Thunnus_albacares ~ sst + sal + depth + il + Mes + Barco + offset(log(N_anzol)),
              data = dados)
 
 
 AIC(mod_1, mod_2, mod_3, mod_4, mod_5) #Comparando 
-
-anova(mod_5,mod_4)
-
 
 summary(mod_5)
 
@@ -213,23 +209,23 @@ check_zeroinflation(mod_5)
 
 dotchart(dados$Thunnus_albacares) #Não há outlier aparente
 
-dotchart(dados$N_anzol) #Há pelo menos 2-3 outliers
+dotchart(dados$N_anzol) #Há pelo menos 2 outliers bem marcantes
 
 
 ### Tirando o outlier
 dados2 <- filter(dados, N_anzol <= 1500) 
 
 
-dotchart(dados2$N_anzol) #Há pelo menos 1 outlier 
+dotchart(dados2$N_anzol) 
 
 
 # Vamos rodar novamente o modelo BN
-mod_5b <- glm.nb(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes + Barco + offset(log(N_anzol)),
+mod_5b <- glm.nb(Thunnus_albacares ~ sst + sal + depth + il + Mes + Barco + offset(log(N_anzol)),
                 data = dados2)
 
 
 ## ATENÇÃO: Não podemos comparar mod_5 e mod_5b diretamente (e.g., anova), porque
-## não são os mesmos dados! A comparação via ANOVA (LRT)/AIC só funciona qunado se está lidando com o mesmo banco de dados
+## não são os mesmos dados! A comparação via ANOVA (LRT)/AIC só funciona qunado se está lidando com o mesmo banco de dados (e quando os modelos são aninhados!)
 
 dim(dados2)
 dim(dados)
@@ -237,7 +233,7 @@ dim(dados)
 summary(mod_5b)
 
 
-
+ggpredict(mod_5b) %>% plot()
 
 # modelo# modelo# modelo_full <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes,
 #                    family = "poisson", 

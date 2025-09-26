@@ -25,7 +25,7 @@ library(ggplot2)
 #~~~~~~~~~~~~~~~~~~~~~~~
 # 1) Importando os dados
 #~~~~~~~~~~~~~~~~~~~~~~~
-dados <- read.csv("Dados/palmerpenguins_extended.csv")
+dados <- readRDS("Dados/palmerpenguins_extended.rds")
 
 
 

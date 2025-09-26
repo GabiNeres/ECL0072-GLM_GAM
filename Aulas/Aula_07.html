@@ -37,7 +37,7 @@ class: center, middle, inverse, title-slide
 &gt; Prática 
 
 
-**2. Distribuições para dados zero-inflacionadas**  
+**2. Distribuições para dados zero-inflacionados**  
 
 &gt; Prática 
 
@@ -51,14 +51,28 @@ class: center, middle, inverse, title-slide
 
 ## &lt;span style="color: #ee6c4d;"&gt;Leitura sugerida &lt;/span&gt; 
 
-- **Zero-inflacionado**
-     - Cap. 11: Mixed effect models and extensions in Ecology (Zuur)
-     - Cap. 5 (seção 5.5): Extending the Linear model with R (Faraway)
-     - Cap. 7 (seção 7.4): Foundations of Linear and Generalized Linear Models (Agresti, 2015)
-     - Moreno et al. (2019). What does a zero mean? Understanding false, random and structural zeros in ecology. https://doi.org/10.1111/2041-210X.13185
-     
-- **Beta**
-     - Cap. 3 (seção 3.6): Extending the Linear model with R (Faraway)
+
+.pull-left[
+**Livros**
+
+- **Cap. 11:** Zuur et al. (2009)
+- **Cap. 4:** Bolker (2008)
+- **Cap. 3 (seção 3.6):** Faraway (2016)
+- **Cap. 5 (seção 5.5):** Faraway (2016)
+- **Cap. 9 (seção 9.5):** Faraway (2016)
+- **Cap. 7 (seção 7.4):** Agresti (2015)
+]
+
+
+.pull-right[
+**Artigos**
+
+**Moreno, A.B.** (2019). What does a zero mean? Understanding false, random and structural zeros in ecology. Methods in Ecology and Evolution. https://doi.org/10.1111/2041-210X.13185
+
+**Bonat, W.H. et al.** (2016). Extended Poisson-Tweedie: properties and regression models for count data. https://doi.org/10.48550/arXiv.1608.06888
+ 
+]
+
 
 ---
 class: inverse, center, middle
@@ -498,6 +512,62 @@ onde:
 class: inverse, center, middle
 
 # Distribuição Tweedie
+
+---
+
+## &lt;span style="color: #ee6c4d;"&gt;Distribuição Tweedie &lt;/span&gt;
+
+É um caso especial da família exponencial de distribuições
+- Distribuição *híbrida*: contínua e discreta (depende do parâmetro `\(p\)`)
+
+&lt;br&gt;
+
+--
+
+`$$\large Y \sim Tw_p(\mu, \sigma^2)$$`
+
+`$$E(Y) = \mu, \quad Var(Y) = \phi\mu^p$$`
+
+
+onde:
+- `\(\mu:\)` média
+- `\(\phi:\)` dispersão
+- `\(p:\)` parâmetro de potência (define o tipo de distribuição) 
+
+
+---
+## &lt;span style="color: #ee6c4d;"&gt;Distribuição Tweedie &lt;/span&gt;
+
+&lt;br&gt;
+
+&lt;img src="../Figuras/Distribuição_tweedie.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+## &lt;span style="color: #ee6c4d;"&gt;Distribuição Tweedie &lt;/span&gt;
+
+A distribuição torna-se particularmente útil para dados com:
+- forte assimetria
+- excesso de zeros
+- valores positivos
+
+
+--
+
+&lt;br&gt;
+
+&gt; Na dúvida, sempre testar essa distribuição em casos de dados zero-inflacionados (poisson, binomial negativa, e gama) 
+
+---
+
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;
+
+&lt;br&gt;
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="../Figuras/Rlogo.png" alt="Pratica_aula_07_zeroinflacionado.R &amp;lt;br&amp;gt;" width="25%" /&gt;
+&lt;p class="caption"&gt;Pratica_aula_07_zeroinflacionado.R &lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
 
 ---
     </textarea>

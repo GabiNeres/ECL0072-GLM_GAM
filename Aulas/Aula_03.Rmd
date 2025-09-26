@@ -23,13 +23,21 @@ output:
 
 **2. GLM para dados binários**  
 
+  > Prática 
+
+---
+## <span style="color: #ee6c4d;">Leitura sugerida </span> 
+
+**Livros**
+- **Caps. 8 & 10:** Zuur et al. (2009)
+- **Cap. 4 (seção 4.5):** Bolker (2008)
+- **Caps. 2 & 3:** Faraway (2016)
+- **Cap. 13:** Gelman et al. (2020)
+- **Caps. 13:** Gelman et al. (2020)
+- **Caps. 1 & 5:** Agresti (2015)*
 
 
-- Sugestão de leitura:
-  - Caps. 2 & 3: Extending the Linear model with R (Faraway)
-  - Caps. 8 & 9: Mixed effect models and extensions in Ecology (Zuur)
-  - Cap. 13: regression and other stories (Gelman)
-  -
+.footnote[*Leitura mais técnica]
 
 ---
 class: inverse, center, middle

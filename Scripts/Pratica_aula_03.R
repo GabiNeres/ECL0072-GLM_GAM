@@ -23,7 +23,7 @@ setwd("~/OneDrive/Arbeit/Lectures_and_Talks/UFRN/Lectures/ECL0072-GLM_GAM/")
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 1) Importando o banco de dados
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-dados <- read.csv("Dados/palmerpenguins_extended.csv")
+dados <- readRDS("Dados/palmerpenguins_extended.rds")
 
 
 

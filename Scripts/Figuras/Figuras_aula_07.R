@@ -102,3 +102,64 @@ ggsave(plot = p2,
        width = 12,
        height = 4,
        dpi = 350)
+
+
+
+
+########################
+# Distribuição Tweedie #
+########################
+
+
+# Pacotes
+library(tweedie)
+library(ggplot2)
+library(dplyr)
+
+
+## Função para simular de acordo com p
+sim_tweedie <- function(p, n = 1000, mu = 2, phi = 1) {
+  
+  ## A função rtweedie não aceita valores de p < 1;
+  ## Precisamos reparametrizar as distribuições tradicionais
+  if (p == 0) {
+    y <- rnorm(n, mean = mu, sd = sqrt(phi))
+  } else if (p == 1) {
+    y <- rpois(n, lambda = mu)
+  } else if (p == 2) {
+    y <- rgamma(n, shape = mu/phi, scale = phi)
+  } else if (p > 1 & p < 2) {
+    y <- rtweedie(n, mu = mu, phi = phi, power = p)
+  } else {
+    stop("Este exemplo só cobre p = 0, 1, 1<p<2, 2")
+  }
+  tibble(y = y, p = as.factor(p))
+}
+
+## Simulando
+set.seed(123)
+
+dados <- bind_rows(sim_tweedie(p = 0), #Gaussiana
+                   sim_tweedie(p = 1), #Poisson
+                   sim_tweedie(p = 1.2), #Tweedie (entre 1 e 2)
+                   sim_tweedie(p = 2))  #Gamma)
+
+# Gráfico
+facet_names <- c(`0` = "Normal (p=0)",
+                 `1` = "Poisson (p=1)",
+                 `1.2` = "Tweedie (p=1.2)",
+                 `2` = "Gamma (p=2)")
+
+p3 <- ggplot(dados, aes(x = y)) +
+      geom_histogram(bins = 40, fill = "darkorange", color = "white", alpha = .7) +
+      facet_wrap(~p, scales = "free", labeller = as_labeller(facet_names)) +
+      theme_minimal(base_size = 16) +
+      labs(x = "Valores simulados de Y", y = "Frequência")
+
+
+
+ggsave(plot = p3,
+       filename ="Figuras/Distribuição_tweedie.png", 
+       width = 9,
+       height = 4,
+       dpi = 350)

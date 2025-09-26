@@ -28,7 +28,7 @@ setwd("~/OneDrive/Arbeit/Lectures_and_talks/UFRN/Lectures/ECL0072-GLM_GAM/")
 
 
 ## Carregando os dados
-dados <- read.csv("Dados/palmerpenguins_extended.csv") #Pinguins de Palmer
+dados <- readRDS("Dados/palmerpenguins_extended.rds") #Pinguins de Palmer
 
 
 #<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>

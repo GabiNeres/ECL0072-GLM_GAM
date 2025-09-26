@@ -41,7 +41,7 @@ source("Scripts/funcoes_auxiliares.R")
 #~~~~~~~~~~~~~~~~~~~~~~~
 # 1) Importando os dados
 #~~~~~~~~~~~~~~~~~~~~~~~
-dados <- read.csv("Dados/palmerpenguins_extended.csv")
+dados <- readRDS("Dados/palmerpenguins_extended.rds")
 
 
 # 1.1) Transformando as variáveis

@@ -273,5 +273,23 @@ check_model(simres5) #Os dados ainda apresentam sobredispersão
 check_overdispersion(simres5) # Avaliando a sobredispersão
 
 
-
 ggpredict(ZANB1) %>% plot()
+
+
+
+# 3.4) Modelo Tweedie
+#~~~~~~~~~~~~~~~~~~~~~~
+tweedie <- glmmTMB(Damaged ~ tipo_planta + Location,
+                   data = dados,
+                   family = tweedie(link = "log"))
+
+
+AIC(ZANB1, tweedie) #Comparando os modelos...
+
+
+simres6 <- simulateResiduals(tweedie, n=1000)
+check_model(simres6) #Os dados ainda apresentam sobredispersão
+check_overdispersion(simres6) # Avaliando a sobredispersão
+
+
+summary(tweedie)
