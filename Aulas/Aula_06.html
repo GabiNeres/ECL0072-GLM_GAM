@@ -37,11 +37,18 @@ class: center, middle, inverse, title-slide
 
 **2. Distribuição Multinomial**  
 
+  &gt; Prática 
 
 
-- Sugestão de leitura:
-  - Cap. 7: Extending the Linear model with R (Faraway)
-  - Cap. 6: Foundations of Linear and Generalized Linear Models (Agresti, 2015)
+---
+
+## &lt;span style="color: #ee6c4d;"&gt;Leitura sugerida &lt;/span&gt; 
+
+
+**Livros**
+- **Cap. 7:** Faraway (2016)
+- **Cap. 6:** Agresti (2014)
+
 
 ---
 class: inverse, center, middle
@@ -97,8 +104,24 @@ Na maioria dos casos, o foco está em descrever características da população
 &lt;img src="../Figuras/Exemplo_dado_categorico.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
-
 ## &lt;span style="color: #ee6c4d;"&gt;Exemplo prático &lt;/span&gt;
+
+
+A análise de conteúdo estomacal permite avaliar uma série de questões relacionadas à biologia e ecologia do animial. Entre essas questões, está a análise estomacal, a qual permite compreender o nicho alimentar das diferentes espécies.
+
+&gt; **Pergunta:** Como se dá a mudança de preferência alimentar ao longo da ontogenia dos pinguins? Há distinção entre as diferentes espécies e sexos? 
+  
+  
+
+&lt;img src="../Figuras/exemplo_pref_alimentar_pinguins.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+
+
+
+
+
+
 
 ---
 
@@ -116,8 +139,8 @@ class: inverse, center, middle
 &lt;br&gt;
 
 `$$\large Y = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\Y_K  \end{bmatrix}, ~~ \text{com} \sum_{k=1}^{K} Y_k = n$$`
-- **k = **número de categorias
-- **n = ** número de amostras
+- **k = **número de categorias (e.g., categorias na dieta dos pinguins)
+- **n = ** número de amostras 
 
 ---
 
@@ -231,19 +254,25 @@ A probabilidade de uma categoria é a sua taxa de ocorrência relativa ao total 
 ]
 
 ---
-## &lt;span style="color: #ee6c4d;"&gt;Distribuição Multinomial &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Ordinal &lt;/span&gt; 
-
-Quando a ordem das categorias importa, o modelo multinomial passa a ser expresso em termos de probabilidades acumuladas
-- estima a probabilidade de uma categoria ser igual ou menor que outra categoria
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;
 
 
+&lt;br&gt;
+&lt;br&gt;
 
-`$$\log\frac{P(Y \leq k)}{1-P(Y \leq k)} = \theta_k - \beta X, \quad k=1,\dots,K-1$$`
-
-
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="../Figuras/Rlogo.png" alt="Pratica_aula_06.R &amp;lt;br&amp;gt;" width="25%" /&gt;
+&lt;p class="caption"&gt;Pratica_aula_06.R &lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
 
 
 ---
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Relatório:  &lt;/span&gt;
+
+
+**palmerpenguins_extended.rds**
+
+- Pode-se avaliar a relação da métrica de saúde (acima, abaixo ou peso normal) em função do estágio de vida, espécie e sexo.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -30,7 +30,7 @@ source("setup_knitr.R")
 - **Contato:** macrufener@gmail.com
 
 - **Horário e Sala:**
-    - Segunda à Sexta, 08:00 - 12:00h; Laboratório Didático I
+    - Segunda à Sexta, 08:00 - 12:00h; Laboratório de modelagem
     
 <br>
 

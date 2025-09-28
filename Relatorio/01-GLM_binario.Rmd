@@ -16,7 +16,7 @@ Para exemplificar o modelo logístico, usaremos os dados dos pinguins de Palmer,
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 1. Importando o banco de dados
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-dados <- read.csv("../Dados/palmerpenguins_extended.csv")
+dados <- readRDS("../Dados/palmerpenguins_extended.rds")
 
 ```
 

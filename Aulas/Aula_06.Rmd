@@ -25,11 +25,18 @@ output:
 
 **2. Distribuição Multinomial**  
 
+  > Prática 
 
 
-- Sugestão de leitura:
-  - Cap. 7: Extending the Linear model with R (Faraway)
-  - Cap. 6: Foundations of Linear and Generalized Linear Models (Agresti, 2015)
+---
+
+## <span style="color: #ee6c4d;">Leitura sugerida </span> 
+
+
+**Livros**
+- **Cap. 7:** Faraway (2016)
+- **Cap. 6:** Agresti (2014)
+
 
 ---
 class: inverse, center, middle
@@ -95,8 +102,26 @@ knitr::include_graphics("../Figuras/Exemplo_dado_categorico.png")
 ```
 
 ---
-
 ## <span style="color: #ee6c4d;">Exemplo prático </span>
+
+
+A análise de conteúdo estomacal permite avaliar uma série de questões relacionadas à biologia e ecologia do animial. Entre essas questões, está a análise estomacal, a qual permite compreender o nicho alimentar das diferentes espécies.
+
+> **Pergunta:** Como se dá a mudança de preferência alimentar ao longo da ontogenia dos pinguins? Há distinção entre as diferentes espécies e sexos? 
+  
+  
+
+```{r echo=FALSE, out.width ="60%", fig.align ='center'}
+knitr::include_graphics("../Figuras/exemplo_pref_alimentar_pinguins.png")
+```
+
+
+
+
+
+
+
+
 
 ---
 
@@ -114,8 +139,8 @@ class: inverse, center, middle
 <br>
 
 $$\large Y = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots \\Y_K  \end{bmatrix}, ~~ \text{com} \sum_{k=1}^{K} Y_k = n$$
-- **k = **número de categorias
-- **n = ** número de amostras
+- **k = **número de categorias (e.g., categorias na dieta dos pinguins)
+- **n = ** número de amostras 
 
 ---
 
@@ -233,16 +258,21 @@ $$\large p_k = \frac{\text{exp}(\eta_k)}{1+\sum_{j=2}^{K}\text{exp}(\eta_j)}$$
 ]
 
 ---
-## <span style="color: #ee6c4d;">Distribuição Multinomial </span><span style="color: #3e5c76;">| Ordinal </span> 
-
-Quando a ordem das categorias importa, o modelo multinomial passa a ser expresso em termos de probabilidades acumuladas
-- estima a probabilidade de uma categoria ser igual ou menor que outra categoria
+## <span style="color: #ee6c4d;">Prática no R </span>
 
 
+<br>
+<br>
 
-$$\log\frac{P(Y \leq k)}{1-P(Y \leq k)} = \theta_k - \beta X, \quad k=1,\dots,K-1$$
-
-
+```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_06.R <br>", fig.topcaption=F}
+knitr::include_graphics("../Figuras/Rlogo.png")
+```
 
 
 ---
+## <span style="color: #ee6c4d;">Prática no R </span><span style="color: #3e5c76;">| Relatório:  </span>
+
+
+**palmerpenguins_extended.rds**
+
+- Pode-se avaliar a relação da métrica de saúde (acima, abaixo ou peso normal) em função do estágio de vida, espécie e sexo.

@@ -477,6 +477,7 @@ Pode-se aplicar o mesmo raciocínio para a distribuição Binomial Negativa:
 $$\large f(y_i > 0; \mu_i, k) = \frac{\frac{\Gamma(y_i+k)}{\Gamma(k)\times\Gamma(y_i+1)} \times \left (\frac{k}{\mu_i + k}\right)^k \times \left(1 - \frac{k}{\mu_i + k}\right)^{y_i}} {1 - \left (\frac{k}{\mu_i + k}\right)^k}$$
 
 ---
+
 ## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
 
 Podemos resumir os *hurdle models* conforme a estrutura:
@@ -550,7 +551,6 @@ A distribuição torna-se particularmente útil para dados com:
 - valores positivos
 
 
---
 
 <br>
 
@@ -565,5 +565,3 @@ A distribuição torna-se particularmente útil para dados com:
 ```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_07_zeroinflacionado.R <br>", fig.topcaption=F}
 knitr::include_graphics("../Figuras/Rlogo.png")
 ```
-
----

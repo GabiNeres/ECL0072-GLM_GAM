@@ -6,8 +6,8 @@
 ####################################
 
 # Este script abordará dois métodos de estimação de parâmetros:
-# 1) mínimos quadrados (ols - ordinary least squares)
-# 2) máxima verossimilhança (ml - maximum likelihood)
+# 1) mínimos quadrados (OLS - ordinary least squares)
+# 2) máxima verossimilhança (ML - maximum likelihood)
 # Para cada um dos métodos, será mostrado como se pode esimtar os 
 # parâmetros manualmente e via funções específicas (lm/glm).
 
@@ -225,8 +225,8 @@ sqrt(diag(solve(estim_mle$hessian)))
 
 ### LM ###
 estim_glm <- glm(body_mass_g ~ bill_length_mm, 
-                data = dados,
-                family = gaussian)
+                 data = dados,
+                 family = gaussian)
 
 summary(estim_glm)$coeff
 summary(mod_lm)$coeff

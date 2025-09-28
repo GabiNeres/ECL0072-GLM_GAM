@@ -10,9 +10,9 @@ output:
 
 ## Referências básicas
 
-- Faraway, J. J. (2014). [Linear Model with R (2nd Ed.)](https://wangyang-bucket.oss-cn-beijing.aliyuncs.com/cms/image/Linear%20Models%20With%20R_1676789263894.pdf). ChapmanHall/CRC. [Ebook]
+- Faraway, J. J. (2014). [Linear Model with R (2nd Ed.)](https://wangyang-bucket.oss-cn-beijing.aliyuncs.com/cms/image/Linear%20Models%20With%20R_1676789263894.pdf). ChapmanHall/CRC. [**Ebook**]
 
-- Faraway, J. J. (2016). [Extending the Linear Model with R (2nd Ed.)](https://englianhu.wordpress.com/wp-content/uploads/2016/01/faraway-extending-the-linear-model-with-r-e28093-2006.pdf). ChapmanHall/CRC.
+- Faraway, J. J. (2016). [Extending the Linear Model with R (2nd Ed.)](https://englianhu.wordpress.com/wp-content/uploads/2016/01/faraway-extending-the-linear-model-with-r-e28093-2006.pdf). ChapmanHall/CRC. [**Ebook**]
 
 - Wood, S. N. (2017). [Generalized Additive Models: An Introduction with R (2nd Ed.)](https://www.taylorfrancis.com/books/mono/10.1201/9781315370279/generalized-additive-models-simon-wood). Chapman and Hall/CRC.
 
@@ -29,6 +29,8 @@ output:
 - Bolker, B.M. (2008). [Ecological models and data in R](http://www.leg.ufpr.br/lib/exe/fetch.php/wiki:internas:biblioteca:bolker.pdf). Princeton University Press.[**Ebook**]
 
 - Clark, M. & Berry, S. (2025). [Models Demystified: A practical guide from linear regression to deep learning](https://m-clark.github.io/book-of-models/) [**Ebook**]
+
+- Clark, M. (???). [Generalized Additive Models](https://m-clark.github.io/generalized-additive-models/) [**Ebook**]
 
 - Da Silva F. R et al. (2022). [Análises Ecológicas no R](https://analises-ecologicas.com/).[**Ebook**]
 

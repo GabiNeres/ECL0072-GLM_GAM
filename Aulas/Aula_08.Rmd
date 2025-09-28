@@ -15,6 +15,9 @@ output:
       countIncrementalSlides: false
 ---
 
+
+
+
 ## <span style="color: #ee6c4d;">Conteúdo programático </span> 
 
 <br>
@@ -32,19 +35,22 @@ output:
 
 
 **Livros**
-ATUALIZAR LIVROS
-- **Cap. 11:** Zuur et al. (2009)
-- **Cap. 4:** Bolker (2008)
+
+- **Cap. 3:** Zuur et al. (2009)
+- **Caps. 4 & 5:** Wood (2017)
 
 
-
-
-.pull-right[
 **Artigos**
 
-**Guisan, A. et al.** (2002). Generalized linear and generalized additive models in studies of species distributions: setting the scene. Ecological Modelling. https://doi.org/10.1016/S0304-3800(02)00204-1 
+- **Guisan, A. et al.** (2002). Generalized linear and generalized additive models in studies of species distributions: setting the scene. Ecological Modelling. https://doi.org/10.1016/S0304-3800(02)00204-1 
  
-]
+
+**Material alternativo**
+- [Generalized Additive Models:](https://m-clark.github.io/generalized-additive-models/) Clark (Ano não informado)
+
+
+
+
 
 
 ---

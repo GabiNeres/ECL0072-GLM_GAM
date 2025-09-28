@@ -6,8 +6,13 @@
 ######################################
 
 # O script abordará o modelo multinomial.
-# Será utilizado os dados de pinguim de palmer como exemplo prático.
+# Para tal, será utilizado os dados de pinguim de palmer como exemplo prático.
 
+# A principal questão a ser avaliada é se a preferência alimentar muda ao longo
+# do crescimento do pinguim, bem como se há distinção na preferência alimentar entre as diferentes espécies.
+# Portanto, temos:
+# y = tipo de dieta (4 categorias)
+# x = massa corporal (e/ou espécie)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,11 +78,32 @@ ggplot(dados, aes(x = species, fill = diet)) +
   labs(y = "Proporção", x = "") +
   theme_minimal(base_size = 15) 
 
-# ggplot(dados, aes(x = body_mass_g, y = diet, col = species, fill = species)) +
-#   geom_boxplot(size = 0.7,alpha = 0.15) +
-#   scale_colour_manual(values = c("darkorange", "gray50", "cyan4")) +
-#   scale_fill_manual(values = c("darkorange", "gray50", "cyan4")) +
-#   theme_minimal(base_size = 15)
+
+## E entre as diferentes espécies?
+ggplot(dados, aes(y = body_mass_g, x = diet, col = species, fill = species)) +
+  geom_boxplot(size = 0.7,alpha = 0.15) +
+  scale_colour_manual(values = c("darkorange", "gray50", "cyan4")) +
+  scale_fill_manual(values = c("darkorange", "gray50", "cyan4")) +
+  theme_minimal(base_size = 15)
+
+
+# ggplot(dados, aes(x = sex, fill = diet)) +
+#   geom_bar(position = "fill",  alpha = 0.8) +
+#   scale_y_continuous(labels = scales::percent) +
+#   scale_fill_manual(values = c("#d6ccc2", "cyan4", "darkorange", "gray50")) +
+#   labs(y = "Proporção", x = "") +
+#   theme_minimal(base_size = 15)  + facet_wrap(species ~ .)
+
+## E entre sexos?
+ggplot(dados, aes(x = sex, fill = diet)) +
+  geom_bar(position = "fill",  alpha = 0.8) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = c("#d6ccc2", "cyan4", "darkorange", "gray50")) +
+  labs(y = "Proporção", x = "") +
+  theme_minimal(base_size = 15)  + facet_wrap(species ~ .)
+
+
+
 
 
 
@@ -87,6 +113,7 @@ ggplot(dados, aes(x = species, fill = diet)) +
 
 # CUIDADO: definir o nível de referência
 levels(dados$diet)
+
 
 # 3.1) Ajustando o modelo
 #~~~~~~~~~~~~~~~~~~~~~~~~~~

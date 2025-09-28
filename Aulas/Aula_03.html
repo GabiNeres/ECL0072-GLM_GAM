@@ -446,7 +446,6 @@ Os dados de pinguins de Palmer contém a informação sobre o estado de saúde d
 
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Dados com características binárias são típicamente descritos por uma **distribuição Binomial (Bernoulli)** 
 
@@ -470,7 +469,6 @@ Dados com características binárias são típicamente descritos por uma **distr
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Quando se observa mais de um indivíduo:
 
@@ -496,7 +494,6 @@ A Bernoulli é um caso especial da Binomial quando `\(n_i = 1\)`
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Quando se observa mais de um indivíduo:
 
@@ -513,7 +510,6 @@ Podemos relacionar a probabilidade de sucesso a um conjunto de covariáveis, con
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Na distribuição Binomial, a função de ligação é frequentemente descrita pela **função logit**:
 
@@ -522,7 +518,6 @@ $$\large logit(p_i) = log(\frac{p_i}{1-p_i}) $$
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Na distribuição Binomial, a função de ligação é frequentemente descrita pela **função logit**:
 
@@ -539,7 +534,6 @@ Na distribuição Binomial, a função de ligação é frequentemente descrita p
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Na distribuição Binomial, a função de ligação é frequentemente descrita pela **função logit**:
 
@@ -555,7 +549,6 @@ Na distribuição Binomial, a função de ligação é frequentemente descrita p
 
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Vejamos como funciona essa transformação:
 
@@ -587,7 +580,6 @@ $$\large logit(p_i) = log(\frac{p_i}{1-p_i}) $$
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Quando transformamos infinitos valores de `\(p_i\)`, obtemos a característica curva sigmóide
 
@@ -601,7 +593,6 @@ Quando transformamos infinitos valores de `\(p_i\)`, obtemos a característica c
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Por causa da função de ligação, mudamos a forma como interpretamos os parâmetros do modelo
 
@@ -619,7 +610,6 @@ $$
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Em GLMs, muitas vezes é mais conveniente aplicar a função inversa para interpretar os parâmetros na escala original
   - No caso da distribuição Binomial, `\(\text{log} \leftrightarrow \text{exp}\)`
@@ -637,7 +627,6 @@ Em GLMs, muitas vezes é mais conveniente aplicar a função inversa para interp
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Dados binários &lt;/span&gt;
 
-#### Traduzindo para o matematiquês
 
 Em modelos com distribuição binomial, a função de ligação logit é a mais amplamente utilizada
   - Há outras funções de ligações que podem ser testadas:
@@ -668,6 +657,24 @@ A comparação entre os modelos não pode ser feita mediante o teste de razão d
 &lt;p class="caption"&gt;Pratica_aula_03.R &lt;br&gt; (Relatorio/01-GLM_binario.Rmd)&lt;/p&gt;
 &lt;/div&gt;
 
+---
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Relatório:  &lt;/span&gt;  
+
+Dados que podem ser utilizados para elaboração do 1º capítulo do relatório:
+
+
+**koalas.rds**
+
+- Presença/ausência de coalas na Austrália
+  - Associar a diferentes fatores de urbanização e quaildade de habitat
+
+----
+
+**fisheries.rds**
+
+- Presença/ausência de diferentes espécies
+  - Associar a presença de uma espécie à características oceanográficas
+      - Transformar as abundâncias em variável binária (se y&gt; 0, atribui-se 1; caso contrário, 0 (y=0))
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

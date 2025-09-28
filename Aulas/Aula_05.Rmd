@@ -28,11 +28,18 @@ output:
 
 **3. Distribuição log-Normal**  
 
+  > Prática 
+
+---
+
+## <span style="color: #ee6c4d;">Leitura sugerida </span> 
 
 
-- Sugestão de leitura:
-  - Cap. 9: Extending the Linear model with R (Faraway)
-  - Cap. 8: Mixed effect models and extensions in Ecology (Zuur)
+
+**Livros**
+- **Cap. 8:** Zuur et al. (2009)
+- **Cap. 4 (seção 4.6):** Bolker (2008)
+- **Cap. 9 (seção 9.1):** Faraway (2016)
 
 
 ---
@@ -78,7 +85,7 @@ Distribuições de probabilidade contínuas:
 ## <span style="color: #ee6c4d;">Exemplo prático </span>
 
 A captura incidental de espécies não-alvo, i.e. *bycatch*, ocorre com frequência na pesca de espinhel.
-  - Entender padrões espaço-temporais do bycatch é fundamental para propor medidas de     manejo pesqueiro, 
+  - Entender padrões espaço-temporais do bycatch é fundamental para propor medidas de manejo pesqueiro, 
   
     > **Pergunta:** Em que época do ano são registrados as maiores capturas de bycatch? Espacialmente, há uma área mais vulnerável?
 
@@ -285,6 +292,16 @@ Os parâmetros do modelo ($\beta$) são interpretados na escala log!
 
 <br>
 
-
 ```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_05.R <br>", fig.topcaption=F}
 knitr::include_graphics("../Figuras/Rlogo.png")
+```
+
+
+---
+## <span style="color: #ee6c4d;">Prática no R </span><span style="color: #3e5c76;">| Relatório:  </span>
+
+
+**fisheries.rds**
+
+- Pode-se modelar a captura-por-unidade-de-esforço (CPUE) das espécies alvos da pesca (todas juntas, ou individualmente)
+  - Relacionar a fatores oceanográficos, espaço-temporais e pesqueiros

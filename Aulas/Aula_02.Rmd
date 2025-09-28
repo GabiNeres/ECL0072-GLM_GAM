@@ -326,8 +326,8 @@ knitr::include_graphics("../Figuras/Dist_normal.png")
 
 <br>
 
-```{r echo=FALSE, out.width ="70%", fig.align ='center'}
-knitr::include_graphics("../Figuras/MLE_exemplo.png")
+```{r echo=FALSE, out.width ="85%", fig.align ='center'}
+knitr::include_graphics("../Figuras/MLE0.png")
 ```
 
 
@@ -340,8 +340,8 @@ knitr::include_graphics("../Figuras/MLE_exemplo.png")
 
 <br>
 
-```{r echo=FALSE, out.width ="70%", fig.align ='center'}
-knitr::include_graphics("../Figuras/MLE_exemplo2.png")
+```{r echo=FALSE, out.width ="85%", fig.align ='center'}
+knitr::include_graphics("../Figuras/MLE1.png")
 ```
 
 
@@ -354,8 +354,8 @@ knitr::include_graphics("../Figuras/MLE_exemplo2.png")
 
 <br>
 
-```{r echo=FALSE, out.width ="70%", fig.align ='center'}
-knitr::include_graphics("../Figuras/MLE_exemplo3.png")
+```{r echo=FALSE, out.width ="85%", fig.align ='center'}
+knitr::include_graphics("../Figuras/MLE2.png")
 ```
 
 ---
@@ -367,8 +367,8 @@ knitr::include_graphics("../Figuras/MLE_exemplo3.png")
 
 <br>
 
-```{r echo=FALSE, out.width ="70%", fig.align ='center'}
-knitr::include_graphics("../Figuras/MLE_exemplo4.png")
+```{r echo=FALSE, out.width ="85%", fig.align ='center'}
+knitr::include_graphics("../Figuras/MLE3.png")
 ```
 
 ---
@@ -929,5 +929,3 @@ $n:$ número de observações
 knitr::include_graphics("../Figuras/modelling_workflow.png")
 ```
 
-
----

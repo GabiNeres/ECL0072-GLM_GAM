@@ -51,9 +51,9 @@ summary(dados)
 #~~~~~~~~~~~~~~~~~~~~~~~~
 # Há variáveis classificadas como 'character'.
 # Precisamos transformar elas para 'factor', de modo que sejam
-# reconhecidas como categorias e assim permitir a realização de comparações
+# reconhecidas como categorias e assim permitir a realização de comparações estatísticas.
 
-## Selecionando as colunas a serem transformada
+## Selecionando as colunas a serem transformadas
 cols <- c("species", "island","sex", "diet", "life_stage", "health_metrics")
 
 ## Transformando para fator
@@ -115,7 +115,12 @@ head(model.matrix(dados$body_mass_g ~ dados$bill_length_mm))
 
 
 ## Resultado numérico do modelo
-summary(mod1)
+summary(mod1) 
+
+# - Intercept: Massa corporal estimada quando o comprimento do bico (x) é zero;
+# - bill_length_mm: Para um aumento de 1mm no comprimento do bico, espera-se um aumento médio de 65.8 gramas na massa corporal do pinguim
+# - Res. std. error: os valores individuais de massa corporal se desviam ~984 g da reta ajustada.
+#
 
 
 ## Ajuste do modelo

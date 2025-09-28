@@ -10,24 +10,81 @@ A maioria dos dados incluídos nesta pasta foram extraídos de diversas fontes p
 Cada dado descreve uma situação ecológica distinta.
 
 
-Abaixo, uma breve descrição de cada dado.
+Abaixo, uma breve descrição de cada banco de dados
 
 
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# palmerpenguins_extended.csv
+# palmerpenguins_extended.rds
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Extraído de: https://www.kaggle.com/datasets/samybaladram/palmers-penguin-dataset-extended?resource=download
+Também disponível via pacote do r: https://allisonhorst.github.io/palmerpenguins/ (porém com menos anos de amostragem)
 
-Também disponível via pacote do r: https://allisonhorst.github.io/palmerpenguins/
+Os dados foram coletados no Arquipélago Palmer, próximo à Antártida, ao longo dos anos 2021-2025.
+Esses dados fornecem informações sobre três espécies de pinguins (pinguins-de-adélia, pinguins-gentoo e 
+pinguins-de-barbicha), e inclui variáveis biológicas, como dimensões do bico e massa corporal.
+
+Além disso, o banco de dados conta com outras variáveis, como tipo de dieta, ano de observação,
+estágio de vida e indicadores de saúde. Esse conjunto de informação permitem compreender de forma mais detalhada
+a biologia e ecologia de pinguins.
 
 
+> Informações presentes:
 
-Os dados foram coletados no Arquipélago Palmer, próximo à Antártida, ao longo dos anos 2021-2025. Esses dados fornecem informações sobre três espécies de pinguins, incluindo pinguins-de-adélia, pinguins-gentoo e pinguins-de-barbicha, e inclui variáveis biológicas, como dimensões do bico e massa corporal.
+- species: espécie de pinguim
+- island: ilha em que foi realizada a amostragem
+- bill_length_mm: comprimento do bico (mm)
+- bill_depth_mm: altura do bico (mm)
+- flipper_length_mm: comprimento da asa (mm)
+- body_mass_g: massa corporal (g)
+- sex: sexo do pinguim amostrado
+- diet: tipo de dieta
+- life_stage: estágio de desenvolvimento
+- health_metrics: condição de saúde em relação ao peso
+- year: ano da amostragem
 
-Além disso, o banco de dados conta com variáveis adicionais, como dieta, ano de observação, estágio de vida e indicadores de saúde. Esse conjunto de informação permitem uma compreensão mais detalhada da biologia e ecologia dos pinguins.
+
+###########################################################################
+
+#~~~~~~~~~~~~
+# koalas.rds
+#~~~~~~~~~~~~
+
+Dado adquirido pelo livro do Zuur (2009):
+https://www.highstat.com/index.php?view=article&id=17&catid=18
+
+Os coalas vem sofrendo declínios na sua abundância e distribuição devido 
+à desflorestação e degradação das florestas de eucalipto, juntamente com a caça histórica, 
+doenças, incêndios florestais, seca e urbanização. Mais de 50% das florestas originais de eucalipto foram desmatadas 
+para agricultura e desenvolvimento urbano. Os coalas estão, portanto, ameaçados pela perda e fragmentação de seu habitat 
+e por ameaças associadas à urbanização, como carros e cães domésticos. 
+Para permitir o desenvolvimento de estratégias de gestão bem-sucedidas, é importante que os planejadores de conservação 
+sejam capazes de quantificar o impacto dessas ameaças na distribuição de coalas na área.
+
+Os dados apresentados são baseados em pesquisas realizadas para
+determinar a presença ou ausência de coalas em 300 locais em Noosa (Austrália).
+Em cada estação de amostragem, foi registrada a porcentagem de árvores que eram espécies
+primárias e secundárias (preferência alimentar). A distribuição do habitat dos coalas 
+# (classificado em habitat altamente adequado, adequado, marginal e inadequado) e a localização 
+# de estradas pavimentadas foram mapeadas em um sistema de informações geográficas.
+
+
+> Informações presentes:
+
+- site: Estação de amostragem
+- subsite: Estação de subamostragem (medidas repetidas)
+- easting: coordenadas leste-oeste (UTM)
+- northing: coordenadas norte-sul (UTM)
+- presence: presência/ausência de coala
+- pprim_ssite: porcentagem de árvores primárias
+- psec_ssite: porcentagem de árvores secundárias
+- phss_(1,2.5,5)km: porcentagem de hábitat altamente adequado dentro de um raio de 1, 2.5 e 5 kms (habitats altamente adequado + adequado).
+- pm_(1,2.5,5)km: porcentagem de hábitat marginal dentro de um raio de 1, 2.5 e 5 kms.
+- pdens_(1,2.5,5)km: densidade de fragmentação (no. fragmentos/ha) dentro de um raio de 1, 2.5 e 5 kms (habitats altamente adequado + adequado + marginal).
+- edens_(1,2.5,5)km: densidade de efeito de borda (comprimento de borda/ha) dentro de um raio de 1, 2.5 e 5 kms (habitats altamente adequado + adequado + marginal).
+- rdens_(1,2.5,5)km: densidade de ruas pavimentadas (comprimento de estrada/ha) dentro de um raio de 1, 2.5 e 5 kms (habitats altamente adequado + adequado + marginal).
 
 
 ###########################################################################
@@ -36,18 +93,72 @@ Além disso, o banco de dados conta com variáveis adicionais, como dieta, ano d
 # fisheries.rds
 #~~~~~~~~~~~~~~~
 
-Banco de dados fictício que simula uma típica pesca de espinhel.
+Banco de dados simulado que descreve uma típica pescaria de atum no Oceano Atlântico Sul.  
+Assim como outros métodos de pescaira, a pesca de atum é caracterizada pela captura incidental 
+de espécies não-alvo (bycatch), que variam em abundância e distribuição.  
+
+A distribuição espacial das espécies (alvo e não-alvo) é modulada por fatores oceanográficos, espaciais e sazonais.  
+Além disso, por se tratar de um dado enviesado (fruto da atividade pesqueira), é importante contabilizar os fatores pesqueiros
+na avaliação da abundância.
+
+O conjunto de informações permite explorar uma gama de questões relacionadas à dinâmica espaço-temporal das (i) espécies alvos
+(ii) espécies não-alvos (bycatch), e assim subsidiar medidas de manejo pesqueiro e conservação.
 
 
+> Informações presentes:
 
+- Ano: ano da pescaria
+- Mes: mês da pescaria
+- N_anzol: número de anzóis utilizados (medida de esforço pesqueiro)
+- Barco: identidade do navio pesqueiro
+- Pais: país de origem do navio pesqueiro
+- Long: longitude da pescaria (Graus)
+- Lat: latitude da pescaria (Graus)
+- Thunnus_albacares - Lamna_nasus: abundância das espécies pescadas em cada pescaria
+- sst: temperatura do mar
+- sal: salinidade do mar
+- chla: concentração de clorofila (produtividade)
+- depth: profundidade do leito marinho em que ocorreu a pescaria
+- dlm: camada de mistura de massas de água
+- il: índice lunar
+
+
+@Espécies alvo da pesca: Thunnus_albacares, Thunnus_atlanticus, Katsuwonus_pelamis, Prionace_glauca
+@Espécies não-alvo da pesca: demais espécies
 
 
 ###########################################################################
 
+#~~~~~~~~~~~~~~~~~~~~~~
+# benthos_exposure.rds
+#~~~~~~~~~~~~~~~~~~~~~~
 
+Dado adquirido pelo livro do Zuur (2009):
+https://www.highstat.com/index.php?view=article&id=17&catid=18 (Nome original do banco de dados: RIKZ)
+
+Dados bentônicos marinhos foram coletados em 9 áreas intermareais ao longo da 
+costa holandesa. Os dados foram coletados pelo instituto holandês RIKZ no verão de 2002. 
+Em cada área de inter-maré (denominada "praia"), foram coletadas cinco amostras,
+e a macrofauna bentônica foram coletadas junstas com variáveis abióticas.
+
+A questão subjacente a esses dados é se existe uma relação entre riqueza de espécies, 
+exposição e NAP. A exposição é um índice composto pelos seguintes elementos: ação das ondas, 
+comprimento da zona de arrebentação, declive, tamanho dos grãos e profundidade da camada 
+anaeróbica. Já NAP representa a altura de uma estação de amostragem em relação aonível médio da maré.
+
+
+- Sample: número da amostra
+- Richness: riqueza de macrofauna bentônica
+- Exposure: índice de exposição (8, 10, 11)
+- NAP: altura da estação de amostragem em relação à maré 
+- Beach: Praia em que foi feito a amostragem
+
+
+
+##############
 
 #~~~~~~~~~~~~~~~~~
-# Salamanders.rds
+# salamanders.rds
 #~~~~~~~~~~~~~~~~~
 Dado extraído do pacote glmmTMB - data("Salamanders").
 Cedido originalmente por Price et al. (2015, 2016).
@@ -71,8 +182,6 @@ Algumas espécies possuem estágio larval e adulto.
 IMPORTANTE: todas as covariáveis foram padronizadas (z-score)
 
 
-
-
 ###########################################################################
 
 #~~~~~~~~~~~~~~~~~~
@@ -92,7 +201,7 @@ Esse dado, reúne informações sobre hábitos de sono e outras características
 > Informações presentes:
 - mammals: os diferentes grupos de mamíferos (39 espécies; 13 ordens)
 - body: massa corporal (g)
-- bain: massa cerebral (g)
+- brain: massa cerebral (g)
 - nondream: número de horas em estado 'não-sonhando'
 - dream: número de horas em estado 'sonhando'
 - sleep: número total de horas dormidas (nondream + dream)

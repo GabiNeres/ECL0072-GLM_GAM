@@ -19,7 +19,7 @@ library(ggeffects) #para plotar os resultados
 library(performance) #avaliação dos residuos
 
 
-
+## Definindo diretório base
 setwd("~/OneDrive/Arbeit/Lectures_and_Talks/UFRN/Lectures/ECL0072-GLM_GAM/")
 
 
@@ -50,7 +50,8 @@ dados[, c("Ano", "Mes", "Barco")] <- lapply(dados[, c("Ano", "Mes", "Barco")], f
 ## Espécies alvo (atuns)
 especies_alvo <- c("Thunnus_albacares",
                    "Thunnus_atlanticus",
-                   "Katsuwonus_pelamis")
+                   "Katsuwonus_pelamis",
+                   "Prionace_glauca")
 
 ## Espécies não-alvo (todo o restante)
 especies_nalvo <- setdiff(colnames(dados)[8:27], especies_alvo)
@@ -84,7 +85,6 @@ summary(dados$BPUE)
 
 ## Dinâmica temporal
 plot(dados$BPUE ~ dados$Mes)
-plot(log1p(dados$BPUE) ~ dados$Mes)
 
 ggplot(dados, aes(x = Mes, y = BPUE)) +
 #ggplot(dados, aes(x = Mes, y = log1p(BPUE))) +
@@ -134,8 +134,9 @@ ggplot(dados, aes(x = Long, y = BPUE)) +
 # Truqe matemátcio: adicionar uma pequena constante 
 
 
-# Usando 10% da mediana do BPUQ
+# Usando 10% da mediana do BPUE
 dados$BPUE2 <- dados$BPUE + (0.1 * median(dados$BPUE))
+
 
 # Transformando para log
 dados$BPUE2_log <- log(dados$BPUE2)
@@ -166,7 +167,7 @@ AIC(modelo_G, modelo_LN)
 
 
 ## Teste de razão de verossimilhança
-lmtest::lrtest(modelo_G, modelo_LN) ## Quanto maior o valor de logLik, melhor o ajuste!
+lmtest::lrtest(modelo_LN,modelo_G) ## Quanto maior o valor de logLik, melhor o ajuste!
 
 
 
@@ -282,7 +283,7 @@ dfpred_mesb$Modelo <- "log-Normal"
 
 
 ### Reunindo tudo em um único data frame
-dfpred_full <- rbind(dfpred, dfpred2)
+dfpred_full <- rbind(dfpred_mes, dfpred_mesb)
 
 
 
@@ -364,8 +365,8 @@ ggplot(dfpred_full, aes(x = Lat, y = fit, col= Modelo, group = Modelo)) +
   labs(y = "BPUE (predito)",
        x = "Latitude") +
   theme_minimal() +
-  scale_color_manual(values = c("Gama" = "darkorange", "log-Normal" = "cyan4")) +
-  facet_wrap(Modelo ~ .)
+  #facet_wrap(Modelo ~ .) +
+  scale_color_manual(values = c("Gama" = "darkorange", "log-Normal" = "cyan4"))
 
 
 

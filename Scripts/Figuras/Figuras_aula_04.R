@@ -40,12 +40,12 @@ df_pois <- lapply(lambdas, function(lambda) {
 ## Plot
 p1 <- ggplot(df_pois, aes(x = x, y = y, fill = lambda)) +
   #geom_line(linewidth = 1.2) +
-  geom_col(position = "identity",col = 'white') +
+  geom_col(position = "identity",col = 'white', width = 1) +
   theme_minimal(base_size = 14) +
   #scale_fill_brewer(palette = "Spectral",direction = -1) +
   scale_fill_manual(values = c("#0a9396", "#bf4342", "#ee9b00")) +
-  facet_wrap(lambda ~ . ) +
-  theme_minimal(base_size = 13) +
+  facet_wrap(lambda ~ .) +
+  theme_minimal(base_size = 15) +
   labs( x = "Contagem",
         y = "Probabilidade",
         fill = expression(lambda)) +

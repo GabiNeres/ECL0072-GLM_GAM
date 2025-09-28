@@ -40,12 +40,23 @@ class: center, middle, inverse, title-slide
 
 **3. Distribuição Binomial Negativa**  
 
+  &gt; Prática 
 
 
-- Sugestão de leitura:
-  - Cap. 5: Extending the Linear model with R (Faraway)
-  - Cap. 9: Mixed effect models and extensions in Ecology (Zuur)
+---
 
+## &lt;span style="color: #ee6c4d;"&gt;Leitura sugerida &lt;/span&gt; 
+
+
+
+**Livros**
+- **Caps. 9:** Zuur et al. (2009)
+- **Cap. 5 :** Faraway (2016)
+- **Caps. 4 (seção 4.6):** Bolker (2008)
+- **Caps. 7:** Agresti (2015)*
+
+
+.footnote[*Leitura mais técnica]
 
 ---
 class: inverse, center, middle
@@ -125,7 +136,7 @@ Definida sob variáveis discretas positivas
 
 &lt;br&gt;
 
-`\(\large \lambda_i\)`: numéro médio de eventos (e.g., número médio de espécies não-alvo por pescaria)
+`\(\large \lambda_i\)`: numéro médio de eventos (e.g., abundância média de uma espécie ou número médio de espécies não-alvo por pescaria)
 
 
 
@@ -211,8 +222,6 @@ Se a referência não for padronizada ao longo do estudo, teremos conclusões eq
 
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Poisson &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Offset &lt;/span&gt; 
-
-#### Traduzindo para o matematiquês
 
 
 O offset é uma variável preditora especial que entra no componente sistemático do modelo, porém não tem parâmetro para ser estimado
@@ -469,6 +478,24 @@ O que significa quando `\(k \rightarrow \infty\)`?
 &lt;img src="../Figuras/Rlogo.png" alt="Pratica_aula_04.R &amp;lt;br&amp;gt;" width="25%" /&gt;
 &lt;p class="caption"&gt;Pratica_aula_04.R &lt;br&gt;&lt;/p&gt;
 &lt;/div&gt;
+
+---
+## &lt;span style="color: #ee6c4d;"&gt;Prática no R &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Relatório:  &lt;/span&gt;  
+
+
+**fisheries.rds**
+
+- Abundância de diversas espécies alvos e não-alvos da pesca
+  - Associar a abundância de uma espécie a fatores oceanográficos, espaciais, sazonais e pesqueiros
+    - Alternativamente, pode-se calcular a riqueza de espécies avaliar sua relação com os demais fatores 
+
+
+----
+
+**benthos_exposure.rds**
+
+- Riqueza de macrofauna bentônica registrada em diferentes praias
+  - Associar a riqueza à fatores de exposição a estresse ambiental e altura em relação a maré
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

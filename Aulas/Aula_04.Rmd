@@ -28,12 +28,23 @@ output:
 
 **3. Distribuição Binomial Negativa**  
 
+  > Prática 
 
 
-- Sugestão de leitura:
-  - Cap. 5: Extending the Linear model with R (Faraway)
-  - Cap. 9: Mixed effect models and extensions in Ecology (Zuur)
+---
 
+## <span style="color: #ee6c4d;">Leitura sugerida </span> 
+
+
+
+**Livros**
+- **Cap. 9:** Zuur et al. (2009)
+- **Cap. 5 :** Faraway (2016)
+- **Cap. 4 (seção 4.6):** Bolker (2008)
+- **Cap. 7:** Agresti (2015)*
+
+
+.footnote[*Leitura mais técnica]
 
 ---
 class: inverse, center, middle
@@ -119,7 +130,7 @@ $$\large E[Y] = \lambda, ~~~~~Var(Y) = \lambda$$
 
 <br>
 
-$\large \lambda_i$: numéro médio de eventos (e.g., número médio de espécies não-alvo por pescaria)
+$\large \lambda_i$: numéro médio de eventos (e.g., abundância média de uma espécie ou número médio de espécies não-alvo por pescaria)
 
 
 
@@ -209,8 +220,6 @@ knitr::include_graphics("../Figuras/Offset_2.png")
 
 ---
 ## <span style="color: #ee6c4d;">Distribuição Poisson </span><span style="color: #3e5c76;">| Offset </span> 
-
-#### Traduzindo para o matematiquês
 
 
 O offset é uma variável preditora especial que entra no componente sistemático do modelo, porém não tem parâmetro para ser estimado
@@ -472,3 +481,21 @@ O que significa quando $k \rightarrow \infty$?
 ```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_04.R <br>", fig.topcaption=F}
 knitr::include_graphics("../Figuras/Rlogo.png")
 ```
+
+---
+## <span style="color: #ee6c4d;">Prática no R </span><span style="color: #3e5c76;">| Relatório:  </span>  
+
+
+**fisheries.rds**
+
+- Abundância de diversas espécies alvos e não-alvos da pesca
+  - Associar a abundância de uma espécie a fatores oceanográficos, espaciais, sazonais e pesqueiros
+    - Alternativamente, pode-se calcular a riqueza de espécies avaliar sua relação com os demais fatores 
+
+
+----
+
+**benthos_exposure.rds**
+
+- Riqueza de macrofauna bentônica registrada em diferentes praias
+  - Associar a riqueza à fatores de exposição a estresse ambiental e altura em relação a maré

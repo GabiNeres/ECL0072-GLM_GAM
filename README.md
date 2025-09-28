@@ -13,25 +13,40 @@ Este repositório contém todo o material de aula e os arquivos necessários par
 
 
 
-### Para acessar o conteúdo do curso
+### Acessando o conteúdo do curso
 
 A página do curso é toda construída usando apenas o [R Markdown][] e, por isso, o código fonte pode ser acessado nos arquivos `Rmd`. Para gerar o site você precisará
 instalar (ou atualizar) os pacotes `rmarkdown` e `knitr`.
+
+Para acessar o conteúdo do curso, siga as intruções abaixo:
 
 1. Copie (ou fork) esse repositório
 2. Apague o diretório `site_libs/`
 3. Abra o R nesse diretório, carregue os pacotes e renderize o site com
    `render_site()`
-   
+4. Clique no arquivo *index.html* e abre ele com a opção *browser*
+
+
 ```r
 
 # Instalando os pacotes
 #~~~~~~~~~~~~~~~~~~~~~~~~
+
+## Pacotes principais
 install.packages("knitr")
 install.packages("rmarkdown"")
 
-#install.packages("xaringan")
-#install.packages("kableExtra")
+
+## Pacotes adicionais
+install.packages("bookdown")
+install.packages("kableExtra")
+install.packages("tinytex")
+install.packages("tinytex")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("DHARMa")
+install.packages("performance")
+
 
 
 # Compila o site da disciplina
@@ -39,6 +54,8 @@ install.packages("rmarkdown"")
 library(knitr)
 library(rmarkdown)
 render_site()
+
+
 ```
 
 ### Licença

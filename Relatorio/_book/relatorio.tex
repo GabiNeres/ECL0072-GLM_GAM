@@ -1,0 +1,911 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Relatório da disciplina},
+  pdfauthor={Marie-Christine Rufener},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Relatório da disciplina}
+\author{Marie-Christine Rufener}
+\date{}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\chapter{Contextualização}\label{contextualizauxe7uxe3o}
+
+\chapter{GLM para dados binários}\label{glm-para-dados-binuxe1rios}
+
+\section{Introdução}\label{introduuxe7uxe3o}
+
+Dados binários são caracterizados por variáveis que podem assumir apenas dois estados possíveis (0-1). Exemplos incluem:
+
+\begin{itemize}
+\tightlist
+\item
+  Presença ausência de espécies
+\item
+  Proporção de machos/fêmeas em uma população
+\item
+  Sobreviveu ou não sobreviveu
+\end{itemize}
+
+Para exemplificar o modelo logístico, usaremos os dados dos pinguins de Palmer, armazenados no diretório \texttt{/Dados} da disciplina.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 1. Importando o banco de dados}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\NormalTok{dados }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"../Dados/palmerpenguins\_extended.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Esses dados foram coletados como parte de uma pesquisa científica para estudar o comportamento de forrageamento dos pinguins da Antártida e sua relação com a variabilidade ambiental.
+
+Os dados foram coletados entre os anos 2021 e 2025, e fornecem informações sobre 3430 pinguins de três espécies.
+
+Vejamos as outras informações contidas no banco de dados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 2. Análise exploratória }
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\FunctionTok{str}\NormalTok{(dados)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    3430 obs. of  11 variables:
+##  $ species          : chr  "Adelie" "Adelie" "Adelie" "Adelie" ...
+##  $ island           : chr  "Biscoe" "Biscoe" "Biscoe" "Biscoe" ...
+##  $ bill_length_mm   : num  53.4 49.3 55.7 38 60.7 35.7 61 66.1 61.4 54.9 ...
+##  $ bill_depth_mm    : num  17.8 18.1 16.6 15.6 17.9 16.8 20.8 20.8 19.9 22.3 ...
+##  $ flipper_length_mm: num  219 245 226 221 177 194 211 246 270 230 ...
+##  $ body_mass_g      : num  5687 6811 5388 6262 4811 ...
+##  $ sex              : chr  "female" "female" "female" "female" ...
+##  $ diet             : chr  "fish" "fish" "fish" "fish" ...
+##  $ life_stage       : chr  "adult" "adult" "adult" "adult" ...
+##  $ health_metrics   : chr  "overweight" "overweight" "overweight" "overweight" ...
+##  $ year             : int  2021 2021 2021 2021 2021 2021 2021 2021 2021 2021 ...
+\end{verbatim}
+
+\section{Análise exploratória (breve)}\label{anuxe1lise-exploratuxf3ria-breve}
+
+\subsection{Corrigindo os tipos de variáveis}\label{corrigindo-os-tipos-de-variuxe1veis}
+
+Antes de efetuar a análise exploratória, é importante que cada variável do banco de dados seja caracterizado de acordo com sua natureza (\emph{character}, \emph{factor}, \emph{numeric}, \emph{integer}, etc.).
+
+Olhando a estrutura dos dados, percebemos que precisamos converter as variáveis \emph{character} em \emph{fator}
+
+\begin{itemize}
+\tightlist
+\item
+  Isso permitirá que os níveis do fator possam ser comparados (graficamente e estatisticamente)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2.1) Convertendo as variáveis}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\NormalTok{cols }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"species"}\NormalTok{, }\StringTok{"island"}\NormalTok{, }\StringTok{"sex"}\NormalTok{, }\StringTok{"diet"}\NormalTok{, }\StringTok{"life\_stage"}\NormalTok{, }\StringTok{"health\_metrics"}\NormalTok{, }\StringTok{"year"}\NormalTok{)}
+
+\NormalTok{dados[, cols] }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(dados[, cols], factor)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Analisando as métricas de saúde}\label{analisando-as-muxe9tricas-de-sauxfade}
+
+A coluna \texttt{health\_metrics} armazena informação sobre as categorias de peso, baseados nos pesos individuais destacados na coluna \texttt{body\_mass\_g}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2.2) Explorando os dados}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\FunctionTok{table}\NormalTok{(dados}\SpecialCharTok{$}\NormalTok{health\_metrics)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##     healthy  overweight underweight 
+##        1550        1167         713
+\end{verbatim}
+
+Ao todo, temos três categorias de peso:
+
+\begin{itemize}
+\tightlist
+\item
+  saudável
+\item
+  sobrepeso
+\item
+  abaixo do peso
+\end{itemize}
+
+Para rodar o modelo logístico, vamos considerar apenas os indivíduos categorizados como \emph{saudável} ou \emph{sobrepeso}.
+
+\begin{quote}
+Analisaremos as três categorias na aula de modelo multinomial!
+\end{quote}
+
+Precisamos, portanto, filtrar os dados para remover os indivíduos que estão abaixo do peso\textgreater{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Filtrando os dados \#\#}
+\FunctionTok{library}\NormalTok{(dplyr)}
+
+\NormalTok{dados2 }\OtherTok{\textless{}{-}} \FunctionTok{filter}\NormalTok{(dados, }\SpecialCharTok{!}\NormalTok{(health\_metrics }\SpecialCharTok{==} \StringTok{"underweight"}\NormalTok{))}
+
+
+\NormalTok{dados2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(health\_metrics) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Npinguins =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Proporcao =}\NormalTok{ Npinguins }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(Npinguins)) }\CommentTok{\#43\% dos pinguins são obesos!}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 3
+##   health_metrics Npinguins Proporcao
+##   <fct>              <int>     <dbl>
+## 1 healthy             1550     0.570
+## 2 overweight          1167     0.430
+\end{verbatim}
+
+Agora podemos avaliar a relação dessas categorias em função de algumas covariáveis inclusas no banco de dados.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\DocumentationTok{\#\# Relação com o peso individual \#\#}
+\CommentTok{\# Precisamos converter as categorias de peso em formato binário}
+
+\NormalTok{dados2}\SpecialCharTok{$}\NormalTok{categoria }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{health\_metrics }\SpecialCharTok{==} \StringTok{"overweight"}\NormalTok{,}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+
+\FunctionTok{ggplot}\NormalTok{(dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ categoria)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \DecValTok{4}\NormalTok{, }\AttributeTok{col =} \StringTok{\textquotesingle{}gray50\textquotesingle{}}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.25}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+Podemos ver que há muitos pinguins com baixo peso corporal porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.
+
+É natural supor que cada espécie vai apresentar um peso médio próprio. Isso explica, em parte, o por que de observarmos indivíduos obsesos associados a menores massas corporais:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Relação peso individual vs. espécie \#\#}
+\FunctionTok{ggplot}\NormalTok{(dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ species, }\AttributeTok{y =}\NormalTok{ body\_mass\_g, }\AttributeTok{fill =}\NormalTok{ species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{stat\_summary}\NormalTok{(}\AttributeTok{fun =}\NormalTok{ mean, }\AttributeTok{geom=}\StringTok{"point"}\NormalTok{, }\AttributeTok{shape=}\DecValTok{19}\NormalTok{, }\AttributeTok{size=}\DecValTok{3}\NormalTok{, }\AttributeTok{color=}\StringTok{"red"}\NormalTok{, }\AttributeTok{fill=}\StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"BrBG"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-8-1.pdf}}
+
+Além disso, sabemos que o peso médio também difere em relação ao sexo do invidíduo (fêmea/macho)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Relação peso individual vs. sexo \#\#}
+\FunctionTok{ggplot}\NormalTok{(dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ body\_mass\_g, }\AttributeTok{fill =}\NormalTok{ sex)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"BrBG"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-9-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Relação peso individual vs. sexo \& espécie \#\#}
+\FunctionTok{ggplot}\NormalTok{(dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sex, }\AttributeTok{y =}\NormalTok{ body\_mass\_g, }\AttributeTok{fill =}\NormalTok{ species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"BrBG"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-9-2.pdf}}
+
+Podemos nos questionar se o tipo de dieta influencia no peso dos pinguins:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Relação peso individual vs. dieta \#\#}
+
+\FunctionTok{ggplot}\NormalTok{(dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ diet, }\AttributeTok{y =}\NormalTok{ body\_mass\_g, }\AttributeTok{fill =}\NormalTok{ species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette=}\StringTok{"BrBG"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-10-1.pdf}}
+
+Como podemos ver, os pesos médios dos pinguins diferem quanto a espécie, o sexo e a sua dieta. Portanto, isso também influenciará na categoria de peso (sobrepeso (1), normal (0))
+
+\section{Hipóteses}\label{hipuxf3teses}
+
+Com base nessas breves observações, podemos começar a formular algumas hipóteses:
+
+\begin{itemize}
+\item
+  \(H_1:\) A probabilidade de sobrepeso difere entre as difrerentes espécies, com a espécie Gentoo apresentando às maiores probabilidades
+\item
+  \(H_2:\) Os machos apresentam maiores probabilidades de sobrepeso
+\item
+  \(H_3:\) O sobrepeso pode ser determinado pela dieta
+\end{itemize}
+
+\section{Objetivos}\label{objetivos}
+
+Avaliar como fatores biológicos (espécie e sexo) e ecológicos (composição da dieta) influenciam na probabilidade de sobrepeso em pinguins do Arquipélago Palmer.
+
+\subsection{Objetivos específicos}\label{objetivos-especuxedficos}
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\tightlist
+\item
+  \textbf{Estimar a influência das espécies na probabilidade de sobrepeso}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Permitirá determinar se os pinguins-gentoo, pinguins-de-barbicha e pinguins-de-adélia diferem significativamente na probabilidade de estarem acima do peso
+  \end{itemize}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Avaliar o efeito do sexo na probabilidade de sobrepeso, irrespectivo da espécie}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Permitirá avaliar qual dos sexos tem maiores probabilidade de sobrepeso
+  \end{itemize}
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\roman{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Avaliar o papel da composição da dieta na probabilidade de sobrepeso, irrespectivo da espécie}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Permitirá avaliar qual item alimentar está associado à maiores probabilidade de sobrepeso
+  \end{itemize}
+\end{enumerate}
+
+\section{Metodologia}\label{metodologia}
+
+Para avaliar os fatores que influenciam o sobrepeso em pinguins, será utilizado um modelo de regressão logística (i.e., modelo binomial), visto que a variável resposta (\emph{health\_metrics}) é binária (sobrepeso (1) vs.~normal (0)). Indivíduos classificados como abaixo do peso foram excluídos das análises de modo que o foco do estudo seja apenas na população com peso normal e sobrepeso.
+
+Podemos resumir o modelo conforme:
+
+\[y_i \sim Binomial(n_i, p_i)\]
+
+\[logit(p_i) = \eta_i 
+= \beta_0 +\sum_{j=1}^{J} \beta_j x_{ij}\]
+
+onde \(y_i\) é o i\emph{esmo} pinguim, \(n_i\) o número total de pinguins, \(p_i\) a probabilidade do i\emph{esmo} pinguim estar acima do peso, \(\beta_0\) o intercepto (i.e., peso médio), \(j\) número de covariáveis, \(\beta_j\) os coeficientes que quantificam o efeito das covariáveis \(x_j\).
+
+Poderíamos escrever o modelo completo, conforme
+
+\[logit(p_i) = \beta_0 + \beta_1\text{Peso}_i+ \beta_2\text{Especie}_i + \beta_3\text{Sexo}_i + \beta_4\text{Dieta}_i\]
+
+\begin{quote}
+\textbf{Atenção:} Repare que o modelo contém 3 covariáveis categóricas e uma numérica - estamos, portanto, montando uma ANCOVA usando uma distribuição binomial!
+\end{quote}
+
+Este único modelo é suficiente para responder aos três objetivos específicos. No entanto, para vias de exercício, iremos testar diversos modelos para achar o modelo que melhor se ajuste aos dados. Para tanto, usaremos o método ``forward-stepwise'', em que partimos do modelo nulo e inserimos uma covariável por vez.
+
+Os modelos serão comparados pelos valores de AIC e, quando necessário, contrastados (testados) via o \emph{teste de razão de verossimilhança}. Além disso, o ajuste dos modelos será analisado via análises gráficas dos resíduos.
+
+\section{Análises \& Resultados}\label{anuxe1lises-resultados}
+
+Iniciaremos as análises montando os modelos, partindo do modelo mais simples (modelo nulo) para o modelo mais complexo (contém todas as covariáveis).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 3) Testando modelos}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+
+\DocumentationTok{\#\# Modelo Nulo}
+\NormalTok{mod0 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+
+\DocumentationTok{\#\# Modelo 1}
+\NormalTok{mod1 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_mass\_g,}
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+
+\DocumentationTok{\#\# Modelo 2}
+\NormalTok{mod2 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_mass\_g }\SpecialCharTok{+}\NormalTok{ species,}
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+
+\DocumentationTok{\#\# Modelo 3}
+\NormalTok{mod3 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_mass\_g }\SpecialCharTok{+}\NormalTok{ species }\SpecialCharTok{+}\NormalTok{ sex,}
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+
+\DocumentationTok{\#\# Modelo 4}
+\NormalTok{mod4 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}}\NormalTok{ body\_mass\_g }\SpecialCharTok{+}\NormalTok{ species }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ diet,}
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+
+\DocumentationTok{\#\# Modelo 5}
+\NormalTok{mod5 }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(categoria }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(body\_mass\_g, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}\NormalTok{ species }\SpecialCharTok{+}\NormalTok{ sex }\SpecialCharTok{+}\NormalTok{ diet, }
+            \AttributeTok{family =} \FunctionTok{binomial}\NormalTok{(}\AttributeTok{link =} \StringTok{"logit"}\NormalTok{),}
+            \AttributeTok{data =}\NormalTok{ dados2)}
+\end{Highlighting}
+\end{Shaded}
+
+Agora que temos alguns modelos, podemos compará-los via valores de AIC
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 4) Comparando os modelos}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+
+\DocumentationTok{\#\# Calcular os valores de AIC \#\#}
+\NormalTok{aic }\OtherTok{\textless{}{-}} \FunctionTok{AIC}\NormalTok{(mod0, mod1, mod2, mod3, mod4, mod5)}
+
+
+\DocumentationTok{\#\# Ordenar dos menores aos maiores valores \#\#}
+\NormalTok{aic }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(AIC)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      df      AIC
+## mod5  9 1683.024
+## mod4  8 1818.901
+## mod3  5 2525.227
+## mod2  4 2648.702
+## mod1  2 2733.078
+## mod0  1 3714.392
+\end{verbatim}
+
+De acordo com a tabela, constata-se que o modelo que usou todas as covariávies (mod5), incluindo o termo quadrático para a massa corporal, foi o que apresentou o melhor ajuste uma vez que apresentou o menor valor de AIC quando comparado aos demais modelos.
+
+Antes de prosseguirmos com a validação visual do modelo escolhido, vamos comparar se esse modelo difere significativamente do segundo melhor modelo (mod4).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Teste de razão de verossimilhança \#\#}
+
+\CommentTok{\#lmtest::lrtest(mod4, mod5) \# mesma coisa}
+\FunctionTok{anova}\NormalTok{(mod4, mod5, }\AttributeTok{test =} \StringTok{"Chisq"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Deviance Table
+## 
+## Model 1: categoria ~ body_mass_g + species + sex + diet
+## Model 2: categoria ~ poly(body_mass_g, 2) + species + sex + diet
+##   Resid. Df Resid. Dev Df Deviance  Pr(>Chi)    
+## 1      2709     1802.9                          
+## 2      2708     1665.0  1   137.88 < 2.2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Como o p-valor \textless{} 0.05, conclui-se que o modelo mais complexo é significativamente melhor do que o modelo que não usa o termo quadrático do peso corporal.
+
+Vamos agora analisar gráficamente o ajuste do modelo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 5) Validação do modelo}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\FunctionTok{library}\NormalTok{(DHARMa)}
+
+\DocumentationTok{\#\# Simulando os resíduos a partir do modelo escolhido \#\#}
+\NormalTok{resid\_sim }\OtherTok{\textless{}{-}} \FunctionTok{simulateResiduals}\NormalTok{(mod5, }\AttributeTok{n=}\DecValTok{1000}\NormalTok{)}
+
+\FunctionTok{plot}\NormalTok{(resid\_sim)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-14-1.pdf}}
+
+Embora o teste de Kolmogorov--Smirnov aponte que os resíduos não estão uniformemente distribuídos conforme o modelo proposto, a avaliação gráfica revela que não há violações aparentes - i.e., os resíduos não sinalizam nenhum viés sistemático.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Teste de uniformidade dos resíduos}
+\FunctionTok{testUniformity}\NormalTok{(resid\_sim) }
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\begin{verbatim}
+## 
+##  Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  simulationOutput$scaledResiduals
+## D = 0.019823, p-value = 0.236
+## alternative hypothesis: two-sided
+\end{verbatim}
+
+No que diz respeito ao teste de sobredispersão, constata-se que os resíduos não apresentam sobredispersão:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Teste de sobredispersão}
+\FunctionTok{testDispersion}\NormalTok{(resid\_sim) }\CommentTok{\# se p\textgreater{}0.05, não há sobredispersão}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-16-1.pdf}}
+
+\begin{verbatim}
+## 
+##  DHARMa nonparametric dispersion test via sd of residuals
+##  fitted vs. simulated
+## 
+## data:  simulationOutput
+## dispersion = 0.99631, p-value = 0.896
+## alternative hypothesis: two.sided
+\end{verbatim}
+
+Os resíduos mostram-se levemente correlacionados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Teste de autocorrelação}
+\FunctionTok{library}\NormalTok{(performance)}
+\FunctionTok{check\_autocorrelation}\NormalTok{(mod5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Autocorrelated residuals detected (p < .001).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(mod5))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-17-1.pdf}}
+
+De modo geral, o modelo escolhido se ajustou bem aos dados. Exceto pelo pressuposto da independência residual, todos os demais pressupostos foram atendidos.
+
+A violação da independência não deve ser negligenciada, porque indica que os dados são correlacionados entre si. Ignorar esse problema pode resultar não apenas em estimativas de erros padrões inválidas, como também em interpretações errada dos parâmetros.
+
+\begin{quote}
+\textbf{Atenção:} Para vias de prática, vamos ignorar esse probelma, mesmo porque a violação foi mínima, e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs.~submissão do indivíduo em e o acesso à
+áreas de alimentações mais nutritivas). Esses problemas podem ser abordados via \emph{Modelos Hierárquicos}.
+\end{quote}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# 6) Analsiando os resultados}
+\CommentTok{\#\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+
+\FunctionTok{summary}\NormalTok{(mod5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = categoria ~ poly(body_mass_g, 2) + species + sex + 
+##     diet, family = binomial(link = "logit"), data = dados2)
+## 
+## Coefficients:
+##                       Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)             2.0472     0.1628  12.572   <2e-16 ***
+## poly(body_mass_g, 2)1 252.1322    11.7799  21.404   <2e-16 ***
+## poly(body_mass_g, 2)2 -75.3848     5.5807 -13.508   <2e-16 ***
+## speciesChinstrap       -1.6433     0.1966  -8.357   <2e-16 ***
+## speciesGentoo          -3.2613     0.2062 -15.817   <2e-16 ***
+## sexmale                -3.2371     0.2075 -15.603   <2e-16 ***
+## dietkrill              -2.2294     0.1761 -12.658   <2e-16 ***
+## dietparental            5.7126     0.4025  14.194   <2e-16 ***
+## dietsquid              -2.2187     0.2413  -9.193   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 3712.4  on 2716  degrees of freedom
+## Residual deviance: 1665.0  on 2708  degrees of freedom
+## AIC: 1683
+## 
+## Number of Fisher Scoring iterations: 6
+\end{verbatim}
+
+Como estamos trabalhando com variáveis categóricas, isso implica que o primeiro nível de cada variável estará absorvido no intercepto. Dessa forma, a interpretação dos resultados é feita de forma relativa.
+
+\begin{itemize}
+\tightlist
+\item
+  i.e., tudo é comparado ao nível de referência
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Espécie: Adelie
+  \item
+    Sexo: feminino
+  \item
+    Dieta: peixe
+  \end{itemize}
+\end{itemize}
+
+Por se tratar de um modelo logístico, todos os parâmetros estão expressos na escala logit e são interpretados sob a forma de razão de chance. Esses parâmetros podem ser transformados em probabilidades convertendo-os para escala natural conforme:
+
+\[p = \frac{1}{1 + exp(-\eta)}\]
+
+\begin{quote}
+\textbf{Atenção:} a conversão para probabilidades só faz sentido quando tratamos de variáveis categóricas. Para variáveis numéricas (contínuas ou discertas)
+\end{quote}
+
+Avaliando individualmente os valores estimados para cada covariável, observamos que:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Intercept}: representa o nível de referência, logo, a massa corporal de um pinguim fêmea da espécie Adelie e com dieta de peixe.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-2.0472)}  \approx 0.88\)
+    \item
+      A probabilidade de um pinguim fêmea da espécie Adelie com dieta de peixe ter sobrepeso é de 88.6\%.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{poly(body\_mass\_g,\ 2)1}: representa o efeito linear da massa corporal; indica que há uma \textbf{relação positiva} entre a massa corporal e a chance de sobrepeso.
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{poly(body\_mass\_g,\ 2)2}: representa o efeito quadrático; como o valor do \textbf{parâmetro é negativo}, isso indica que a \textbf{relação} entre a massa corporal e a chance de sobrepeso é \textbf{côncava}, i.e, parâbola com concavidade voltada para baixo \(\bigcap\). Dessa forma, interpretamos que a chance de sobrepeso aumenta com a massa corporal, mas a taxa de aumento começa a diminuir à medida que a massa corporal se torna muito alta.
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{speciesChinstrap}: representa o log-odds de sobrepeso para a espécie Chinstrapquando comparado com a espécie Adelie (-1.64). Isso significa que os pinguins da espécie Chinstrap têm uma chance significativamente menor de sobrepeso do que os pinguins Adelie.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-(2.0472 + (-1.6433)))}  \approx 0.59\)
+    \item
+      A probabilidade de um pinguim da espécie Chinstrap ter sobrepeso é de 60.0\%.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{speciesGentoo}: O log-odds de sobrepeso para a espécie Gentoo é ainda menor comparado às demais espécies, dado ao valor estimado muito menor. Isso significa a e pinguins da espécie Gentoo têm uma chance significativamente menor de sobrepeso do que os pinguins Adelie e Chinstrap.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-(2.0472 + (-3.2613)))}  \approx 0.22\)
+    \item
+      A espécie Gentoo apresentou a menor probabilidade de sobprepeso, com probabilidade estimada em 22\%.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{sexmale}: comparado com as fêmeas, os machos apresentam chances de sobrepeso significativamente menores dado ao valor negativo que foi estimado o parâmetro (-3.23).
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-(2.0472 + (-3.2371)))}  \approx 0.23\)
+    \item
+      Um pinguim macho tem uma probabilidade de sobrepeso de 23\%, probabilidade é significativamente menor que a das fêmeas.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{dietkrill}: há uma relação negativa e significativa, o que indica que há uma menor chance de pinguins que se alimentam de krill estarem obesos, quando comparado com pinguins que se alimentam de peixes.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-(2.0472 + (-2.2294)))}  \approx 0.45\)
+    \item
+      A probabilidade de sobrepeso para pinguins que se alimentam de krill é de 45\%.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{dietparental}: há uma forte relação positiva entre a dieta parental e as chances de sobrepeso. Como se trata de dieta `parental', é provável que essa maior taxa de sobrepeso esteja relacionado à filhotes - poderia se testar um modelo incluindo \texttt{life\_stage} como variável preditora.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Convertendo para probabilidades, temos:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      \(p = \frac{1}{1+exp(-(2.0472 + 5.7126)}  \approx 0.99\)
+    \item
+      Pinguins que são alimentados pelos pais tem 99\% de probabilidade de estarem acima do peso.
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{dietsquid}: interpretação similar à dieta à base de krill.
+\end{itemize}
+
+Por fim, podemos visualizar os resultados do modelo ajustado.
+A ideia é usar o modelo ajustado para predizer novos valores de y baseado nas covariáveis que estão no modelo.
+
+Para tanto, precisamos montar um data frame no qual se cria uma sequência de valores
+de massa corporal, e replica as demais covariáveis.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)}
+\NormalTok{massas }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FunctionTok{min}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{body\_mass\_g, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+              \FunctionTok{max}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{body\_mass\_g, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+              \AttributeTok{length.out =} \DecValTok{100}\NormalTok{)}
+
+
+
+\DocumentationTok{\#\# Gerando um data frame de predição}
+\NormalTok{dfpred }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{body\_mass\_g =}\NormalTok{  massas,}
+                      \AttributeTok{species =} \FunctionTok{unique}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{species),}
+                      \AttributeTok{sex =} \FunctionTok{unique}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{sex),}
+                      \AttributeTok{diet =} \FunctionTok{unique}\NormalTok{(dados2}\SpecialCharTok{$}\NormalTok{diet))}
+
+
+
+\DocumentationTok{\#\# Predizendo na escala logit (necessario para calcular os ICs)}
+\NormalTok{predicoes }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(mod5, }\AttributeTok{newdata =}\NormalTok{ dfpred , }\AttributeTok{type =} \StringTok{"link"}\NormalTok{, }\AttributeTok{se.fit =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{dfpred }\OtherTok{\textless{}{-}}\NormalTok{ dfpred }\SpecialCharTok{\%\textgreater{}\%}
+          \FunctionTok{mutate}\NormalTok{(}\AttributeTok{link =}\NormalTok{ predicoes}\SpecialCharTok{$}\NormalTok{fit,}
+                 \AttributeTok{se =}\NormalTok{ predicoes}\SpecialCharTok{$}\NormalTok{se.fit,}
+                 \AttributeTok{prob =} \FunctionTok{plogis}\NormalTok{(link),}
+                 \AttributeTok{lwr =} \FunctionTok{plogis}\NormalTok{(link }\SpecialCharTok{{-}} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ se),}
+                 \AttributeTok{upr =} \FunctionTok{plogis}\NormalTok{(link }\SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ se))}
+
+
+
+\DocumentationTok{\#\# Plotando....}
+\FunctionTok{ggplot}\NormalTok{(dfpred, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ prob, }\AttributeTok{color =}\NormalTok{ sex, }\AttributeTok{fill =}\NormalTok{ sex)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ dados2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ body\_mass\_g, }\AttributeTok{y =}\NormalTok{ categoria),}
+             \AttributeTok{inherit.aes =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{col =} \StringTok{"gray40"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_ribbon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =}\NormalTok{ lwr, }\AttributeTok{ymax =}\NormalTok{ upr), }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{color =} \ConstantTok{NA}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(diet }\SpecialCharTok{\textasciitilde{}}\NormalTok{ species) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \StringTok{"Probabilidade de sobrepeso"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Massa corporal (g)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#D8B365"}\NormalTok{, }\StringTok{"\#5AB4AC"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{relatorio_files/figure-latex/unnamed-chunk-19-1.pdf}}
+
+\chapter{GLM para dados discretos}\label{glm-para-dados-discretos}
+
+Desenvolva seu projeto aqui\ldots{}
+
+\chapter{GLM para dados contínuos}\label{glm-para-dados-contuxednuos}
+
+Desenvolva seu projeto aqui\ldots{}
+
+\chapter{GLM para dados categóricos}\label{glm-para-dados-categuxf3ricos}
+
+Desenvolva seu projeto aqui\ldots{}
+
+\chapter{Outras distribuições de probabilidade}\label{outras-distribuiuxe7uxf5es-de-probabilidade}
+
+Desenvolva seu projeto aqui\ldots{}
+
+\chapter{GAM}\label{gam}
+
+Desenvolva seu projeto aqui\ldots{}
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}
