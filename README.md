@@ -23,21 +23,22 @@ Para acessar o conteúdo do curso, siga as intruções abaixo:
 1. Copie (ou fork) esse repositório
 2. Apague o diretório `site_libs/`
 3. Abra o R nesse diretório, carregue os pacotes e renderize o site com
-   `render_site()`
+   `render_site()`, conforme indicado abaixo
 4. Clique no arquivo *index.html* e abre ele com a opção *browser*
 
+<br>
 
 ```r
 
 # Instalando os pacotes
 #~~~~~~~~~~~~~~~~~~~~~~~~
 
-## Pacotes principais
+## Pacotes principais ##
 install.packages("knitr")
 install.packages("rmarkdown"")
 
 
-## Pacotes adicionais
+## Pacotes adicionais ##
 install.packages("bookdown")
 install.packages("kableExtra")
 install.packages("tinytex")

@@ -18,6 +18,16 @@ Para exemplificar o modelo logístico, usaremos os dados dos pinguins de Palmer,
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 dados <- readRDS("../Dados/palmerpenguins_extended.rds")
 
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 2. Carregando os pacotes
+#~~~~~~~~~~~~~~~~~~~~~~~~~~
+library(dplyr)
+library(ggplot2)
+library(performance)
+library(DHARMa)
+library(kableExtra)
+
 ```
 
 
@@ -40,9 +50,9 @@ str(dados)
 ## Análise exploratória (breve)
 
 ### Corrigindo os tipos de variáveis
-Antes de efetuar a análise exploratória, é importante que cada variável do banco de dados seja caracterizado de acordo com sua natureza (*character*, *factor*, *numeric*, *integer*, etc.).
+Antes de efetuar a análise exploratória, é importante que cada variável do banco de dados seja caracterizada de acordo com sua natureza (*character*, *factor*, *numeric*, *integer*, etc.).
 
-Olhando a estrutura dos dados, percebemos que precisamos converter as variáveis *character* em *fator*
+Olhando a estrutura dos dados, percebemos que precisamos converter as variáveis *character* para *factor*
 
   - Isso permitirá que os níveis do fator possam ser comparados (graficamente e estatisticamente)  
 
@@ -86,8 +96,6 @@ Precisamos, portanto, filtrar os dados para remover os indivíduos que estão ab
 ```{r echo=T, message=F, warning=F}
 
 ## Filtrando os dados ##
-library(dplyr)
-
 dados2 <- filter(dados, !(health_metrics == "underweight"))
 
 
@@ -104,8 +112,6 @@ Agora podemos avaliar a relação dessas categorias em função de algumas covar
 
 
 ```{r echo=T}
-library(ggplot2)
-
 ## Relação com o peso individual ##
 # Precisamos converter as categorias de peso em formato binário
 
@@ -174,7 +180,7 @@ Como podemos ver, os pesos médios dos pinguins diferem quanto a espécie, o sex
 ## Hipóteses
 Com base nessas breves observações, podemos começar a formular algumas hipóteses:
 
-- $H_1:$ A probabilidade de sobrepeso difere entre as difrerentes espécies, com a espécie Gentoo apresentando às maiores probabilidades
+- $H_1:$ A probabilidade de sobrepeso difere entre as difrerentes espécies, com a espécie Gentoo apresentando as maiores probabilidades
 
 - $H_2:$ Os machos apresentam maiores probabilidades de sobrepeso
 
@@ -294,7 +300,14 @@ aic <- AIC(mod0, mod1, mod2, mod3, mod4, mod5)
 
 
 ## Ordenar dos menores aos maiores valores ##
-aic %>% arrange(AIC)
+aic %>% 
+  arrange(AIC) %>%
+  kable(format = "html", caption = "Comparação de modelos via AIC") %>%
+  kable_paper(bootstrap_options = c("striped","condensed"), full_width = F) %>%
+  kable_classic()
+
+
+
 ```
 
 
@@ -323,8 +336,6 @@ Vamos agora analisar gráficamente o ajuste do modelo.
 #~~~~~~~~~~~~~~~~~~~~~~~~
 # 5) Validação do modelo
 #~~~~~~~~~~~~~~~~~~~~~~~~
-library(DHARMa)
-
 ## Simulando os resíduos a partir do modelo escolhido ##
 resid_sim <- simulateResiduals(mod5, n=1000)
 
@@ -353,7 +364,6 @@ Os resíduos mostram-se levemente correlacionados
 
 ```{r echo=T, message=F, warning=F}
 ## Teste de autocorrelação
-library(performance)
 check_autocorrelation(mod5)
 acf(residuals(mod5))
 
@@ -377,7 +387,17 @@ A violação da independência não deve ser negligenciada, porque indica que os
 # 6) Analsiando os resultados
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-summary(mod5)
+#summary(mod5) 
+
+res <- summary(mod5)
+
+res$coefficients %>%
+  round(.,2) %>%
+  as.data.frame() %>% 
+  kable(format = "html", caption = "Sumário estatístico do modelo escolhido") %>%
+  kable_paper(bootstrap_options = c("striped","condensed"), full_width = F) %>%
+  kable_classic()
+
 ```
 
 

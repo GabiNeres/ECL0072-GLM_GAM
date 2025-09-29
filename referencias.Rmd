@@ -42,11 +42,33 @@ output:
 <br>
 
 
-## Para aquela curiosidade extra
+## Quando bater aquela curiosidade extra
 - [Lista de vídeos no YouTube](https://youtube.com/playlist?list=PLhfTXDln3k652uTf0jf4EyoBJBTUHiorf&si=Pk23sNq_LLAqaJnc) 
 
 
 <br>
+
+
+## Tutoriais
+
+**RMarkdown**
+
+- https://livro.curso-r.com/9-1-markdown.html#markdown
+- https://bookdown.org/yihui/rmarkdown-cookbook/
+
+
+**Bookdown**
+
+- https://bookdown.org/yihui/bookdown/
+
+
+**Visualização de dados**
+
+- https://clauswilke.com/dataviz/
+
+<br>
+
+
 
 
 ## Para apreciar com um cafezinho
