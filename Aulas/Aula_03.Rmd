@@ -33,7 +33,6 @@ output:
 - **Cap. 4 (seção 4.5):** Bolker (2008)
 - **Caps. 2 & 3:** Faraway (2016)
 - **Cap. 13:** Gelman et al. (2020)
-- **Caps. 13:** Gelman et al. (2020)
 - **Caps. 1 & 5:** Agresti (2015)*
 
 
@@ -368,7 +367,7 @@ knitr::include_graphics("../Figuras/nazare.gif")
     
     
 - a normalidade residual só se aplica para o caso em que a variável resposta ($y$) segue uma distribuição Normal de probabilidae
-  - os resíduos podem ser avaliaados sob o prisma do modelo de probabilidade escolhido para a variável $y$ 
+  - os resíduos podem ser avaliados sob o prisma do modelo de probabilidade escolhido para a variável $y$ 
 
 ---
 ## <span style="color: #ee6c4d;">Desmistificando os GLMs </span><span style="color: #3e5c76;">| Pressupostos  </span>  
@@ -489,7 +488,7 @@ $$\large y_i \sim Binomial(n_i, p_i)$$
 <b>ATENÇÃO</b>
 <br>
   
-A Bernoulli é um caso especial da Binomial quando $n_i = 1$
+A Bernoulli é um caso especial da Binomial quando $n = 1$
 </p>
 
 ---

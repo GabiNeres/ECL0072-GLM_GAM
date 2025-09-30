@@ -75,6 +75,14 @@ ggplot(dados2, aes(x = species, y = body_mass_g, fill = species)) +
     theme_minimal()
 
 
+
+ggplot(dados2, aes(x = as.factor(categoria), y = body_mass_g, fill = species)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="BrBG") +
+  theme_minimal()
+
+
+
 ## Relação peso individual vs. sexo ##
 ggplot(dados2, aes(x = sex, y = body_mass_g, fill = sex)) +
     geom_boxplot() +
