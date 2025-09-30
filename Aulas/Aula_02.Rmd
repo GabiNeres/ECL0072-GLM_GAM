@@ -256,7 +256,7 @@ $$\large \hat{y} = Hy ~~\color{gray}{(= \hat{\beta_1})}$$
 
 
 
-.footnote[**H** = matriz 'hat'; **r** = coeficiente de correlação;  **σ** = variância]
+.footnote[**H** = matriz 'hat'; **r** = coeficiente de correlação;  **σ** = desvio padrão]
 
 
 ---
