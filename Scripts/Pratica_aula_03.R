@@ -68,14 +68,6 @@ ggplot(dados2, aes(x = body_mass_g, y = categoria)) +
 
 
 ## Relação peso individual vs. espécie ##
-ggplot(dados2, aes(x = species, y = body_mass_g, fill = species)) +
-    geom_boxplot() +
-    stat_summary(fun = mean, geom="point", shape=19, size=3, color="red", fill="red") +
-    scale_fill_brewer(palette="BrBG") +
-    theme_minimal()
-
-
-
 ggplot(dados2, aes(x = as.factor(categoria), y = body_mass_g, fill = species)) +
   geom_boxplot() +
   scale_fill_brewer(palette="BrBG") +

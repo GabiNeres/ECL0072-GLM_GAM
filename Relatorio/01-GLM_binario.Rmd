@@ -123,7 +123,7 @@ ggplot(dados2, aes(x = body_mass_g, y = categoria)) +
 
 ```
 
-Podemos ver que há muitos pinguins com baixo peso corporal porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.
+Podemos ver que há muitos pinguins com baixo peso corporal, porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.
 
 
 É natural supor que cada espécie vai apresentar um peso médio próprio. Isso explica, em parte, o por que de observarmos indivíduos obsesos associados a menores massas corporais:
@@ -131,11 +131,12 @@ Podemos ver que há muitos pinguins com baixo peso corporal porém categorizado 
 ```{r echo=T}
 
 ## Relação peso individual vs. espécie ##
-ggplot(dados2, aes(x = species, y = body_mass_g, fill = species)) +
-    geom_boxplot() +
-    stat_summary(fun = mean, geom="point", shape=19, size=3, color="red", fill="red") +
-    scale_fill_brewer(palette="BrBG") +
-    theme_minimal()
+ggplot(dados2, aes(x = as.factor(categoria), y = body_mass_g, fill = species)) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="BrBG") +
+  theme_minimal()
+
+##
 
 ```
 

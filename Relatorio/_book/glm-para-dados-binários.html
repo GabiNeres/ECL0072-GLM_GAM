@@ -310,35 +310,35 @@ code span.wa { color: #bf0303; } /* Warning */
 <span id="cb17-7"><a href="glm-para-dados-binários.html#cb17-7" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&#39;gray50&#39;</span>, <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
 <span id="cb17-8"><a href="glm-para-dados-binários.html#cb17-8" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Podemos ver que há muitos pinguins com baixo peso corporal porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.</p>
+<p>Podemos ver que há muitos pinguins com baixo peso corporal, porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.</p>
 <p>É natural supor que cada espécie vai apresentar um peso médio próprio. Isso explica, em parte, o por que de observarmos indivíduos obsesos associados a menores massas corporais:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="glm-para-dados-binários.html#cb18-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. espécie ##</span></span>
-<span id="cb18-2"><a href="glm-para-dados-binários.html#cb18-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="glm-para-dados-binários.html#cb18-3" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb18-4"><a href="glm-para-dados-binários.html#cb18-4" tabindex="-1"></a>    <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom=</span><span class="st">&quot;point&quot;</span>, <span class="at">shape=</span><span class="dv">19</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="st">&quot;red&quot;</span>, <span class="at">fill=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a href="glm-para-dados-binários.html#cb18-5" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
-<span id="cb18-6"><a href="glm-para-dados-binários.html#cb18-6" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<span id="cb18-2"><a href="glm-para-dados-binários.html#cb18-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(categoria), <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="glm-para-dados-binários.html#cb18-3" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a href="glm-para-dados-binários.html#cb18-4" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="glm-para-dados-binários.html#cb18-5" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="glm-para-dados-binários.html#cb19-1" tabindex="-1"></a><span class="do">##</span></span></code></pre></div>
 <p>Além disso, sabemos que o peso médio também difere em relação ao sexo do invidíduo (fêmea/macho)</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="glm-para-dados-binários.html#cb19-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. sexo ##</span></span>
-<span id="cb19-2"><a href="glm-para-dados-binários.html#cb19-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="glm-para-dados-binários.html#cb19-3" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb19-4"><a href="glm-para-dados-binários.html#cb19-4" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
-<span id="cb19-5"><a href="glm-para-dados-binários.html#cb19-5" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="relatorio_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="glm-para-dados-binários.html#cb20-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. sexo &amp; espécie ##</span></span>
-<span id="cb20-2"><a href="glm-para-dados-binários.html#cb20-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="glm-para-dados-binários.html#cb20-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. sexo ##</span></span>
+<span id="cb20-2"><a href="glm-para-dados-binários.html#cb20-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb20-3"><a href="glm-para-dados-binários.html#cb20-3" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb20-4"><a href="glm-para-dados-binários.html#cb20-4" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
 <span id="cb20-5"><a href="glm-para-dados-binários.html#cb20-5" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img src="relatorio_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="glm-para-dados-binários.html#cb21-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. sexo &amp; espécie ##</span></span>
+<span id="cb21-2"><a href="glm-para-dados-binários.html#cb21-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> sex, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="glm-para-dados-binários.html#cb21-3" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb21-4"><a href="glm-para-dados-binários.html#cb21-4" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="glm-para-dados-binários.html#cb21-5" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
 <p>Podemos nos questionar se o tipo de dieta influencia no peso dos pinguins:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="glm-para-dados-binários.html#cb21-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. dieta ##</span></span>
-<span id="cb21-2"><a href="glm-para-dados-binários.html#cb21-2" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="glm-para-dados-binários.html#cb21-3" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> diet, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="glm-para-dados-binários.html#cb21-4" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb21-5"><a href="glm-para-dados-binários.html#cb21-5" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="glm-para-dados-binários.html#cb21-6" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="glm-para-dados-binários.html#cb22-1" tabindex="-1"></a><span class="do">## Relação peso individual vs. dieta ##</span></span>
+<span id="cb22-2"><a href="glm-para-dados-binários.html#cb22-2" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="glm-para-dados-binários.html#cb22-3" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(<span class="at">x =</span> diet, <span class="at">y =</span> body_mass_g, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="glm-para-dados-binários.html#cb22-4" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb22-5"><a href="glm-para-dados-binários.html#cb22-5" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;BrBG&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="glm-para-dados-binários.html#cb22-6" tabindex="-1"></a>    <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Como podemos ver, os pesos médios dos pinguins diferem quanto a espécie, o sexo e a sua dieta. Portanto, isso também influenciará na categoria de peso (sobrepeso (1), normal (0))</p>
 </div>
@@ -400,54 +400,54 @@ code span.wa { color: #bf0303; } /* Warning */
 <div id="análises-resultados" class="section level2 hasAnchor" number="1.6">
 <h2><span class="header-section-number">1.6</span> Análises &amp; Resultados<a href="#an%C3%A1lises-resultados" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Iniciaremos as análises montando os modelos, partindo do modelo mais simples (modelo nulo) para o modelo mais complexo (contém todas as covariáveis).</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="glm-para-dados-binários.html#cb22-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb22-2"><a href="glm-para-dados-binários.html#cb22-2" tabindex="-1"></a><span class="co"># 3) Testando modelos</span></span>
-<span id="cb22-3"><a href="glm-para-dados-binários.html#cb22-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb22-4"><a href="glm-para-dados-binários.html#cb22-4" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="glm-para-dados-binários.html#cb22-5" tabindex="-1"></a><span class="do">## Modelo Nulo</span></span>
-<span id="cb22-6"><a href="glm-para-dados-binários.html#cb22-6" tabindex="-1"></a>mod0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb22-7"><a href="glm-para-dados-binários.html#cb22-7" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-8"><a href="glm-para-dados-binários.html#cb22-8" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
-<span id="cb22-9"><a href="glm-para-dados-binários.html#cb22-9" tabindex="-1"></a></span>
-<span id="cb22-10"><a href="glm-para-dados-binários.html#cb22-10" tabindex="-1"></a><span class="do">## Modelo 1</span></span>
-<span id="cb22-11"><a href="glm-para-dados-binários.html#cb22-11" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g,</span>
-<span id="cb22-12"><a href="glm-para-dados-binários.html#cb22-12" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-13"><a href="glm-para-dados-binários.html#cb22-13" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
-<span id="cb22-14"><a href="glm-para-dados-binários.html#cb22-14" tabindex="-1"></a></span>
-<span id="cb22-15"><a href="glm-para-dados-binários.html#cb22-15" tabindex="-1"></a><span class="do">## Modelo 2</span></span>
-<span id="cb22-16"><a href="glm-para-dados-binários.html#cb22-16" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species,</span>
-<span id="cb22-17"><a href="glm-para-dados-binários.html#cb22-17" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-18"><a href="glm-para-dados-binários.html#cb22-18" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
-<span id="cb22-19"><a href="glm-para-dados-binários.html#cb22-19" tabindex="-1"></a></span>
-<span id="cb22-20"><a href="glm-para-dados-binários.html#cb22-20" tabindex="-1"></a><span class="do">## Modelo 3</span></span>
-<span id="cb22-21"><a href="glm-para-dados-binários.html#cb22-21" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex,</span>
-<span id="cb22-22"><a href="glm-para-dados-binários.html#cb22-22" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-23"><a href="glm-para-dados-binários.html#cb22-23" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
-<span id="cb22-24"><a href="glm-para-dados-binários.html#cb22-24" tabindex="-1"></a></span>
-<span id="cb22-25"><a href="glm-para-dados-binários.html#cb22-25" tabindex="-1"></a><span class="do">## Modelo 4</span></span>
-<span id="cb22-26"><a href="glm-para-dados-binários.html#cb22-26" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex <span class="sc">+</span> diet,</span>
-<span id="cb22-27"><a href="glm-para-dados-binários.html#cb22-27" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-28"><a href="glm-para-dados-binários.html#cb22-28" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
-<span id="cb22-29"><a href="glm-para-dados-binários.html#cb22-29" tabindex="-1"></a></span>
-<span id="cb22-30"><a href="glm-para-dados-binários.html#cb22-30" tabindex="-1"></a><span class="do">## Modelo 5</span></span>
-<span id="cb22-31"><a href="glm-para-dados-binários.html#cb22-31" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> <span class="fu">poly</span>(body_mass_g, <span class="dv">2</span>) <span class="sc">+</span> species <span class="sc">+</span> sex <span class="sc">+</span> diet, </span>
-<span id="cb22-32"><a href="glm-para-dados-binários.html#cb22-32" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
-<span id="cb22-33"><a href="glm-para-dados-binários.html#cb22-33" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span></code></pre></div>
-<p>Agora que temos alguns modelos, podemos compará-los via valores de AIC</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="glm-para-dados-binários.html#cb23-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb23-2"><a href="glm-para-dados-binários.html#cb23-2" tabindex="-1"></a><span class="co"># 4) Comparando os modelos</span></span>
-<span id="cb23-3"><a href="glm-para-dados-binários.html#cb23-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="glm-para-dados-binários.html#cb23-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb23-2"><a href="glm-para-dados-binários.html#cb23-2" tabindex="-1"></a><span class="co"># 3) Testando modelos</span></span>
+<span id="cb23-3"><a href="glm-para-dados-binários.html#cb23-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~</span></span>
 <span id="cb23-4"><a href="glm-para-dados-binários.html#cb23-4" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="glm-para-dados-binários.html#cb23-5" tabindex="-1"></a><span class="do">## Calcular os valores de AIC ##</span></span>
-<span id="cb23-6"><a href="glm-para-dados-binários.html#cb23-6" tabindex="-1"></a>aic <span class="ot">&lt;-</span> <span class="fu">AIC</span>(mod0, mod1, mod2, mod3, mod4, mod5)</span>
-<span id="cb23-7"><a href="glm-para-dados-binários.html#cb23-7" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="glm-para-dados-binários.html#cb23-8" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="glm-para-dados-binários.html#cb23-9" tabindex="-1"></a><span class="do">## Ordenar dos menores aos maiores valores ##</span></span>
-<span id="cb23-10"><a href="glm-para-dados-binários.html#cb23-10" tabindex="-1"></a>aic <span class="sc">%&gt;%</span> </span>
-<span id="cb23-11"><a href="glm-para-dados-binários.html#cb23-11" tabindex="-1"></a>  <span class="fu">arrange</span>(AIC) <span class="sc">%&gt;%</span></span>
-<span id="cb23-12"><a href="glm-para-dados-binários.html#cb23-12" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&quot;html&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Comparação de modelos via AIC&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-13"><a href="glm-para-dados-binários.html#cb23-13" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;condensed&quot;</span>), <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
-<span id="cb23-14"><a href="glm-para-dados-binários.html#cb23-14" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code></pre></div>
+<span id="cb23-5"><a href="glm-para-dados-binários.html#cb23-5" tabindex="-1"></a><span class="do">## Modelo Nulo</span></span>
+<span id="cb23-6"><a href="glm-para-dados-binários.html#cb23-6" tabindex="-1"></a>mod0 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb23-7"><a href="glm-para-dados-binários.html#cb23-7" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-8"><a href="glm-para-dados-binários.html#cb23-8" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
+<span id="cb23-9"><a href="glm-para-dados-binários.html#cb23-9" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="glm-para-dados-binários.html#cb23-10" tabindex="-1"></a><span class="do">## Modelo 1</span></span>
+<span id="cb23-11"><a href="glm-para-dados-binários.html#cb23-11" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g,</span>
+<span id="cb23-12"><a href="glm-para-dados-binários.html#cb23-12" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-13"><a href="glm-para-dados-binários.html#cb23-13" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
+<span id="cb23-14"><a href="glm-para-dados-binários.html#cb23-14" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="glm-para-dados-binários.html#cb23-15" tabindex="-1"></a><span class="do">## Modelo 2</span></span>
+<span id="cb23-16"><a href="glm-para-dados-binários.html#cb23-16" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species,</span>
+<span id="cb23-17"><a href="glm-para-dados-binários.html#cb23-17" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-18"><a href="glm-para-dados-binários.html#cb23-18" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
+<span id="cb23-19"><a href="glm-para-dados-binários.html#cb23-19" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="glm-para-dados-binários.html#cb23-20" tabindex="-1"></a><span class="do">## Modelo 3</span></span>
+<span id="cb23-21"><a href="glm-para-dados-binários.html#cb23-21" tabindex="-1"></a>mod3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex,</span>
+<span id="cb23-22"><a href="glm-para-dados-binários.html#cb23-22" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-23"><a href="glm-para-dados-binários.html#cb23-23" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
+<span id="cb23-24"><a href="glm-para-dados-binários.html#cb23-24" tabindex="-1"></a></span>
+<span id="cb23-25"><a href="glm-para-dados-binários.html#cb23-25" tabindex="-1"></a><span class="do">## Modelo 4</span></span>
+<span id="cb23-26"><a href="glm-para-dados-binários.html#cb23-26" tabindex="-1"></a>mod4 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> sex <span class="sc">+</span> diet,</span>
+<span id="cb23-27"><a href="glm-para-dados-binários.html#cb23-27" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-28"><a href="glm-para-dados-binários.html#cb23-28" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span>
+<span id="cb23-29"><a href="glm-para-dados-binários.html#cb23-29" tabindex="-1"></a></span>
+<span id="cb23-30"><a href="glm-para-dados-binários.html#cb23-30" tabindex="-1"></a><span class="do">## Modelo 5</span></span>
+<span id="cb23-31"><a href="glm-para-dados-binários.html#cb23-31" tabindex="-1"></a>mod5 <span class="ot">&lt;-</span> <span class="fu">glm</span>(categoria <span class="sc">~</span> <span class="fu">poly</span>(body_mass_g, <span class="dv">2</span>) <span class="sc">+</span> species <span class="sc">+</span> sex <span class="sc">+</span> diet, </span>
+<span id="cb23-32"><a href="glm-para-dados-binários.html#cb23-32" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">&quot;logit&quot;</span>),</span>
+<span id="cb23-33"><a href="glm-para-dados-binários.html#cb23-33" tabindex="-1"></a>            <span class="at">data =</span> dados2)</span></code></pre></div>
+<p>Agora que temos alguns modelos, podemos compará-los via valores de AIC</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="glm-para-dados-binários.html#cb24-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb24-2"><a href="glm-para-dados-binários.html#cb24-2" tabindex="-1"></a><span class="co"># 4) Comparando os modelos</span></span>
+<span id="cb24-3"><a href="glm-para-dados-binários.html#cb24-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb24-4"><a href="glm-para-dados-binários.html#cb24-4" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="glm-para-dados-binários.html#cb24-5" tabindex="-1"></a><span class="do">## Calcular os valores de AIC ##</span></span>
+<span id="cb24-6"><a href="glm-para-dados-binários.html#cb24-6" tabindex="-1"></a>aic <span class="ot">&lt;-</span> <span class="fu">AIC</span>(mod0, mod1, mod2, mod3, mod4, mod5)</span>
+<span id="cb24-7"><a href="glm-para-dados-binários.html#cb24-7" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="glm-para-dados-binários.html#cb24-8" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="glm-para-dados-binários.html#cb24-9" tabindex="-1"></a><span class="do">## Ordenar dos menores aos maiores valores ##</span></span>
+<span id="cb24-10"><a href="glm-para-dados-binários.html#cb24-10" tabindex="-1"></a>aic <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href="glm-para-dados-binários.html#cb24-11" tabindex="-1"></a>  <span class="fu">arrange</span>(AIC) <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="glm-para-dados-binários.html#cb24-12" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&quot;html&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Comparação de modelos via AIC&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-13"><a href="glm-para-dados-binários.html#cb24-13" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;condensed&quot;</span>), <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb24-14"><a href="glm-para-dados-binários.html#cb24-14" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-paper lightable-classic" style="color: black; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; color: black; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:unnamed-chunk-12">Table 1.1: </span>Comparação de modelos via AIC
@@ -535,10 +535,10 @@ mod0
 </table>
 <p>De acordo com a tabela, constata-se que o modelo que usou todas as covariávies (mod5), incluindo o termo quadrático para a massa corporal, foi o que apresentou o melhor ajuste uma vez que apresentou o menor valor de AIC quando comparado aos demais modelos.</p>
 <p>Antes de prosseguirmos com a validação visual do modelo escolhido, vamos comparar se esse modelo difere significativamente do segundo melhor modelo (mod4).</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="glm-para-dados-binários.html#cb24-1" tabindex="-1"></a><span class="do">## Teste de razão de verossimilhança ##</span></span>
-<span id="cb24-2"><a href="glm-para-dados-binários.html#cb24-2" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="glm-para-dados-binários.html#cb24-3" tabindex="-1"></a><span class="co">#lmtest::lrtest(mod4, mod5) # mesma coisa</span></span>
-<span id="cb24-4"><a href="glm-para-dados-binários.html#cb24-4" tabindex="-1"></a><span class="fu">anova</span>(mod4, mod5, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="glm-para-dados-binários.html#cb25-1" tabindex="-1"></a><span class="do">## Teste de razão de verossimilhança ##</span></span>
+<span id="cb25-2"><a href="glm-para-dados-binários.html#cb25-2" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="glm-para-dados-binários.html#cb25-3" tabindex="-1"></a><span class="co">#lmtest::lrtest(mod4, mod5) # mesma coisa</span></span>
+<span id="cb25-4"><a href="glm-para-dados-binários.html#cb25-4" tabindex="-1"></a><span class="fu">anova</span>(mod4, mod5, <span class="at">test =</span> <span class="st">&quot;Chisq&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: categoria ~ body_mass_g + species + sex + diet
@@ -550,17 +550,17 @@ mod0
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Como o p-valor &lt; 0.05, conclui-se que o modelo mais complexo é significativamente melhor do que o modelo que não usa o termo quadrático do peso corporal.</p>
 <p>Vamos agora analisar gráficamente o ajuste do modelo.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="glm-para-dados-binários.html#cb26-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb26-2"><a href="glm-para-dados-binários.html#cb26-2" tabindex="-1"></a><span class="co"># 5) Validação do modelo</span></span>
-<span id="cb26-3"><a href="glm-para-dados-binários.html#cb26-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb26-4"><a href="glm-para-dados-binários.html#cb26-4" tabindex="-1"></a><span class="do">## Simulando os resíduos a partir do modelo escolhido ##</span></span>
-<span id="cb26-5"><a href="glm-para-dados-binários.html#cb26-5" tabindex="-1"></a>resid_sim <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(mod5, <span class="at">n=</span><span class="dv">1000</span>)</span>
-<span id="cb26-6"><a href="glm-para-dados-binários.html#cb26-6" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="glm-para-dados-binários.html#cb26-7" tabindex="-1"></a><span class="fu">plot</span>(resid_sim)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="glm-para-dados-binários.html#cb27-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-2"><a href="glm-para-dados-binários.html#cb27-2" tabindex="-1"></a><span class="co"># 5) Validação do modelo</span></span>
+<span id="cb27-3"><a href="glm-para-dados-binários.html#cb27-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb27-4"><a href="glm-para-dados-binários.html#cb27-4" tabindex="-1"></a><span class="do">## Simulando os resíduos a partir do modelo escolhido ##</span></span>
+<span id="cb27-5"><a href="glm-para-dados-binários.html#cb27-5" tabindex="-1"></a>resid_sim <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(mod5, <span class="at">n=</span><span class="dv">1000</span>)</span>
+<span id="cb27-6"><a href="glm-para-dados-binários.html#cb27-6" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="glm-para-dados-binários.html#cb27-7" tabindex="-1"></a><span class="fu">plot</span>(resid_sim)</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Embora o teste de Kolmogorov–Smirnov aponte que os resíduos não estão uniformemente distribuídos conforme o modelo proposto, a avaliação gráfica revela que não há violações aparentes - i.e., os resíduos não sinalizam nenhum viés sistemático.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="glm-para-dados-binários.html#cb27-1" tabindex="-1"></a><span class="do">## Teste de uniformidade dos resíduos</span></span>
-<span id="cb27-2"><a href="glm-para-dados-binários.html#cb27-2" tabindex="-1"></a><span class="fu">testUniformity</span>(resid_sim) </span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="glm-para-dados-binários.html#cb28-1" tabindex="-1"></a><span class="do">## Teste de uniformidade dos resíduos</span></span>
+<span id="cb28-2"><a href="glm-para-dados-binários.html#cb28-2" tabindex="-1"></a><span class="fu">testUniformity</span>(resid_sim) </span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <pre><code>## 
 ##  Asymptotic one-sample Kolmogorov-Smirnov test
@@ -569,8 +569,8 @@ mod0
 ## D = 0.028148, p-value = 0.02699
 ## alternative hypothesis: two-sided</code></pre>
 <p>No que diz respeito ao teste de sobredispersão, constata-se que os resíduos não apresentam sobredispersão:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="glm-para-dados-binários.html#cb29-1" tabindex="-1"></a><span class="do">## Teste de sobredispersão</span></span>
-<span id="cb29-2"><a href="glm-para-dados-binários.html#cb29-2" tabindex="-1"></a><span class="fu">testDispersion</span>(resid_sim) <span class="co"># se p&gt;0.05, não há sobredispersão</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="glm-para-dados-binários.html#cb30-1" tabindex="-1"></a><span class="do">## Teste de sobredispersão</span></span>
+<span id="cb30-2"><a href="glm-para-dados-binários.html#cb30-2" tabindex="-1"></a><span class="fu">testDispersion</span>(resid_sim) <span class="co"># se p&gt;0.05, não há sobredispersão</span></span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <pre><code>## 
 ##  DHARMa nonparametric dispersion test via sd of residuals fitted vs.
@@ -580,10 +580,10 @@ mod0
 ## dispersion = 0.99806, p-value = 0.922
 ## alternative hypothesis: two.sided</code></pre>
 <p>Os resíduos mostram-se levemente correlacionados</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="glm-para-dados-binários.html#cb31-1" tabindex="-1"></a><span class="do">## Teste de autocorrelação</span></span>
-<span id="cb31-2"><a href="glm-para-dados-binários.html#cb31-2" tabindex="-1"></a><span class="fu">check_autocorrelation</span>(mod5)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="glm-para-dados-binários.html#cb32-1" tabindex="-1"></a><span class="do">## Teste de autocorrelação</span></span>
+<span id="cb32-2"><a href="glm-para-dados-binários.html#cb32-2" tabindex="-1"></a><span class="fu">check_autocorrelation</span>(mod5)</span></code></pre></div>
 <pre><code>## Warning: Autocorrelated residuals detected (p &lt; .001).</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="glm-para-dados-binários.html#cb33-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(mod5))</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="glm-para-dados-binários.html#cb34-1" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(mod5))</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>De modo geral, o modelo escolhido se ajustou bem aos dados. Exceto pelo pressuposto da independência residual, todos os demais pressupostos foram atendidos.</p>
 <p>A violação da independência não deve ser negligenciada, porque indica que os dados são correlacionados entre si. Ignorar esse problema pode resultar não apenas em estimativas de erros padrões inválidas, como também em interpretações errada dos parâmetros.</p>
@@ -593,20 +593,20 @@ mod0
 áreas de alimentações mais nutritivas). Esses problemas podem ser abordados via <em>Modelos Hierárquicos</em>.</p>
 </blockquote>
 <p><br></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="glm-para-dados-binários.html#cb34-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb34-2"><a href="glm-para-dados-binários.html#cb34-2" tabindex="-1"></a><span class="co"># 6) Analsiando os resultados</span></span>
-<span id="cb34-3"><a href="glm-para-dados-binários.html#cb34-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
-<span id="cb34-4"><a href="glm-para-dados-binários.html#cb34-4" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="glm-para-dados-binários.html#cb34-5" tabindex="-1"></a><span class="co">#summary(mod5) </span></span>
-<span id="cb34-6"><a href="glm-para-dados-binários.html#cb34-6" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="glm-para-dados-binários.html#cb34-7" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod5)</span>
-<span id="cb34-8"><a href="glm-para-dados-binários.html#cb34-8" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="glm-para-dados-binários.html#cb34-9" tabindex="-1"></a>res<span class="sc">$</span>coefficients <span class="sc">%&gt;%</span></span>
-<span id="cb34-10"><a href="glm-para-dados-binários.html#cb34-10" tabindex="-1"></a>  <span class="fu">round</span>(.,<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-11"><a href="glm-para-dados-binários.html#cb34-11" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb34-12"><a href="glm-para-dados-binários.html#cb34-12" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&quot;html&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Sumário estatístico do modelo escolhido&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb34-13"><a href="glm-para-dados-binários.html#cb34-13" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;condensed&quot;</span>), <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
-<span id="cb34-14"><a href="glm-para-dados-binários.html#cb34-14" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="glm-para-dados-binários.html#cb35-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb35-2"><a href="glm-para-dados-binários.html#cb35-2" tabindex="-1"></a><span class="co"># 6) Analsiando os resultados</span></span>
+<span id="cb35-3"><a href="glm-para-dados-binários.html#cb35-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb35-4"><a href="glm-para-dados-binários.html#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="glm-para-dados-binários.html#cb35-5" tabindex="-1"></a><span class="co">#summary(mod5) </span></span>
+<span id="cb35-6"><a href="glm-para-dados-binários.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="glm-para-dados-binários.html#cb35-7" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">summary</span>(mod5)</span>
+<span id="cb35-8"><a href="glm-para-dados-binários.html#cb35-8" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="glm-para-dados-binários.html#cb35-9" tabindex="-1"></a>res<span class="sc">$</span>coefficients <span class="sc">%&gt;%</span></span>
+<span id="cb35-10"><a href="glm-para-dados-binários.html#cb35-10" tabindex="-1"></a>  <span class="fu">round</span>(.,<span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-11"><a href="glm-para-dados-binários.html#cb35-11" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb35-12"><a href="glm-para-dados-binários.html#cb35-12" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&quot;html&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Sumário estatístico do modelo escolhido&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-13"><a href="glm-para-dados-binários.html#cb35-13" tabindex="-1"></a>  <span class="fu">kable_paper</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>,<span class="st">&quot;condensed&quot;</span>), <span class="at">full_width =</span> F) <span class="sc">%&gt;%</span></span>
+<span id="cb35-14"><a href="glm-para-dados-binários.html#cb35-14" tabindex="-1"></a>  <span class="fu">kable_classic</span>()</span></code></pre></div>
 <table class=" lightable-paper lightable-classic" style="color: black; font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto; color: black; font-family: &quot;Arial Narrow&quot;, &quot;Source Sans Pro&quot;, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <span id="tab:unnamed-chunk-18">Table 1.2: </span>Sumário estatístico do modelo escolhido
@@ -883,45 +883,45 @@ dietsquid
 A ideia é usar o modelo ajustado para predizer novos valores de y baseado nas covariáveis que estão no modelo.</p>
 <p>Para tanto, precisamos montar um data frame no qual se cria uma sequência de valores
 de massa corporal, e replica as demais covariáveis.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="glm-para-dados-binários.html#cb35-1" tabindex="-1"></a><span class="do">## Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)</span></span>
-<span id="cb35-2"><a href="glm-para-dados-binários.html#cb35-2" tabindex="-1"></a>massas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb35-3"><a href="glm-para-dados-binários.html#cb35-3" tabindex="-1"></a>              <span class="fu">max</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb35-4"><a href="glm-para-dados-binários.html#cb35-4" tabindex="-1"></a>              <span class="at">length.out =</span> <span class="dv">100</span>)</span>
-<span id="cb35-5"><a href="glm-para-dados-binários.html#cb35-5" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="glm-para-dados-binários.html#cb35-6" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="glm-para-dados-binários.html#cb35-7" tabindex="-1"></a></span>
-<span id="cb35-8"><a href="glm-para-dados-binários.html#cb35-8" tabindex="-1"></a><span class="do">## Gerando um data frame de predição</span></span>
-<span id="cb35-9"><a href="glm-para-dados-binários.html#cb35-9" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">body_mass_g =</span>  massas,</span>
-<span id="cb35-10"><a href="glm-para-dados-binários.html#cb35-10" tabindex="-1"></a>                      <span class="at">species =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>species),</span>
-<span id="cb35-11"><a href="glm-para-dados-binários.html#cb35-11" tabindex="-1"></a>                      <span class="at">sex =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>sex),</span>
-<span id="cb35-12"><a href="glm-para-dados-binários.html#cb35-12" tabindex="-1"></a>                      <span class="at">diet =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>diet))</span>
-<span id="cb35-13"><a href="glm-para-dados-binários.html#cb35-13" tabindex="-1"></a></span>
-<span id="cb35-14"><a href="glm-para-dados-binários.html#cb35-14" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="glm-para-dados-binários.html#cb35-15" tabindex="-1"></a></span>
-<span id="cb35-16"><a href="glm-para-dados-binários.html#cb35-16" tabindex="-1"></a><span class="do">## Predizendo na escala logit (necessario para calcular os ICs)</span></span>
-<span id="cb35-17"><a href="glm-para-dados-binários.html#cb35-17" tabindex="-1"></a>predicoes <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod5, <span class="at">newdata =</span> dfpred , <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb35-18"><a href="glm-para-dados-binários.html#cb35-18" tabindex="-1"></a></span>
-<span id="cb35-19"><a href="glm-para-dados-binários.html#cb35-19" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> dfpred <span class="sc">%&gt;%</span></span>
-<span id="cb35-20"><a href="glm-para-dados-binários.html#cb35-20" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">link =</span> predicoes<span class="sc">$</span>fit,</span>
-<span id="cb35-21"><a href="glm-para-dados-binários.html#cb35-21" tabindex="-1"></a>                 <span class="at">se =</span> predicoes<span class="sc">$</span>se.fit,</span>
-<span id="cb35-22"><a href="glm-para-dados-binários.html#cb35-22" tabindex="-1"></a>                 <span class="at">prob =</span> <span class="fu">plogis</span>(link),</span>
-<span id="cb35-23"><a href="glm-para-dados-binários.html#cb35-23" tabindex="-1"></a>                 <span class="at">lwr =</span> <span class="fu">plogis</span>(link <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
-<span id="cb35-24"><a href="glm-para-dados-binários.html#cb35-24" tabindex="-1"></a>                 <span class="at">upr =</span> <span class="fu">plogis</span>(link <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se))</span>
-<span id="cb35-25"><a href="glm-para-dados-binários.html#cb35-25" tabindex="-1"></a></span>
-<span id="cb35-26"><a href="glm-para-dados-binários.html#cb35-26" tabindex="-1"></a></span>
-<span id="cb35-27"><a href="glm-para-dados-binários.html#cb35-27" tabindex="-1"></a></span>
-<span id="cb35-28"><a href="glm-para-dados-binários.html#cb35-28" tabindex="-1"></a><span class="do">## Plotando....</span></span>
-<span id="cb35-29"><a href="glm-para-dados-binários.html#cb35-29" tabindex="-1"></a><span class="fu">ggplot</span>(dfpred, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> prob, <span class="at">color =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
-<span id="cb35-30"><a href="glm-para-dados-binários.html#cb35-30" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> dados2, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> categoria),</span>
-<span id="cb35-31"><a href="glm-para-dados-binários.html#cb35-31" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
-<span id="cb35-32"><a href="glm-para-dados-binários.html#cb35-32" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb35-33"><a href="glm-para-dados-binários.html#cb35-33" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb35-34"><a href="glm-para-dados-binários.html#cb35-34" tabindex="-1"></a>  <span class="fu">facet_grid</span>(diet <span class="sc">~</span> species) <span class="sc">+</span></span>
-<span id="cb35-35"><a href="glm-para-dados-binários.html#cb35-35" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidade de sobrepeso&quot;</span>,</span>
-<span id="cb35-36"><a href="glm-para-dados-binários.html#cb35-36" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Massa corporal (g)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb35-37"><a href="glm-para-dados-binários.html#cb35-37" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb35-38"><a href="glm-para-dados-binários.html#cb35-38" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)<span class="sc">+</span></span>
-<span id="cb35-39"><a href="glm-para-dados-binários.html#cb35-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#D8B365&quot;</span>, <span class="st">&quot;#5AB4AC&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="glm-para-dados-binários.html#cb36-1" tabindex="-1"></a><span class="do">## Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)</span></span>
+<span id="cb36-2"><a href="glm-para-dados-binários.html#cb36-2" tabindex="-1"></a>massas <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb36-3"><a href="glm-para-dados-binários.html#cb36-3" tabindex="-1"></a>              <span class="fu">max</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb36-4"><a href="glm-para-dados-binários.html#cb36-4" tabindex="-1"></a>              <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb36-5"><a href="glm-para-dados-binários.html#cb36-5" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="glm-para-dados-binários.html#cb36-6" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="glm-para-dados-binários.html#cb36-7" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="glm-para-dados-binários.html#cb36-8" tabindex="-1"></a><span class="do">## Gerando um data frame de predição</span></span>
+<span id="cb36-9"><a href="glm-para-dados-binários.html#cb36-9" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">body_mass_g =</span>  massas,</span>
+<span id="cb36-10"><a href="glm-para-dados-binários.html#cb36-10" tabindex="-1"></a>                      <span class="at">species =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>species),</span>
+<span id="cb36-11"><a href="glm-para-dados-binários.html#cb36-11" tabindex="-1"></a>                      <span class="at">sex =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>sex),</span>
+<span id="cb36-12"><a href="glm-para-dados-binários.html#cb36-12" tabindex="-1"></a>                      <span class="at">diet =</span> <span class="fu">unique</span>(dados2<span class="sc">$</span>diet))</span>
+<span id="cb36-13"><a href="glm-para-dados-binários.html#cb36-13" tabindex="-1"></a></span>
+<span id="cb36-14"><a href="glm-para-dados-binários.html#cb36-14" tabindex="-1"></a></span>
+<span id="cb36-15"><a href="glm-para-dados-binários.html#cb36-15" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="glm-para-dados-binários.html#cb36-16" tabindex="-1"></a><span class="do">## Predizendo na escala logit (necessario para calcular os ICs)</span></span>
+<span id="cb36-17"><a href="glm-para-dados-binários.html#cb36-17" tabindex="-1"></a>predicoes <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod5, <span class="at">newdata =</span> dfpred , <span class="at">type =</span> <span class="st">&quot;link&quot;</span>, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb36-18"><a href="glm-para-dados-binários.html#cb36-18" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="glm-para-dados-binários.html#cb36-19" tabindex="-1"></a>dfpred <span class="ot">&lt;-</span> dfpred <span class="sc">%&gt;%</span></span>
+<span id="cb36-20"><a href="glm-para-dados-binários.html#cb36-20" tabindex="-1"></a>          <span class="fu">mutate</span>(<span class="at">link =</span> predicoes<span class="sc">$</span>fit,</span>
+<span id="cb36-21"><a href="glm-para-dados-binários.html#cb36-21" tabindex="-1"></a>                 <span class="at">se =</span> predicoes<span class="sc">$</span>se.fit,</span>
+<span id="cb36-22"><a href="glm-para-dados-binários.html#cb36-22" tabindex="-1"></a>                 <span class="at">prob =</span> <span class="fu">plogis</span>(link),</span>
+<span id="cb36-23"><a href="glm-para-dados-binários.html#cb36-23" tabindex="-1"></a>                 <span class="at">lwr =</span> <span class="fu">plogis</span>(link <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se),</span>
+<span id="cb36-24"><a href="glm-para-dados-binários.html#cb36-24" tabindex="-1"></a>                 <span class="at">upr =</span> <span class="fu">plogis</span>(link <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se))</span>
+<span id="cb36-25"><a href="glm-para-dados-binários.html#cb36-25" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="glm-para-dados-binários.html#cb36-26" tabindex="-1"></a></span>
+<span id="cb36-27"><a href="glm-para-dados-binários.html#cb36-27" tabindex="-1"></a></span>
+<span id="cb36-28"><a href="glm-para-dados-binários.html#cb36-28" tabindex="-1"></a><span class="do">## Plotando....</span></span>
+<span id="cb36-29"><a href="glm-para-dados-binários.html#cb36-29" tabindex="-1"></a><span class="fu">ggplot</span>(dfpred, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> prob, <span class="at">color =</span> sex, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb36-30"><a href="glm-para-dados-binários.html#cb36-30" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> dados2, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> categoria),</span>
+<span id="cb36-31"><a href="glm-para-dados-binários.html#cb36-31" tabindex="-1"></a>             <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>, <span class="at">alpha =</span> <span class="fl">0.1</span>, <span class="at">col =</span> <span class="st">&quot;gray40&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-32"><a href="glm-para-dados-binários.html#cb36-32" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb36-33"><a href="glm-para-dados-binários.html#cb36-33" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb36-34"><a href="glm-para-dados-binários.html#cb36-34" tabindex="-1"></a>  <span class="fu">facet_grid</span>(diet <span class="sc">~</span> species) <span class="sc">+</span></span>
+<span id="cb36-35"><a href="glm-para-dados-binários.html#cb36-35" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Probabilidade de sobrepeso&quot;</span>,</span>
+<span id="cb36-36"><a href="glm-para-dados-binários.html#cb36-36" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Massa corporal (g)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb36-37"><a href="glm-para-dados-binários.html#cb36-37" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb36-38"><a href="glm-para-dados-binários.html#cb36-38" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)<span class="sc">+</span></span>
+<span id="cb36-39"><a href="glm-para-dados-binários.html#cb36-39" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;#D8B365&quot;</span>, <span class="st">&quot;#5AB4AC&quot;</span>))</span></code></pre></div>
 <p><img src="relatorio_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 
 </div>
