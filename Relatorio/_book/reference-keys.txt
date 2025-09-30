@@ -10,9 +10,9 @@ objetivos-específicos
 metodologia
 análises-resultados
 glm-para-dados-discretos
+example-one
+example-two
 glm-para-dados-contínuos
 glm-para-dados-categóricos
 outras-distribuições-de-probabilidade
 gam
-tab:unnamed-chunk-12
-tab:unnamed-chunk-18
