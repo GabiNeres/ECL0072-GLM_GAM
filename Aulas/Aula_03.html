@@ -375,31 +375,6 @@ Com os resíduos, a história é diferente
   - os resíduos podem ser avaliados sob o prisma do modelo de probabilidade escolhido para a variável `\(y\)` 
 
 ---
-## &lt;span style="color: #ee6c4d;"&gt;Desmistificando os GLMs &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos  &lt;/span&gt;  
-
-#### Análise residual via pacote `DHARMa`
-
-
-- Analisa resíduos *simulados* (`\(y_{i,\text{sim}}\)`)
-  - e não resíduos tradicionais (`\(y_i -\hat{y_i}\)`)
-
---
-
-
-**Como funciona:**
-
-1. Usa o modelo ajustado para simular muitos conjuntos de dados que poderiam ter acontecido de acordo com a distribuição do modelo
-  - Exemplo: Binomial, Poisson, ....
-
---
-
-2. Cada valor observado (`\(y_i\)`) é contrastado com o valor simulado  (`\(y_{i,\text{sim}}\)`)
-  - A difrerença entre esses valores é convertida em percentil (0-1)
-    - Se o modelo for bom, todos os valores observados devem estar distribuídos uniformemente entre 0 e 1 - **QQ-plot**
-
- 
-
----
 
 class: inverse, center, middle
 
