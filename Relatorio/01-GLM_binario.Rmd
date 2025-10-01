@@ -1,4 +1,19 @@
-# GLM para dados binários
+---
+title: "GLM para dados binários"
+author: "Marie-Christine Rufener"
+#date: "`r format (Sys.time(), '%d %B, %Y')`"
+output:
+   html_document: #Salvar como html
+      theme: journal #cerulean,flatly,united,cosmo,simplex
+      number_sections: yes
+      toc: true               # Gera sumário (Table of Contents)
+      toc_float:              # Faz o sumário “flutuar” ao lado
+        collapsed: false      # Não inicia “fechado”
+        smooth_scroll: false  # Desativa rolagem suave (opcional)
+        position: left        # Posiciona o sumário à esquerda
+        width: 250px          # Define a largura do sumário
+---
+
 
 ## Introdução
 
@@ -81,7 +96,7 @@ Para rodar o modelo logístico, vamos considerar apenas os indivíduos categoriz
 
   > Analisaremos as três categorias na aula de modelo multinomial!
 
-Precisamos, portanto, filtrar os dados para remover os indivíduos que estão abaixo do peso>
+Precisamos, portanto, filtrar os dados para remover os indivíduos que estão abaixo do peso.
 
 ```{r echo=T, message=F, warning=F}
 
@@ -109,7 +124,7 @@ library(ggplot2)
 ## Relação com o peso individual ##
 # Precisamos converter as categorias de peso em formato binário
 
-dados2$categoria <- ifelse(dados2$health_metrics == "overweight",1, 0)
+dados2$categoria <- ifelse(dados2$health_metrics == "overweight",1, 0) %>%                       as.factor()
 
 ggplot(dados2, aes(x = body_mass_g, y = categoria)) +
   geom_point(size = 4, col = 'gray50', alpha = 0.25) +
@@ -117,67 +132,72 @@ ggplot(dados2, aes(x = body_mass_g, y = categoria)) +
 
 ```
 
+
 Podemos ver que há muitos pinguins com baixo peso corporal porém categorizado como sobrepeso. Isso não faz muito sentido e é um claro indício de que precisamos considerar a relação com outras covariáveis.
 
+Por exemplo, é natural supor que haja diferença de incidência de sobrepeso entre as diferentes espécies consideradas:
 
-É natural supor que cada espécie vai apresentar um peso médio próprio. Isso explica, em parte, o por que de observarmos indivíduos obsesos associados a menores massas corporais:
 
 ```{r echo=T}
 
-## Relação peso individual vs. espécie ##
-ggplot(dados2, aes(x = as.factor(categoria), y = body_mass_g, fill = species)) +
-  geom_boxplot() +
-  scale_fill_brewer(palette="BrBG") +
+## Incidência de sobrepeso vs. espécie ##
+ggplot(dados2, aes(x = species, fill = as.factor(categoria))) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("#35978f", "#dfc27d"))+
   theme_minimal()
 
 ```
 
 
-Além disso, sabemos que o peso médio também difere em relação ao sexo do invidíduo (fêmea/macho)
+Além disso, é provável supor que a incidência de sobrepeso também difere em relação ao sexo do invidíduo (fêmea/macho)
 
 
 ```{r echo=T}
 
-## Relação peso individual vs. sexo ##
-ggplot(dados2, aes(x = sex, y = body_mass_g, fill = sex)) +
-    geom_boxplot() +
-    scale_fill_brewer(palette="BrBG") +
-    theme_minimal()
+## Incidência de sobrepeso vs. sexo ##
+ggplot(dados2, aes(x = sex, fill = as.factor(categoria))) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("#35978f", "#dfc27d"))+
+  theme_minimal()
 
 
-## Relação peso individual vs. sexo & espécie ##
-ggplot(dados2, aes(x = sex, y = body_mass_g, fill = species)) +
-    geom_boxplot() +
-    scale_fill_brewer(palette="BrBG") +
-    theme_minimal()
+
+
+## Incidência de sobrepeso vs. sexo & espécie ##
+ggplot(dados2, aes(x = sex, fill = as.factor(categoria))) +
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("#35978f", "#dfc27d"))+
+  facet_wrap(species ~ .) +
+  theme_minimal()
+
 ```
 
 
-Podemos nos questionar se o tipo de dieta influencia no peso dos pinguins:
+Podemos, também, nos questionar se o tipo de dieta influencia no incidência de sobrepeso:
 
 
 ```{r echo=T}
 
-## Relação peso individual vs. dieta ##
-
-ggplot(dados2, aes(x = diet, y = body_mass_g, fill = species)) +
-    geom_boxplot() +
-    scale_fill_brewer(palette="BrBG") +
+## Incidência de sobrepeso vs. dieta ##
+ggplot(dados2, aes(x = diet, fill = as.factor(categoria))) +
+    geom_bar(position = "fill") +
+    scale_fill_manual(values = c("#35978f", "#dfc27d"))+
     theme_minimal()
+
 ```
 
 
-Como podemos ver, os pesos médios dos pinguins diferem quanto a espécie, o sexo e a sua dieta. Portanto, isso também influenciará na categoria de peso (sobrepeso (1), normal (0))
+Como podemos ver, a incidência de sobrepeso dos pinguins difere não apenas entre as diferentes espécies, como também de acordo com a dieta consumida e, em menor grau, com o sexo do indivíduo.
 
 
 ## Hipóteses
 Com base nessas breves observações, podemos começar a formular algumas hipóteses:
 
-- $H_1:$ A probabilidade de sobrepeso difere entre as difrerentes espécies, com a espécie Gentoo apresentando às maiores probabilidades
+- $H_1:$ A incidência de sobrepeso difere entre as espécies
 
-- $H_2:$ Os machos apresentam maiores probabilidades de sobrepeso
+- $H_2:$ A incidência de sobrepeso difere entre machos e fêmeas
 
-- $H_3:$ O sobrepeso pode ser determinado pela dieta 
+- $H_3:$ O tipo de dieta influencia na incidência de sobrepeso
 
 
 
@@ -217,16 +237,18 @@ $$logit(p_i) = \eta_i
 = \beta_0 +\sum_{j=1}^{J} \beta_j x_{ij}$$
 
 
-onde $y_i$ é o i*esmo* pinguim, $n_i$ o número total de pinguins, $p_i$ a probabilidade do i*esmo* pinguim estar acima do peso, $\beta_0$ o intercepto (i.e., peso médio), $j$ número de covariáveis, $\beta_j$ os coeficientes que quantificam o efeito das covariáveis $x_j$.
+onde $y_i$ é o i*esmo* pinguim, $n_i$ o número total de pinguins, $p_i$ a probabilidade do i*esmo* pinguim estar acima do peso, $\beta_0$ o intercepto, $j$ número de covariáveis, $\beta_j$ os coeficientes que quantificam o efeito das covariáveis $x_j$.
 
 
 Poderíamos escrever o modelo completo, conforme
 
-$$logit(p_i) = \beta_0 + \beta_1\text{Peso}_i+ \beta_2\text{Especie}_i + \beta_3\text{Sexo}_i + \beta_4\text{Dieta}_i$$
+$$logit(p_i) = \beta_0 + \sum_{j=1}^{J-1} \beta_j Especie_{i,j} + \sum_{k=1}^{K-1} \gamma_k Sexo_{i,k} + \sum_{l=1}^{L-1} \nu_l Dieta_{i,l}$$
+
+
 
 <br>
 
-> **Atenção:** Repare que o modelo contém 3 covariáveis categóricas e uma numérica - estamos, portanto, montando uma ANCOVA usando uma distribuição binomial!
+> **Atenção:** Repare que o modelo contém 3 covariáveis categóricas - estamos, portanto, montando uma ANOVA trifatorial usando uma distribuição binomial!
   
   
 Este único modelo é suficiente para responder aos três objetivos específicos. No entanto, para vias de exercício, iremos testar diversos modelos para achar o modelo que melhor se ajuste aos dados. Para tanto, usaremos o método "forward-stepwise", em que partimos do modelo nulo e inserimos uma covariável por vez. 
@@ -246,33 +268,24 @@ Iniciaremos as análises montando os modelos, partindo do modelo mais simples (m
 # 3) Testando modelos
 #~~~~~~~~~~~~~~~~~~~~~~
 
+
 ## Modelo Nulo
 mod0 <- glm(categoria ~ 1,
             family = binomial(link = "logit"),
             data = dados2)
 
 ## Modelo 1
-mod1 <- glm(categoria ~ body_mass_g,
+mod1 <- glm(categoria ~ species,
             family = binomial(link = "logit"),
             data = dados2)
 
 ## Modelo 2
-mod2 <- glm(categoria ~ body_mass_g + species,
+mod2 <- glm(categoria ~ species + sex,
             family = binomial(link = "logit"),
             data = dados2)
 
 ## Modelo 3
-mod3 <- glm(categoria ~ body_mass_g + species + sex,
-            family = binomial(link = "logit"),
-            data = dados2)
-
-## Modelo 4
-mod4 <- glm(categoria ~ body_mass_g + species + sex + diet,
-            family = binomial(link = "logit"),
-            data = dados2)
-
-## Modelo 5
-mod5 <- glm(categoria ~ poly(body_mass_g, 2) + species + sex + diet, 
+mod3 <- glm(categoria ~ species + sex + diet,
             family = binomial(link = "logit"),
             data = dados2)
 
@@ -289,32 +302,32 @@ Agora que temos alguns modelos, podemos compará-los via valores de AIC
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Calcular os valores de AIC ##
-aic <- AIC(mod0, mod1, mod2, mod3, mod4, mod5)
+aic <- AIC(mod0, mod1, mod2, mod3)
 
 
 ## Ordenar dos menores aos maiores valores ##
-aic %>% arrange(AIC)
+aic %>% arrange(-AIC)
 ```
 
 
-De acordo com a tabela, constata-se que o modelo que usou todas as covariávies (mod5), incluindo o termo quadrático para a massa corporal, foi o que apresentou o melhor ajuste uma vez que apresentou o menor valor de AIC quando comparado aos demais modelos.
+De acordo com a tabela, constata-se que o modelo que usou todas as covariávies (mod3) foi o que apresentou o melhor ajuste uma vez que apresentou o menor valor de AIC quando comparado aos demais modelos.
 
-Antes de prosseguirmos com a validação visual do modelo escolhido, vamos comparar se esse modelo difere significativamente do segundo melhor modelo (mod4).
+Antes de prosseguirmos com a validação visual do modelo escolhido, vamos comparar se esse modelo difere significativamente do segundo melhor modelo (mod2).
 
 
 ```{r echo = T}
 
 ## Teste de razão de verossimilhança ##
 
-#lmtest::lrtest(mod4, mod5) # mesma coisa
-anova(mod4, mod5, test = "Chisq")
+#lmtest::lrtest(mod3, mod2) # mesma coisa
+anova(mod3, mod2, test = "Chisq")
 ```
 
 
-Como o p-valor < 0.05, conclui-se que o modelo mais complexo é significativamente melhor do que o modelo que não usa o termo quadrático do peso corporal.
+Como o p-valor < 0.05, conclui-se que o modelo mais complexo é significativamente melhor do que o modelo que não incluiu a dieta como variável preditora.
 
 
-Vamos agora analisar gráficamente o ajuste do modelo.
+Vamos agora analisar graficamente o ajuste do modelo:
 
 
 ```{r echo=T, message=F}
@@ -325,58 +338,50 @@ Vamos agora analisar gráficamente o ajuste do modelo.
 library(DHARMa)
 
 ## Simulando os resíduos a partir do modelo escolhido ##
-resid_sim <- simulateResiduals(mod5, n=1000)
+resid_sim <- simulateResiduals(mod3, n=1000)
 
 plot(resid_sim)
 
 ```
 
-Embora o teste de Kolmogorov–Smirnov aponte que os resíduos não estão uniformemente distribuídos conforme o modelo proposto, a avaliação gráfica revela que não há violações aparentes - i.e., os resíduos não sinalizam nenhum viés sistemático.
+
+Podemos fazer uma análise mais minuciosa dos resíduos usando a função `check_model()` do pacote *performance*:
 
 
 ```{r echo=T, message=F}
-## Teste de uniformidade dos resíduos
-testUniformity(resid_sim) 
+library(performance)
+check_model(mod3)
+
 ```
 
+Em geral, o modelo está bem ajustado, apesar das falhas pontuais nos 'binned residuals'.
 
-No que diz respeito ao teste de sobredispersão, constata-se que os resíduos não apresentam sobredispersão:
+Este último gráfico mostra que nas caudas das probabilidades preditas (próximo de 0% e 100%) o modelo não foi bem calibrado, uma vez que há resíduos fora da banda. Isso pode sugerir variáveis omitidas ou má especificação da função de ligação.
 
-```{r echo=T, message=F}
-## Teste de sobredispersão
-testDispersion(resid_sim) # se p>0.05, não há sobredispersão
-```
 
 Os resíduos mostram-se levemente correlacionados
 
 
 ```{r echo=T, message=F, warning=F}
 ## Teste de autocorrelação
-library(performance)
-check_autocorrelation(mod5)
-acf(residuals(mod5))
+check_autocorrelation(mod3)
+acf(residuals(mod3))
 
 ```
 
 
-De modo geral, o modelo escolhido se ajustou bem aos dados. Exceto pelo pressuposto da independência residual, todos os demais pressupostos foram atendidos.
-
-A violação da independência não deve ser negligenciada, porque indica que os dados são correlacionados entre si. Ignorar esse problema pode resultar não apenas em estimativas de erros padrões inválidas, como também em interpretações errada dos parâmetros.
+De modo geral, o modelo escolhido se ajustou bem aos dados. Houve violações pontuais dos pressupostos, porém dado que o objetivo do modelo é inferencial (e não preditivo), podemos prosseugir com a análise dos resuiltados.
 
 <br>
 
-  > **Atenção:** Para vias de prática, vamos ignorar esse probelma, mesmo porque a violação foi mínima, e prosseguir com a interpretação dos parâmetros. Entretanto, em casos normais, é de extrema importância que o pesquisador investigue a causa desse probelma. Pode ser que os dados estejam temporalmente correlacionados (e.g., o mesmo pinguim foi amostrado em anos consecutivos), ou simplesemente o estudo não registrou covariáveis-chave que poderiam ocasionar a correlação dos dados observados (e.g., comportamento de dominância vs. submissão do indivíduo em e o acesso à 
-áreas de alimentações mais nutritivas). Esses problemas podem ser abordados via *Modelos Hierárquicos*.
-
-<br>
 
 ```{r echo=T, warning=F, message=F}
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# 6) Analsiando os resultados
+# 6) Analisando os resultados
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-summary(mod5)
+summary(mod3)
 ```
 
 
@@ -388,125 +393,63 @@ Como estamos trabalhando com variáveis categóricas, isso implica que o primeir
     - Dieta: peixe
 
 
-Por se tratar de um modelo logístico, todos os parâmetros estão expressos na escala logit e são interpretados sob a forma de razão de chance. Esses parâmetros podem ser transformados em probabilidades convertendo-os para escala natural conforme:
+Por se tratar de um modelo logístico, todos os parâmetros estão expressos na escala logit e são interpretados sob a forma de *razão de chance*. Esses parâmetros podem ser transformados em probabilidades convertendo-os para escala natural conforme:
 
 $$p = \frac{1}{1 + exp(-\eta)}$$
 
-  > **Atenção:** a conversão para probabilidades só faz sentido quando tratamos de variáveis categóricas. Para variáveis numéricas (contínuas ou discertas)
 
 <br>
 
 Avaliando individualmente os valores estimados para cada covariável, observamos que:
 
-- `Intercept`: representa o nível de referência, logo, a massa corporal de um pinguim fêmea da espécie Adelie e com dieta de peixe.
+- `Intercept`: nível de referência, logo, fêmeas da espécie Adelie e se alimentando de peixe.
   - Convertendo para probabilidades, temos:
-      - $p = \frac{1}{1+exp(-2.0472)}  \approx 0.88$
-      - A probabilidade de um pinguim fêmea da espécie Adelie com dieta de peixe ter sobrepeso é de 88.6%.
+      - $p = \frac{1}{1+exp(-1\times 1.7171)}  \approx 0.84$
+      - A probabilidade de sobrepeso para um pinguim Adelie fêmea com dieta Fish é de aproximadamente 84%
 
 <br>
 
-- `poly(body_mass_g, 2)1`: representa o efeito linear da massa corporal; indica que  há uma **relação positiva** entre a massa corporal e a chance de sobrepeso.
-  
-
-<br>
-
-- `poly(body_mass_g, 2)2`: representa o efeito quadrático; como o valor do **parâmetro é negativo**, isso indica que a **relação** entre a massa corporal e a chance de sobrepeso é **côncava**, i.e, parâbola com concavidade voltada para baixo $\bigcap$. Dessa forma, interpretamos que a chance de sobrepeso aumenta com a massa corporal, mas a taxa de aumento começa a diminuir à medida que a massa corporal se torna muito alta.
-
-<br>
-
-- `speciesChinstrap`:  representa o log-odds de sobrepeso para a espécie Chinstrapquando comparado com a espécie Adelie (-1.64). Isso significa que os pinguins da espécie Chinstrap têm uma chance significativamente menor de sobrepeso do que os pinguins Adelie.
+- `speciesChinstrap`:  representa o log-odds de sobrepeso da espécie Chinstrap quando comparado com o intercepto (-0.3112). Como o parâmetro é negativo, isso significa essa espécie tem uma chance menor (e significativo) de sobrepeso quando comparado à espécie Adelie.
   - Convertendo para probabilidades, temos:
-    - $p = \frac{1}{1+exp(-(2.0472 + (-1.6433)))}  \approx 0.59$
-    - A probabilidade de um pinguim da espécie Chinstrap ter sobrepeso é de 60.0%.
+    - $p = \frac{1}{1+exp(-1 \times(1.7171 - 0.3112))}  \approx 0.80$
+    - A probabilidade de um pinguim da espécie Chinstrap estar acima do peso é de 80%, logo menor do que pinguins da espécie Adelie.
 
 <br>
 
-- `speciesGentoo`:  O log-odds de sobrepeso para a espécie Gentoo é ainda menor comparado às demais espécies, dado ao valor estimado muito menor. Isso significa a e pinguins da espécie Gentoo têm uma chance significativamente menor de sobrepeso do que os pinguins Adelie e Chinstrap.
+- `speciesGentoo`: Interpretação similar a anterior. Como o valor do parâmetro estimado foi positivo, inferimos que pinguins da espécie Gentoo apresentam uma razão de chances maior de sobrepeso quando comparado com as fêmeas da espécie Adelie (e que se alimentam de peixe).
   - Convertendo para probabilidades, temos:
-    - $p = \frac{1}{1+exp(-(2.0472 + (-3.2613)))}  \approx 0.22$
-    - A espécie Gentoo apresentou a menor probabilidade de sobprepeso, com probabilidade estimada em 22%.
+    - $p = \frac{1}{1+exp(-1 \times (1.7171 - 0.2072))}  \approx 0.82$
+    - A espécie Gentoo apresenta uma probabilidade de 82% de sobrepeso.
 
 <br>
 
-- `sexmale`:  comparado com as fêmeas, os machos apresentam chances de sobrepeso significativamente menores dado ao valor negativo que foi estimado o parâmetro (-3.23).
+- `sexmale`:  o coeficiente (parâmetro) estimado é positivo, o que indica que os machos apresentam uma maior probabilidade de sobrepeso quando comparados comparado com as fêmeas.
   - Convertendo para probabilidades, temos:
-    - $p = \frac{1}{1+exp(-(2.0472 + (-3.2371)))}  \approx 0.23$
-    - Um pinguim macho tem uma probabilidade de sobrepeso de 23%, probabilidade é significativamente menor que a das fêmeas. 
+    - $p = \frac{1}{1+exp(-1 \times (1.7171 + 0.3306))}  \approx 0.88$
+    - Um pinguim macho, portanto, tem uma probabilidade de sobrepeso de 88% comparado às femeas.
 
 
 <br>
 
-- `dietkrill`: há uma relação negativa e significativa, o que indica que há uma menor chance de pinguins que se alimentam de krill estarem obesos, quando comparado com pinguins que se alimentam de peixes.
+- `dietkrill`: há uma relação negativa e significativa, o que indica que há uma drástica diminuição na chance de pinguins que se alimentam de krill estarem obesos, quando comparado com pinguins que se alimentam de peixes.
   - Convertendo para probabilidades, temos:
-    - $p = \frac{1}{1+exp(-(2.0472 + (-2.2294)))}  \approx 0.45$
-    - A probabilidade de sobrepeso para pinguins que se alimentam de krill é de 45%.
+    - $p = \frac{1}{1+exp(-1 \times (1.7171 -3.5759)}  \approx 0.13$
+    - A probabilidade de sobrepeso para pinguins que se alimentam de krill é de 13%.
 
 <br>
 
-- `dietparental`: há uma forte relação positiva entre a dieta parental e as chances de sobrepeso. Como se trata de dieta 'parental', é provável que essa maior taxa de sobrepeso esteja relacionado à filhotes - poderia se testar um modelo incluindo `life_stage` como variável preditora.
+- `dietparental`: há uma relação positiva entre a dieta parental e as chances de sobrepeso, com probabilidade de soprepeso estimada em 22%.
   - Convertendo para probabilidades, temos:
-    - $p = \frac{1}{1+exp(-(2.0472 + 5.7126)}  \approx 0.99$
-    - Pinguins que são alimentados pelos pais tem 99% de probabilidade de estarem acima do peso.
+    - $p = \frac{1}{1+exp(-(1.7171  -2.9756)}  \approx 0.22$
 
 <br>
 
-- `dietsquid`: interpretação similar à dieta à base de krill.
-
-
+- `dietsquid`: interpretação similar à demais dietas, porém repare que a probabilidade de sobrepeso foi a segunda maior entre todos os itens alimentares (39%).
+  - Convertendo para probabilidades, temos:
+    - $p = \frac{1}{1+exp(-(1.7171 - 2.1470)}  \approx 0.39$
 
 <br>
 
-Por fim, podemos visualizar os resultados do modelo ajustado.
-A ideia é usar o modelo ajustado para predizer novos valores de y baseado nas covariáveis que estão no modelo.
 
-Para tanto, precisamos montar um data frame no qual se cria uma sequência de valores
-de massa corporal, e replica as demais covariáveis.
-
-
-```{r echo=T, warning=F, message=F}
-
-## Criando uma sequência de massas corporais (para prever probabilidade de sobrepeso)
-massas <- seq(min(dados2$body_mass_g, na.rm = TRUE),
-              max(dados2$body_mass_g, na.rm = TRUE),
-              length.out = 100)
-
-
-
-## Gerando um data frame de predição
-dfpred <- expand.grid(body_mass_g =  massas,
-                      species = unique(dados2$species),
-                      sex = unique(dados2$sex),
-                      diet = unique(dados2$diet))
-
-
-
-## Predizendo na escala logit (necessario para calcular os ICs)
-predicoes <- predict(mod5, newdata = dfpred , type = "link", se.fit = TRUE)
-
-dfpred <- dfpred %>%
-          mutate(link = predicoes$fit,
-                 se = predicoes$se.fit,
-                 prob = plogis(link),
-                 lwr = plogis(link - 1.96 * se),
-                 upr = plogis(link + 1.96 * se))
-
-
-
-## Plotando....
-ggplot(dfpred, aes(x = body_mass_g, y = prob, color = sex, fill = sex)) +
-  geom_point(data = dados2, aes(x = body_mass_g, y = categoria),
-             inherit.aes = FALSE, alpha = 0.1, col = "gray40") +
-  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2, color = NA) +
-  geom_line(size = 1) +
-  facet_grid(diet ~ species) +
-  labs(y = "Probabilidade de sobrepeso",
-       x = "Massa corporal (g)") +
-  theme_minimal() +
-  theme(legend.position = "bottom")+
-  scale_color_manual(values = c("#D8B365", "#5AB4AC"))
-   
-
-
-```
 
 
