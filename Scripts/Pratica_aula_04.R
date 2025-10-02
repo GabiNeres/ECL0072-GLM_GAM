@@ -231,12 +231,67 @@ dim(dados2)
 dim(dados)
 
 summary(mod_5b)
-
-
 ggpredict(mod_5b) %>% plot()
 
-# modelo# modelo# modelo_full <- glm(Thunnus_albacares ~ SST + SLA + BAT + IL + Mes,
-#                    family = "poisson", 
-#                    data = dados)
-# backward_model <- stepAIC(modelo_full, direction = "backward")
-# summary(backward_model)
+
+
+## Modelo considerando componente espacial (Lat & Long) (efeito aditivo)
+mod_6 <- glm.nb(Thunnus_albacares ~ sst + sal + depth + il + Mes + Barco + Lat + Long + offset(log(N_anzol)),
+                data = dados2)
+
+
+## Modelo considerando componente espacial (Lat * Long) (interação)
+mod_7 <- glm.nb(Thunnus_albacares ~ sst + sal + depth + il + Mes + Barco + Lat*Long + offset(log(N_anzol)),
+                data = dados2)
+
+
+AIC(mod_5b, mod_6, mod_7) #Não há diferença expressiva entre mod6 & mod7; porém, adicionar lat/long impactou mais expressivamente o aic quando comparado ao modelo 5b
+# escolhemos mod_6 pelo princípio da parsimônia
+
+
+## Avaliando pressuposto de independência (espacial e temporal)
+### TEMPORAL
+acf(mod_6$residuals) #ok, sem violação
+
+
+### ESPACIAL 
+#### Tornando o dado em um objeto espacial
+# OBS - instale os pacotes abaixo via função install.packages(), caso necessário
+library(sp)
+library(rnaturalearth)
+library(rnaturalearthdata)
+library(sf)
+
+
+## Escolhendo o melhor modelo
+melhor_modelo <- mod_6
+
+## transformando o dado em um objeto espacial
+dados_sp <- data.frame(dados2[, c("Long", "Lat")], melhor_modelo$residuals) #criando df com long, lat & residuos do melhor modelo
+colnames(dados_sp)[3] <- "residuos"
+
+coordinates(dados_sp) <- c("Long", "Lat")
+bubble(dados_sp, "residuos") #Ainda há indício de correlação espacial; há um agrupamento de resíduos positivos na porção superior da figura. 
+
+
+### Mesma coisa, porém mais 'bonitinho'
+mapa <- ne_countries(country = "Brazil", returnclass = "sf") # Baixando mapa do brasil (baixa resolução!)
+
+dados_sp2 <- dados_sp %>% data.frame() %>% dplyr::select(1:3) #Convertendo os df espacial para df normal
+
+ggplot() +
+  geom_point(data = dados_sp2,
+             aes(x = Long, y = Lat,
+                 size = residuos,        
+                 color = residuos > 0),   
+             alpha = 0.6) +
+  geom_sf(data = mapa, fill = "black", color = "black") +
+  scale_color_manual(name = "Sinal do resíduo",
+                     values = c("TRUE" = "cyan4", "FALSE" = "darkorange"),
+                     labels = c("Positivo", "Negativo")) +
+  coord_sf() +
+  theme_bw() +
+  labs(x = "Longitude", y = "Latitude") +
+  guides(size = "none")
+
+
