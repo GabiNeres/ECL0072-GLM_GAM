@@ -9,10 +9,10 @@
 # Para tal, será utilizado os dados de pinguim de palmer como exemplo prático.
 
 # A principal questão a ser avaliada é se a preferência alimentar muda ao longo
-# do crescimento do pinguim, bem como se há distinção na preferência alimentar entre as diferentes espécies.
+# do crescimento do pinguim, bem como se há distinção na preferência alimentar entre as diferentes espécies, sexo e estágios de desenvolvimento.
 # Portanto, temos:
 # y = tipo de dieta (4 categorias)
-# x = massa corporal (e/ou espécie)
+# X = massa corporal (e/ou espécie, sexo, estagio de desenvolvimento,....)
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,20 +79,6 @@ ggplot(dados, aes(x = species, fill = diet)) +
   theme_minimal(base_size = 15) 
 
 
-## E entre as diferentes espécies?
-ggplot(dados, aes(y = body_mass_g, x = diet, col = species, fill = species)) +
-  geom_boxplot(size = 0.7,alpha = 0.15) +
-  scale_colour_manual(values = c("darkorange", "gray50", "cyan4")) +
-  scale_fill_manual(values = c("darkorange", "gray50", "cyan4")) +
-  theme_minimal(base_size = 15)
-
-
-# ggplot(dados, aes(x = sex, fill = diet)) +
-#   geom_bar(position = "fill",  alpha = 0.8) +
-#   scale_y_continuous(labels = scales::percent) +
-#   scale_fill_manual(values = c("#d6ccc2", "cyan4", "darkorange", "gray50")) +
-#   labs(y = "Proporção", x = "") +
-#   theme_minimal(base_size = 15)  + facet_wrap(species ~ .)
 
 ## E entre sexos?
 ggplot(dados, aes(x = sex, fill = diet)) +
@@ -100,10 +86,18 @@ ggplot(dados, aes(x = sex, fill = diet)) +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_manual(values = c("#d6ccc2", "cyan4", "darkorange", "gray50")) +
   labs(y = "Proporção", x = "") +
-  theme_minimal(base_size = 15)  + facet_wrap(species ~ .)
+  facet_wrap(species ~ .) +
+  theme_minimal(base_size = 15) 
 
 
-
+## E estágios de vida?
+ggplot(dados, aes(x = life_stage, fill = diet)) +
+  geom_bar(position = "fill",  alpha = 0.8) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_manual(values = c("#d6ccc2", "cyan4", "darkorange", "gray50")) +
+  labs(y = "Proporção", x = "") +
+  facet_wrap(species ~ .) +
+  theme_minimal(base_size = 15)  
 
 
 
@@ -115,22 +109,22 @@ ggplot(dados, aes(x = sex, fill = diet)) +
 levels(dados$diet)
 
 
-# 3.1) Ajustando o modelo
-#~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Modelo 1: dieta ~ massa corporal
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## O modelo avaliará apenas a relação da composição da dieta e a massa corporal.
 modelo1 <- vglm(diet ~ body_mass_g, 
                 family = multinomial(refLevel = 1),  # define a categoria de referência
                 data = dados)
 
 summary(modelo1)
 
+#### Mesma coisa, porém com pacote diferente e outputs em outro formato
+# library(nnet)
+# modelo1b <- multinom(diet ~ body_mass_g, data = dados)
+# summary(modelo1b)
 
-library(nnet)
-modelo1b <- multinom(diet ~ body_mass_g, data = dados)
-summary(modelo1b)
 
-
-# 3.2) Visualizando os resultados
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Visualizando os resultados ##
 
 ## Criando dados para predizer
 dados_pred <- data.frame(body_mass_g = seq(min(dados$body_mass_g),
@@ -196,3 +190,99 @@ ggplot(preds_full, aes(x = body_mass_g, y = Prob, color = dieta, fill = dieta)) 
   scale_colour_manual(values = c("fish" = "darkorange", "squid" = "#d6ccc2", "parental" = "cyan4", "krill"="gray50")) +
   theme(plot.title = element_text(hjust = 0.5))
 
+
+
+
+# Modelo 2: dieta ~ espécie (nicho alimentar)
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+modelo2 <- vglm(diet ~ species, 
+                family = multinomial(refLevel = 1),  # define a categoria de referência
+                data = dados)
+
+summary(modelo2)
+
+
+### Visualizando as probabilidades ### 
+
+## Predições das probabilidades para cada espécie
+dados_pred2 <- data.frame(species = levels(dados$species)) #Dados para predições; certifica-se dos níveis; primeiro nível tem que coincidir com o primeiro nível do modelo
+preds2 <- predict(modelo2,
+                  newdata = dados_pred2,
+                  type = "response") %>% data.frame()
+
+
+
+### Formatar os resultados para gerar o gráfico
+preds2$species <- dados_pred2$species
+
+colnames(preds2) <- c("Fish", "Krill", "Parental", "Squid", "Species") #Renomeando as colunas de dieta, assumindo a mesma ordem do modelo (i.e, Fish, Krill, Parental, Squid)
+
+
+
+### Transformar dado para o formato longo (necessário para o ggplot2)
+preds2l <- preds2 %>%
+                tidyr::pivot_longer(cols = c("Fish", "Krill", "Parental", "Squid"),
+                                    names_to = "Diet",
+                                    values_to = "Probability")
+
+
+
+### Plotando.... 
+ggplot(preds2l, aes(x = Species, y = Probability, fill = Diet)) +
+  geom_bar(stat = "identity", position = "stack",  alpha = 0.8) +
+  scale_fill_manual(values = c("Fish" = "darkorange", "Squid" = "#d6ccc2", "Parental" = "cyan4", "Krill"="gray50")) +
+  labs(y = "Probabilidade",
+       x = "",
+      fill = "Dieta") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+
+
+### Visualizando as razões de chances (log odds) ### 
+
+### Extraíndo os coeficientes do modelo
+tmp <- summary(modelo2)
+coefs <- tmp@coef3[, "Estimate"]
+se <- tmp@coef3[, "Std. Error"]
+
+results <- data.frame(Coef = coefs,
+                      SE = se) #Savlando em um df
+
+
+### Excluindo os interceptos (para melhor visualização)
+results <- results[-c(1:3),]
+
+
+
+### Calculando razão de chances & ICs a 95%
+df_or <- results %>%
+            mutate(OR = exp(Coef), #odds ratio
+                   LCI = exp(Coef - (1.96 * SE)), #limite inferior do IC 95%
+                   UCI = exp(Coef + (1.96 * SE)), #limite superior do IC 95%
+                   Comparison = rownames(results)) #reavendo os níveis de comparação
+                  
+
+
+### Formatando os dados para plotagem
+df_or <- df_or %>%
+          mutate(Species = gsub("^species", "", Comparison), #tirando 'species'
+                 Diet = gsub(".*:", "", Comparison)) %>% #ficando apenas com os números
+          mutate(Species = gsub(":[0-9]+$", "", Species), #tirando os números
+                 Diet = ifelse(Diet == 1, "Krill", 
+                               ifelse(Diet == 2, "Parental", 'Squid'))) #reclassificando os números de acordo com as categorias alimentares
+
+
+
+### Plotando...
+ggplot(df_or, aes(y = Diet, x = OR, color = Species)) +
+  geom_point(position = position_dodge(width = 0.5), size = 4) +
+  geom_errorbarh(aes(xmin = LCI, xmax = UCI), height = 0.2, position = position_dodge(width = 0.5), size = 1.5) +
+  geom_vline(xintercept = 1, linetype = "dashed", color = "black", size = 1) +
+  scale_x_log10() + # Escala log para melhor visualização do OR
+  scale_colour_manual(values = c("darkorange","cyan4")) +
+  labs(x = "Razão de chances (log)",
+       y = "Dieta",
+       color = "Espécie") +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "bottom")
