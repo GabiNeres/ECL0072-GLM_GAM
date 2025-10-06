@@ -11,6 +11,7 @@
 #~~~~~~~~~~~~~~~~~~~~~~~
 # Carregando os pacotes
 #~~~~~~~~~~~~~~~~~~~~~~~
+library(glmmTMB) #Para rodar modelo log-Normal
 library(ggplot2)
 library(MASS) #seleção automática de modelos
 library(dplyr)
@@ -79,7 +80,6 @@ hist(dados$BPUE)
 summary(dados$BPUE)
 
 #dotchart(dados$BPUE)
-#dotchart(boxplot$BPUE)
 
 
 
@@ -129,9 +129,9 @@ ggplot(dados, aes(x = Long, y = BPUE)) +
 # 3.1) Preparando os dados
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Lembrando que a distribuição Gama e log-Normal é para variáveis estritamente positivas.
+# Lembrando que a distribuição Gama e log-Normal são para variáveis estritamente positivas.
 # Isso implica que a variável resposta não pode conter o valor 0.
-# Truqe matemátcio: adicionar uma pequena constante 
+# Truqe matemátcio: adicionar uma pequena constante (e.g., 10% da mediana)
 
 
 # Usando 10% da mediana do BPUE
@@ -147,15 +147,18 @@ dados$BPUE2_log <- log(dados$BPUE2)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Modelo Gama ##
-modelo_G <- glm(BPUE2 ~ Mes + Lat*Long,
-                family = Gamma(link = "log"),
-                data = dados)
+modelo_G <- glmmTMB(BPUE2 ~ Mes + Lat+Long,
+                    family = Gamma(link = "log"), 
+                    data = dados)
+
 
 
 ## Modelo log-Normal ##
-modelo_LN <- glm(BPUE2_log ~ Mes + Lat*Long,
-                 family = gaussian,
-                 data = dados)
+modelo_LN <- glmmTMB(BPUE2 ~ Mes + Lat + Long,
+                     family = lognormal(link = "log"), 
+                     data = dados)
+
+
 
 
 
@@ -166,44 +169,34 @@ modelo_LN <- glm(BPUE2_log ~ Mes + Lat*Long,
 AIC(modelo_G, modelo_LN)
 
 
-## Teste de razão de verossimilhança
-lmtest::lrtest(modelo_LN,modelo_G) ## Quanto maior o valor de logLik, melhor o ajuste!
-
-
-
-## Deviancia
-modelo_G$deviance
-modelo_LN$deviance
-
-
-## Residuos
+## simulando os residuos
 resG <- simulateResiduals(modelo_G, n=1000)
 resLN <- simulateResiduals(modelo_LN, n=1000)
 
+### Avaliando o comportamento geral dos resíduos
+check_model(modelo_G)
+check_model(modelo_LN)
 
-check_model(resG)
-check_model(resLN)
 
+### Avaliando correlação espacial
+testSpatialAutocorrelation(resG, x = dados$Long, y = dados$Lat) #autocorrelação espacial detectada; problema não pode ser ignorado!
+
+### Avaliando a correlação temporal
+res <- recalculateResiduals(resG, group = dados$Mes)
+testTemporalAutocorrelation(res, time = unique(dados$Mes))
 
 
 # Embora ambos os modelos apresentam um bom ajuste visual, escolhe-se o modelo com
-# distribuição Gama como o melhor modelo, uma vez que foi significativamente melhor
-# que o modelo log-Normal (incluindo o AIC)
-
+# distribuição Gama como o melhor modelo, dado ao menor valor de AIC.
 
 
 ## Avaliando os resultados
 summary(modelo_G)
 
 
-
 ### Plotando valores ajustados
-names(modelo_G)
-
-head(cbind(modelo_G$fitted.values, modelo_G$linear.predictors))
-
-
 ggpredict(modelo_G) %>% plot()
+
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -242,7 +235,7 @@ Long_med <- mean(dados$Long, na.rm = TRUE)
 ## Cuidado: os nomes tem que coincidir com os nomes das variáveis colocadas no modelo
 dfpred_mes <- data.frame(Mes = factor(1:12),
                          Lat = rep(Lat_med, 12),
-                         Long = rep(Long_med, 12)) #Para distribuição Gama
+                         Long = rep(Long_med, 12)) 
 
 dfpred_mesb <- dfpred_mes #Para distribuição log-Normal
 
@@ -274,10 +267,10 @@ pred_LN <- predict(modelo_LN,
                    se.fit = TRUE)
 
 
-dfpred_mesb$fit <- exp(pred_LN$fit)
-dfpred_mesb$se <- exp(pred_LN$se.fit)
-dfpred_mesb$lower <- exp(pred_LN$fit - 1.96 * pred_LN$se.fit)
-dfpred_mesb$upper <- exp(pred_LN$fit + 1.96 * pred_LN$se.fit)
+dfpred_mesb$fit <- pred_LN$fit
+dfpred_mesb$se <- pred_LN$se.fit
+dfpred_mesb$lower <- pred_LN$fit - 1.96 * pred_LN$se.fit
+dfpred_mesb$upper <- pred_LN$fit + 1.96 * pred_LN$se.fit
 dfpred_mesb$Modelo <- "log-Normal"
 
 
@@ -296,6 +289,7 @@ ggplot(dfpred_full, aes(x = Mes, y = fit, col= Modelo, group = Modelo)) +
   labs(y = "BPUE (predito)",
        x = "Mês") +
   theme_minimal() +
+  #facet_wrap(Modelo ~ . ,scales = "free") +
   scale_color_manual(values = c("Gama" = "darkorange", "log-Normal" = "cyan4"))
 
 
@@ -325,7 +319,7 @@ dfpred_latb <- dfpred_lat
 ### Gama
 pred_G <- predict(modelo_G, 
                   newdata = dfpred_lat, 
-                  type = "response", #a predição deve ser feita no espaço da resposta
+                  type = "response", 
                   se.fit = TRUE)
 
 
@@ -344,10 +338,10 @@ pred_LN <- predict(modelo_LN,
                    se.fit = TRUE)
 
 
-dfpred_latb$fit <- exp(pred_LN$fit)
-dfpred_latb$se <- exp(pred_LN$se.fit)
-dfpred_latb$lower <- exp(pred_LN$fit - 1.96 * pred_LN$se.fit)
-dfpred_latb$upper <- exp(pred_LN$fit + 1.96 * pred_LN$se.fit)
+dfpred_latb$fit <- pred_LN$fit
+dfpred_latb$se <- pred_LN$se.fit
+dfpred_latb$lower <- pred_LN$fit - 1.96 * pred_LN$se.fit
+dfpred_latb$upper <- pred_LN$fit + 1.96 * pred_LN$se.fit
 dfpred_latb$Modelo <- "log-Normal"
 
 
@@ -365,7 +359,7 @@ ggplot(dfpred_full, aes(x = Lat, y = fit, col= Modelo, group = Modelo)) +
   labs(y = "BPUE (predito)",
        x = "Latitude") +
   theme_minimal() +
-  #facet_wrap(Modelo ~ .) +
+  #facet_wrap(Modelo ~ ., scales = 'free') +
   scale_color_manual(values = c("Gama" = "darkorange", "log-Normal" = "cyan4"))
 
 
