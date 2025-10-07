@@ -21,11 +21,8 @@
 library(VGAM) #Modelo multinomial
 library(nnet) #Modelo multinomial (pacote alternativo)
 library(ggplot2)
-
 library(dplyr)
-library(DHARMa)
-library(ggeffects) #para plotar os resultados
-library(performance) #avaliação dos residuos
+
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,7 +60,7 @@ dados[, cols] <- lapply(dados[, cols], factor)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ## Há preferência alimentar de acordo com o tamanho dos pinguins? (usando peso como proxy de tamanho)
-ggplot(dados, aes(x = body_mass_g, y = as.factor(diet))) +
+ggplot(dados, aes(y = body_mass_g, x = as.factor(diet))) +
   geom_boxplot(size = 0.7, fill = 'darkorange',col = 'darkorange', alpha = 0.15) +
   stat_summary(fun = mean, geom="point", shape=19, size=1.5, color="black") +
   theme_minimal(base_size = 15)
@@ -106,7 +103,8 @@ ggplot(dados, aes(x = life_stage, fill = diet)) +
 #~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # CUIDADO: definir o nível de referência
-levels(dados$diet)
+levels(dados$diet) 
+
 
 
 # Modelo 1: dieta ~ massa corporal
@@ -286,3 +284,97 @@ ggplot(df_or, aes(y = Diet, x = OR, color = Species)) +
        color = "Espécie") +
   theme_minimal(base_size = 14) +
   theme(legend.position = "bottom")
+
+
+
+
+
+
+################
+#  ADICIONAL 
+###############
+
+
+
+# Modelo 3: regressão multinomial ordinal
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Quando a ordem dos níveis é importante
+
+levels(dados$life_stage)
+
+
+modelo3 <- vglm(life_stage ~ body_mass_g,
+                family = cumulative(parallel = TRUE, link = "logitlink"),
+                data = dados)
+summary(modelo3)
+
+
+
+## Criando dados para predizer
+dados_pred <- data.frame(body_mass_g = seq(min(dados$body_mass_g),
+                                           max(dados$body_mass_g),
+                                           length.out = 100))
+
+## Predizendo...
+preds <- predict(modelo3, 
+                 newdata = dados_pred, 
+                 type = "link", 
+                 se.fit = TRUE)
+
+
+## Calculando probabilidades por categoria & ICs
+n_cat <- ncol(preds$fit) + 1 #no. de categorias
+n_obs <- nrow(preds$fit) #no. de observações
+categorias <- levels(dados$life_stage) #nome das categorias
+cat_ref <- categorias[1] #categoria de referência
+cat_outras <- categorias[-1]
+
+
+preds_full <- lapply(1:n_obs, function(i) {
+  
+  eta <- preds$fit[i, ]
+  se_eta <- preds$se.fit[i, ]
+  
+  probs <- softmax(eta)
+  
+  # Matriz de covariância dos preditores lineares (diagonal com variâncias)
+  V_eta <- diag(se_eta^2)
+  
+  # Jacobiano da softmax
+  J_soft <- softmax_jacobian(probs)
+  
+  # Método Delta: variância aproximada das probabilidades
+  var_probs <- diag(J_soft %*% V_eta %*% t(J_soft))
+  se_probs <- sqrt(var_probs)
+  
+  tibble(
+    body_mass_g = dados_pred$body_mass_g[i],
+    dieta = categorias,
+    Prob = probs,
+    SE = se_probs,
+    IC_lower = pmax(0, probs - 1.96 * se_probs),
+    IC_upper = pmin(1, probs + 1.96 * se_probs)
+  )
+})
+
+preds_full <- do.call("rbind", preds_full)
+
+
+## Plotando...
+ggplot(preds_full, aes(x = body_mass_g, y = Prob, color = dieta, fill = dieta)) +
+  geom_line(linewidth = 1.2) +
+  geom_ribbon(aes(ymin = IC_lower, ymax = IC_upper), alpha = 0.2, color = NA) +
+  labs(title = "",
+       x = "Massa Corporal (g)",
+       y = "Probabilidade p",
+       color = "Estágio \n de vida",
+       fill = "Estágio \n de vida") +
+  theme_minimal(base_size = 14) +
+  scale_fill_manual(values = c("chick" = "darkorange", "juvenile" = "#d6ccc2", "adult" = "cyan4")) +
+  scale_colour_manual(values = c("chick" = "darkorange", "juvenile" = "#d6ccc2", "adult" = "cyan4")) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+
+
