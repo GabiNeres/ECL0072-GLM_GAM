@@ -55,7 +55,7 @@ theme_set(theme_minimal(base_size = 15))
 # ao deixar para trás os inimigos de sua área de origem. 
 
 # Essa hipótese prevê um grande número de plantas intactas (ausência de herbivoria) no habitat invadido,
-# e, consequentemente, os dados podem estar inflacionados a zero e provavelmente superdispersos.
+# e, consequentemente, os dados podem estar inflacionados em zeros e provavelmente sobredispersos.
 
 dados <- readRDS("Dados/plant_herbivore.rds")
 
@@ -90,47 +90,28 @@ dados[, c("Subject","Location", "Species")] <- lapply(dados[, c("Subject","Locat
 
 # Qual a frequência de zeros na variável resposta (damage)?
 plot(table(dados$Damaged))
-
-dados %>%
-  ggplot(aes(x = Damaged)) +
-  geom_histogram()
+table(dados$Damaged == 0) # ~55% de zeros
 
 
 # Será que conseguimos identificar um padrão entre os 2 tipos de plantas?
 dados %>%
   ggplot(aes(x = Damaged)) +
-  geom_histogram(fill = "darkorange", alpha = 0.6, col = 'white') +
-  facet_wrap(~ tipo_planta) +    
-  labs(x = "No. de cabeças predadas", y = "Frequência") 
-
-
-# E entre as diferentes espécies?
-dados %>%
-  ggplot(aes(x = Damaged)) +
-  geom_histogram(fill = "darkorange", alpha = 0.6, col = 'white') +
-  facet_wrap(~ Species, scales = 'free_y') +     
-  #facet_wrap(~ tipo_planta) +    
+  geom_histogram(fill = "cyan4", alpha = 0.6, col = 'white') +
+  facet_wrap(. ~ tipo_planta, ncol = 1) +    
   labs(x = "No. de cabeças predadas", y = "Frequência") 
 
 
 # Houve algum efeito do local de coleta, i.e., area em que se registrou mais predação? 
 dados %>%
   ggplot(aes(x = Damaged)) +
-  geom_histogram(fill = "darkorange", alpha = 0.6, col = 'white') +
+  geom_histogram(fill = "cyan4", alpha = 0.6, col = 'white') +
   facet_grid(Location ~ tipo_planta) +    
   labs(x = "No. de cabeças predadas", y = "Frequência")
 
 
-# Precisamos olhar as tendências médias (essência de modelos de regressão)
 dados %>%
   mutate(Damaged2 = Damaged + (mean(Damaged) * 0.10)) %>%
-  ggplot(aes(x = Location, y = log(Damaged2), fill = tipo_planta)) + 
-  geom_boxplot() +
-  scale_fill_manual(values = c("#ee9b00", "gray50")) 
-
-dados %>%
-  mutate(Damaged2 = Damaged + (mean(Damaged) * 0.10)) %>%
-  ggplot(aes(x = tipo_planta, y = log(Damaged2), fill = tipo_planta)) + 
+  ggplot(aes(x = tipo_planta, y = Damaged2, fill = tipo_planta)) + 
   geom_boxplot() +
   scale_fill_manual(values = c("#ee9b00", "gray50")) 
 
@@ -158,11 +139,12 @@ dados %>%
 
 ## Modelo 1 - covariável apenas para o processo de contagem
 ZIP1 <- glmmTMB(Damaged ~ tipo_planta,
-               ziformula = ~ 1,
-               data = dados,
-               family = poisson(link = "log"))
+                ziformula = ~ 1,
+                data = dados,
+                family = poisson(link = "log"))
 
-## Modelo 1 - covariável apenas para o processo de contagem
+
+## Modelo 2 - covariável apenas para o processo de contagem
 ZIP2 <- glmmTMB(Damaged ~ tipo_planta + Location,
                 ziformula = ~ 1,
                 data = dados,
@@ -186,8 +168,6 @@ plot(simres)
 check_model(simres) #Os dados apresentam sobredispersão
 
 testResiduals(simres) #Avaliando a sobredispersão
-check_overdispersion(simres) # Avaliando a sobredispersão
-
 
 
 ### Há sobredispersão além da dispersão causada pelo excesso de zeros.
@@ -212,22 +192,6 @@ plot(simres2)
 check_model(simres2) #Os dados ainda apresentam sobredispersão
 
 testResiduals(simres2) #Avaliando a sobredispersão
-check_overdispersion(simres2) # Avaliando a sobredispersão
-
-
-## Incluindo o efeito de localidade no processo binário
-ZINB2 <- glmmTMB(Damaged ~ tipo_planta + Location,
-                 ziformula = ~ Species+Location, #Testa a hipótese da liberação do inimigo (i.e., espécies invasoras (SI, SP) deveriam ter uma probabilidade maior de terem zeros)
-                 data = dados,
-                 family = nbinom2(link = "log"))
-
-
-AIC(ZINB1, ZINB2)
-
-
-simres3 <- simulateResiduals(ZINB2, n=1000)
-check_model(simres3) #Os dados ainda apresentam sobredispersão
-check_overdispersion(simres3) # Avaliando a sobredispersão
 
 
 ##Vamos avaliar o ajuste do ZINB1 (menor AIC)
@@ -239,15 +203,13 @@ summary(ZINB1)
 # 3.3) Modelo ZAP
 #~~~~~~~~~~~~~~~~~
 # Agora vamos considerar casos em que não se consegue discernir os tipos de zeros.
-# Para vias de exemplo, continuaremos com o último modelo.
-
 ZAP1 <- glmmTMB(Damaged ~ tipo_planta + Location,
-                ziformula = ~ Species+Location, #Testa a hipótese da liberação do inimigo (i.e., espécies invasoras (SI, SP) deveriam ter uma probabilidade maior de terem zeros)
+                ziformula = ~ Species, 
                 data = dados,
                 family = truncated_poisson(link = "log"))
 
 
-AIC(ZINB1, ZAP1) #Comparando com oúltimo modelo
+AIC(ZINB1, ZAP1) #Comparando com o último modelo
 
 simres4 <- simulateResiduals(ZAP1, n=1000)
 check_model(simres4) #Os dados ainda apresentam sobredispersão
@@ -256,11 +218,9 @@ check_overdispersion(simres4) # Avaliando a sobredispersão
 
 # 3.4) Modelo ZANB
 #~~~~~~~~~~~~~~~~~
-# Agora especificamos a binomial negativa zero-truncada
-
-
+# Especificando uma binomial negativa zero-truncada
 ZANB1 <- glmmTMB(Damaged ~ tipo_planta + Location,
-                ziformula = ~ Species+Location, #Testa a hipótese da liberação do inimigo (i.e., espécies invasoras (SI, SP) deveriam ter uma probabilidade maior de terem zeros)
+                ziformula = ~ Species, 
                 data = dados,
                 family = truncated_nbinom2(link = "log"))
 
@@ -290,6 +250,6 @@ AIC(ZANB1, tweedie) #Comparando os modelos...
 simres6 <- simulateResiduals(tweedie, n=1000)
 check_model(simres6) #Os dados ainda apresentam sobredispersão
 check_overdispersion(simres6) # Avaliando a sobredispersão
-
-
 summary(tweedie)
+
+

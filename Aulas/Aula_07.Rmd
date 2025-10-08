@@ -27,8 +27,6 @@ output:
 
 **2. Distribuições para dados zero-inflacionados**  
 
-> Prática 
-
 
 **3. Distribuições Tweedie**  
 
@@ -107,17 +105,17 @@ $$\large E(Y) = \frac{\alpha}{\alpha + \beta}, \quad Var(Y) = \frac{\alpha \beta
 
 Versão reparametrizada $(\mu, \phi)$:
 
-$$\large \mu = \frac{\alpha}{\alpha+\beta}, \quad \phi = \alpha + \beta$$
-$$\large \alpha = \mu \phi, \quad \beta = \phi(1-\mu)$$
+$$\large \mu = \frac{\alpha}{\alpha+\beta}, \quad \tau = \alpha + \beta$$
+$$\large \alpha = \mu \tau, \quad \beta = \tau(1-\mu)$$
 
 ---
 ## <span style="color: #ee6c4d;">Distribuição Beta </span>
 
 <br>
 
-$$\large Y \sim Beta(\mu\phi, ~\phi(1-\mu))$$
+$$\large Y \sim Beta(\mu\tau, ~\tau(1-\mu))$$
 
-$$\large E(Y) = \mu, \quad Var(Y) = \frac{\mu(1-\mu)}{1+\phi}$$
+$$\large E(Y) = \mu, \quad Var(Y) = \frac{\mu(1-\mu)}{1+\tau}$$
 
 <br>
 
@@ -127,9 +125,23 @@ $$\large logit(\mu) = \eta = \beta_0 + \sum_{j=1}^{p} \beta_j x_{j}$$
 
 Lembrando que:
 
-$\large logit(\mu) = \frac{\mu}{1-\mu}$
+$\large logit(\mu) = log(\frac{\mu}{1-\mu}); \quad \mu = \frac{e^\eta}{1 + e^\eta}$
 
 ---
+## <span style="color: #ee6c4d;">Distribuição Beta </span>
+
+A distribuição Beta também pode ser usada para variáveis que estão limiteadas em outro intervalo de valores
+
+- Redimensionar os valores para o intervalo (0,1) conforme:
+
+$$\large z_i = \frac{y_i-a}{b-a}$$
+
+onde:
+- a = valor mínimo de Y
+- b = valor máximo de Y
+
+---
+
 ## <span style="color: #ee6c4d;">Prática no R </span>
 
 
@@ -205,7 +217,6 @@ Há duas formas de se abordar um dado zero-inflacionado:
   - **Modelos de mistura (ZIP/ZINB)**
     - Assume que os dados foram gerados por dois processos paralelos:
       - <u>Processo binário</u>: determina se a observação será um zero 'extra' (i.e., zero-estrutural/zero verdadeiro).
-      > **<u>Foco:</u>** ausência da espécie.
       - <u>Processo Poisson/BN</u>: considera que as contagens advém de um processo Poisson, podendo gerar qualquer valor inteiro não negativo, incluindo zeros (i.e., zero-amostral/falso zero).
 
 
@@ -226,7 +237,6 @@ Há duas formas de se abordar um dado zero-inflacionado:
   - **Modelos em dois estágios (ZAP/ZANB)**
     - Também assume que os dados foram gerados em duas etapas:
       - <u>Processo binário:</u> decide se a espécie está presente ou ausente; logo, atua como barreira separando os zeros dos números positivos. 
-      > **<u>Foco:</u>** presença da espécie.
       - <u>Processo Poisson/BN truncado:</u> considera que as contagens surgiram de um processo Poisson/NB truncado em zero ( exclui os zeros)
 
 .footnote[ZAP = Zero-altered Poisson; ZANB = Zero-altered Negative Binomial; Hurdle models]
@@ -248,7 +258,7 @@ Considere $Y_i$ o número de flores predadas na amostra $i$
 
 
 $$\large P(Y_i = y_i) =  \left\{ \begin{array}{lr}
-\pi_i + (1-\pi_i) \times f(y_i|\theta)
+\pi_i + (1-\pi_i) \times f(y_i = 0|\theta)
 & y_i = 0 \\ (1-\pi_i) \times f(y_i|\theta) & y_i > 0
 \end{array}\right.$$
 
@@ -271,14 +281,14 @@ onde:
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i} \times e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i}e^{\lambda_i}}{y_i!}$$
 --
 
 .pull-left[
 
 **Quando $\large \mathbf{y_i = 0}$ **
 
-$$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} \times e^{-\lambda_i}}{0!}$$
+$$P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} e^{-\lambda_i}}{0!}$$
 ]
 
 ---
@@ -288,16 +298,16 @@ $$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} \times e^{-\lam
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i} \times e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
 
 
 .pull-left[
 
 **Quando $\large \mathbf{y_i = 0}$ **
 
-$$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} \times e^{-\lambda_i}}{0!}$$
+$$P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} e^{-\lambda_i}}{0!}$$
 Portanto:
-$$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
+$$P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
 
 ]
 
@@ -309,23 +319,23 @@ $$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i} \times e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
 
 
 .pull-left[
 
 **Quando $\large \mathbf{y_i = 0}$ **
 
-$$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} \times e^{-\lambda_i}}{0!}$$
+$$P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} e^{-\lambda_i}}{0!}$$
 Portanto:
-$$\large P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
+$$P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
 
 ]
 
 .pull-right[
 **Quando $\large \mathbf{y_i > 0}$ **
 
-$$\large P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} \times e^{\lambda_i}}{y_i!}$$
+$$P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
 
 ]
 
@@ -333,32 +343,22 @@ $$\large P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} \times e^{\lambda_
 ---
 ## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZIP/ZINB </span>
 
-Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
-
-
-$$\large Y_i \sim ZIP(\pi_i, \lambda_i)$$
-$$\large E(Y_i) = \lambda_i \times (1-\pi_i), \quad Var(Y_i) = (1-\pi_i)\times(\lambda_i + \pi_i\times\lambda^{2}_i)$$
-
-
----
-
-## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZIP/ZINB </span>
-
-Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
-
-
-$$\large Y_i \sim ZIP(\pi_i, \lambda_i)$$
-$$\large E(Y_i) = \lambda_i \times (1-\pi_i), \quad Var(Y_i) = (1-\pi_i)\times(\lambda_i + \pi_i\times\lambda^{2}_i)$$
-
 <br>
+
+$$\large Y_i \sim ZIP(\pi_i, \lambda_i)$$
+
+$E(Y_i) = \lambda_i (1-\pi_i)$
+
+$Var(Y_i) = (1-\pi_i)(\lambda_i + \pi_i\lambda^{2}_i)$
+
 
 .pull-left[
 
 <br>
 
-$\large logit(\pi_i) = \gamma_0 + \gamma_1Z_{i,1} + \cdots + \gamma_pZ_{i,p}$
+$\large logit(\pi_i) = \eta_i= \beta_0 + \sum_{j=1}^{p} \beta_j x_{ij}$
 
-$\large log(\lambda_i) = \beta_0 + \beta_1X_{i,1} + \cdots + \beta_pX_{i,p}$
+$\large log(\lambda_i) = \eta_i = \gamma_0 + \sum_{j=1}^{p} \gamma_j z_{ij}$
 ]
 
 .pull-right[
@@ -382,7 +382,7 @@ Quando o modelo ZIP ainda apresenta sobredispersão, pode-se recorrer à versão
 
 
 
-$$\large P(Y_i = y_i) =  \left\{ \begin{array}{lr} \pi_i + (1-\pi_i) \times f_{NB}(y_i|\theta) & y_i = 0 \\ (1-\pi_i) \times f_{NB}(y_i|\theta) & y_i > 0 \end{array}\right.$$
+$$\large P(Y_i = y_i) =  \left\{ \begin{array}{lr} \pi_i + (1-\pi_i) \times f_{NB}(y_i=0|\theta) & y_i = 0 \\ (1-\pi_i) \times f_{NB}(y_i|\theta) & y_i > 0 \end{array}\right.$$
 
 onde:
 - $\pi_i:$ probabilidade de um zero estrutural (descrito por uma distribuição Binomial)
@@ -396,9 +396,9 @@ onde:
 A versão zero-inflacionada da distribuição Binomial Negativa pode ser representada conforme:
 
 $$\large Y_i \sim ZINB(\pi_i, \mu_i, k)$$
-$\large E(Y_i) = \mu_i \times (1-\pi_i)$
+$E(Y_i) = \mu_i (1-\pi_i)$
 
-$\large Var(Y_i) = (1-\pi_i)\times(\mu_i + \frac{\mu^2_i}{k})~ +~ \mu^2_i \times (\pi^2_i + \pi_i)$
+$Var(Y_i) = (1-\pi_i)(\mu_i + \frac{\mu^2_i}{k})~ +~ \mu^2_i \times (\pi^2_i + \pi_i)$
 
 <br>
 
@@ -412,23 +412,6 @@ $\large log(\mu_i) = \beta_0 + \beta_1X_{i,1} + \cdots + \beta_pX_{i,p}$
 
 ## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
 
-Os exemplos anteriores são aplicados para casos em que se quer discernir as diferentes fontes de zeros
-  - Há casos em que não se quer/sabe diferenciar as fontes de zeros
-      - ***hurdle models*** (ZAP/ZANB)
-
---
-
-- Baseados em dois processos ecológicos bem definidos:
-  1. Processo causando a ausência do animal
-  2. Processo influenciando a abundância do animal (dado que ele esteja presente)
-
-
-
-
----
-
-## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
-
 
 Os exemplos anteriores são aplicados para casos em que se quer discernir as diferentes fontes de zeros
   - Há casos em que não se quer/sabe diferenciar as fontes de zeros
@@ -438,43 +421,6 @@ Os exemplos anteriores são aplicados para casos em que se quer discernir as dif
   1. Processo causando a ausência do animal
   2. Processo influenciando a abundância do animal (dado que ele esteja presente)
 
-Similar aos modelos ZIP/ZINB, porém:
-  - **Processo binomial:** considera a probabilidade de presença vs. ausência (ZIP/ZINB consideram a probabiliade de zero-verdadeiro, i.e., ausência vs. presença)
-  - **Processo Poisson/NB:** considera a distribuição truncada em zero (não gera zeros)
-
----
-
-## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
-
-**Distribuição truncada**
-
-Podemos ajustar a função Poisson/Binomial Negativa de forma a excluir os zeros da distribuição
-
---
-
-Considerando uma distribuição Poisson, temos:
-
-$$\large f(y_i; \lambda_i) = \frac{\lambda^{y_i} \times e^{-\lambda_i}}{y!}$$
---
-
-Para $y_i = 0$, teremos:
-$$\large f(y_i=0; \lambda_i) = e^{-\lambda_i}$$
---
-
-Exclui-se os zeros da distribuição dividindo-a pelos casos em que $y_i = 0$
-
-$$\large f(y_i > 0; \lambda_i) = \frac{\lambda^{y_i} \times e^{-\lambda_i}}{(1-e^{-\lambda_i})\times y!}$$
-
----
-
-## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
-
-**Distribuição truncada**
-
-Pode-se aplicar o mesmo raciocínio para a distribuição Binomial Negativa:
-
-
-$$\large f(y_i > 0; \mu_i, k) = \frac{\frac{\Gamma(y_i+k)}{\Gamma(k)\times\Gamma(y_i+1)} \times \left (\frac{k}{\mu_i + k}\right)^k \times \left(1 - \frac{k}{\mu_i + k}\right)^{y_i}} {1 - \left (\frac{k}{\mu_i + k}\right)^k}$$
 
 ---
 
@@ -490,8 +436,45 @@ p_i
 
 
 onde:
-- $p_i:$ probabilidade da presença da espécie
+- $p_i:$ probabilidade da ausência da espécie
 - $f^+(y_i|\theta):$ distribuição de probabilidade Poisson ou Binomial Negativa *truncada*
+
+
+
+---
+
+## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
+
+**Distribuição truncada**
+
+Podemos ajustar a função Poisson/Binomial Negativa de forma a excluir os zeros da distribuição
+
+--
+
+Considerando uma distribuição Poisson, temos:
+
+$$\large f(y_i; \lambda_i) = \frac{\lambda^{y_i}  e^{-\lambda_i}}{y!}$$
+--
+
+Para $y_i = 0$, teremos:
+$$\large f(y_i=0; \lambda_i) = e^{-\lambda_i}$$
+---
+## <span style="color: #ee6c4d;">Dados zero-inflacionados </span><span style="color: #3e5c76;">| ZAP/ZANB </span>
+
+**Distribuição truncada**
+
+Exclui-se os zeros da distribuição dividindo-a pelos casos em que $y_i = 0$
+
+$$\large f(y_i > 0; \lambda_i) = \frac{\lambda^{y_i} e^{-\lambda_i}}{(1-e^{-\lambda_i}) y!}$$
+
+--
+
+<br>
+
+Pode-se aplicar o mesmo raciocínio para a distribuição Binomial Negativa:
+
+
+$$\large f(y_i > 0; \mu_i, k) = \frac{\frac{\Gamma(y_i+k)}{\Gamma(k)\Gamma(y_i+1)}  \left (\frac{k}{\mu_i + k}\right)^k \left(1 - \frac{k}{\mu_i + k}\right)^{y_i}} {1 - \left (\frac{k}{\mu_i + k}\right)^k}$$
 
 ---
 
@@ -548,7 +531,6 @@ knitr::include_graphics("../Figuras/Distribuição_tweedie.png")
 A distribuição torna-se particularmente útil para dados com:
 - forte assimetria
 - excesso de zeros
-- valores positivos
 
 
 

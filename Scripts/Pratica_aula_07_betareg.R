@@ -151,97 +151,48 @@ tmp$prop_sonho2 <- (tmp$prop_sonho + (median(tmp$prop_sonho)*0.1))
 
 
 ## Modelo com variáveis naturais
-mod1 <- glmmTMB(prop_sonho2 ~ body + brain + lifespan + gestation + predation,
+mod1 <- glmmTMB(prop_sonho2 ~ brain + lifespan + gestation + predation,
                 beta_family(link = "logit"),
                 data = tmp)
 
 
 ### Usando pacote betareg
-# mod1 <- betareg(prop_sonho ~ body + brain + lifespan + gestation + predation,
+# mod1 <- betareg(prop_sonho ~ brain + lifespan + gestation + predation,
 #                 link = "logit", #probit, cloglog, cauchit, log, loglog
 #                 data = tmp)
 
 ### Usando pacote gam
-#mod1b <- gam(prop_sonho ~ body + brain + lifespan + gestation + predation,
+#mod1b <- gam(prop_sonho ~ brain + lifespan + gestation + predation,
 #             family=betar(link = "logit"), 
 #             data = tmp)
 
 
 
 ## Modelo com variáveis transformada
-mod2 <- glmmTMB(prop_sonho2 ~ log(body) + log(brain) + lifespan + gestation + predation,
+mod2 <- glmmTMB(prop_sonho2 ~ log(brain) + lifespan + gestation + predation,
                 beta_family(link = "logit"),
                 data = tmp)
 
 
-## Modelo com efeitos quadráticos
-mod3 <- glmmTMB(prop_sonho2 ~ log(body) + poly(log(brain),2) + lifespan + gestation + predation,
-                beta_family(link = "logit"),
-                data = tmp)
+
+AIC(mod1, mod2)
 
 
-## Modelo com efeitos cúbicos
-mod4 <- glmmTMB(prop_sonho2 ~ log(body) + poly(log(brain),3) + lifespan + gestation + predation,
-                beta_family(link = "logit"),
-                data = tmp)
-
-
-AIC(mod1, mod2, mod3, mod4)
-
-
-## Teste de razão de verossimilhança
-anova(mod4, mod1) 
-
-
-
-## Validando o modelo
-simres <- simulateResiduals(mod4, n=1000)
-plot(simres)
-check_model(simres) #oops....
-
-plot(log(tmp$body)~log(tmp$brain))
-cor(log(tmp$body),log(tmp$brain))
-
-
-
-### Vamos rodar o modelo sem a variável 'body'
-mod5 <- glmmTMB(prop_sonho2 ~ poly(log(brain),3) + lifespan + gestation + predation,
-                beta_family(link = "logit"),
-                data = tmp)
-
-AIC(mod4, mod5)
-
-
-### Revalidando...
-simres2 <- simulateResiduals(mod5, n=1000)
+## Diagnóstico visual 
+simres1 <- simulateResiduals(mod1, n=1000)
+simres2 <- simulateResiduals(mod2, n=1000)
+plot(simres1)
+plot(simres2)
+check_model(simres1) #oops....
 check_model(simres2) #oops....
 
 
-
-### Vamos rodar o modelo sem o termo cúbico
-mod6 <- glmmTMB(prop_sonho2 ~ log(brain) + lifespan + gestation + predation,
-                beta_family(link = "logit"),
-                data = tmp)
-
-simres3 <- simulateResiduals(mod6, n=1000)
-check_model(simres3) 
-
-
-### E agora sem o termo log
-mod7 <- glmmTMB(prop_sonho2 ~ brain + lifespan + gestation + predation,
-                beta_family(link = "logit"),
-                data = tmp)
-
-simres4 <- simulateResiduals(mod7, n=1000)
-check_model(simres4) 
-
-AIC(mod6, mod7)
-
-
+# Embora o mod1 tenha resultado no menor AIC, o diagnóstico dos resíduos revelou
+# que mod2 se ajustou melhor aos dados. 
 
 
 ### Interpretando os resultados
-summary(mod7)
+summary(mod2)
 
 
 
@@ -250,21 +201,20 @@ summary(mod7)
 library(ggeffects)
 
 
-pred_brain <- ggpredict(mod7, terms = "brain")
-pred_lifespan <- ggpredict(mod7, terms = "lifespan")
-pred_gestation <- ggpredict(mod7, terms = "gestation")
-pred_predation <- ggpredict(mod7, terms = "predation")
+## Variável categórica
+pred_predation <- ggpredict(mod2, terms = "predation")
 
-
-ggplot(pred_lifespan, aes(x, predicted)) +
-  geom_line(size = 1, color = "blue") +
-  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
-  labs(x = "Lifespan", y = "Predicted REM proportion") +
+ggplot(pred_predation, aes(x = x, y = predicted)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  labs(x = "Índice de predação", y = "Poporção (sonho/dormida)") +
   theme_minimal()
 
 
-ggplot(pred_predation, aes(x, predicted)) +
-  geom_point(size = 3) +
-  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
-  labs(x = "Predation risk", y = "Predicted REM proportion") +
+## Variável numérica
+pred_lifespan <- ggpredict(mod2, terms = "lifespan")
+ggplot(pred_lifespan, aes(x = x, y = predicted)) +
+  geom_line(size = 1, color = "blue") +
+  geom_ribbon(aes(ymin = conf.low, ymax = conf.high), alpha = 0.2) +
+  labs(x = "Expecativa de vida", y = "Poporção (sonho/dormida)") +
   theme_minimal()
