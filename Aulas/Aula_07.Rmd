@@ -81,7 +81,7 @@ knitr::include_graphics("../Figuras/Exemplo_dado_beta.png")
 ## <span style="color: #ee6c4d;">Distribuição Beta </span>
 
 
-A distribuição Beta é uma distribuição de *probabilidade contínua* definida no intervalo [0, 1]
+A distribuição Beta é uma distribuição de *probabilidade contínua* definida no intervalo (0, 1)
 
 $$\large f(y | \alpha, \beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha-1}(1-y)^{\beta-1}, \quad 0  < y < 1 $$
 
@@ -103,7 +103,7 @@ $$\large E(Y) = \frac{\alpha}{\alpha + \beta}, \quad Var(Y) = \frac{\alpha \beta
 
 --
 
-Versão reparametrizada $(\mu, \phi)$:
+Versão reparametrizada $(\mu, \tau)$:
 
 $$\large \mu = \frac{\alpha}{\alpha+\beta}, \quad \tau = \alpha + \beta$$
 $$\large \alpha = \mu \tau, \quad \beta = \tau(1-\mu)$$
