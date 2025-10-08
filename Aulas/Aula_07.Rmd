@@ -547,3 +547,21 @@ A distribuição torna-se particularmente útil para dados com:
 ```{r echo=FALSE, out.width ="25%", fig.align ='center', fig.cap="Pratica_aula_07_zeroinflacionado.R <br>", fig.topcaption=F}
 knitr::include_graphics("../Figuras/Rlogo.png")
 ```
+
+---
+
+## <span style="color: #ee6c4d;">Prática no R </span><span style="color: #3e5c76;">| Relatório:  </span>  
+
+Escolher uma das três distribuições apresentadas:
+
+
+**salamanders.rds**
+- Abundância (contagem) de diversas espécies de salamandras
+  - Associar a fatores de mineração
+
+
+**fisheries.rds**
+- Razão de captura incidental (bycatch / captura espécies-alvos)
+  - Associar a razão de bycatch com características oceanográficas, espaço-temporais e/ou fatores operacionais da pesca
+
+- Abundância de espécies não-alvo (e.g., *Isurus_oxyrinchus*, *Ruvettus_pretiosus*, *Makaira_nigricans*)
