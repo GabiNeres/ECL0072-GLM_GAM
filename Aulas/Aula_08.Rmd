@@ -119,7 +119,7 @@ $$\large g(\mu) = \eta = \beta_0 + \beta_1x_1$$
 
 Representamos um GAM conforme
 
-$$\large g(\mu) = f(x)$$
+$$\large g(\mu) = \eta = f(x)$$
 
 <br>
 
