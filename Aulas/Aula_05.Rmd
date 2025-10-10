@@ -87,7 +87,7 @@ Distribuições de probabilidade contínuas:
 A captura incidental de espécies não-alvo, i.e. *bycatch*, ocorre com frequência na pesca de espinhel.
   - Entender padrões espaço-temporais do bycatch é fundamental para propor medidas de manejo pesqueiro.
   
-    > **Pergunta:** Em que época do ano são registrados as maiores capturas de bycatch? Espacialmente, há uma área mais vulnerável?
+    > **Pergunta:** Em que época do ano são registradas as maiores capturas de bycatch? Espacialmente, há uma área mais vulnerável?
 
 
 
@@ -210,6 +210,8 @@ $Var(Y) = (e^{\sigma^2} - 1)e^{2\mu + \sigma^2}$
 
 --
 
+<br>
+
 <p class="comment">
 <b>ATENÇÃO</b>
 <br>
@@ -303,5 +305,5 @@ knitr::include_graphics("../Figuras/Rlogo.png")
 
 **fisheries.rds**
 
-- Pode-se modelar a captura-por-unidade-de-esforço (CPUE) das espécies alvos da pesca (todas juntas, ou individualmente)
+- Pode-se modelar a captura-por-unidade-de-esforço (CPUE) das espécies alvo da pesca (todas juntas ou individualmente)
   - Relacionar a fatores oceanográficos, espaço-temporais e pesqueiros
