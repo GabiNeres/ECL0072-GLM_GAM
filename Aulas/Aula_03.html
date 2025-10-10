@@ -211,7 +211,7 @@ Os GLMs são compostos por 3 componentes:
 
   - **A família exponencial de distribuições** 
      - Cobre uma diversidade de distribuições de probabilidade
-          - Específico à natureza da variável `\(y_i\)`
+          - Específic1 à natureza da variável `\(y_i\)`
   
 
 ---
@@ -333,7 +333,7 @@ Os GLMs são compostos por 3 componentes:
 ## &lt;span style="color: #ee6c4d;"&gt;Desmistificando os GLMs &lt;/span&gt;&lt;span style="color: #3e5c76;"&gt;| Pressupostos  &lt;/span&gt;  
 
 
-Assim como nos modelos lineares, os GLMs devem atender aos pressupostso de:
+Assim como nos modelos lineares, os GLMs devem atender aos pressupostos de:
 
 - **Representatividade**
   - As amostras são representativas da população
@@ -371,7 +371,7 @@ Com os resíduos, a história é diferente
     - Variância é descrita em função da média `\((Var(y_i) = \phi V(\mu_i))\)`
     
     
-- a normalidade residual só se aplica para o caso em que a variável resposta (`\(y\)`) segue uma distribuição Normal de probabilidae
+- a normalidade residual só se aplica para o caso em que a variável resposta (`\(y\)`) segue uma distribuição Normal de probabilidade
   - os resíduos podem ser avaliados sob o prisma do modelo de probabilidade escolhido para a variável `\(y\)` 
 
 ---
@@ -396,7 +396,7 @@ Tipo de informação que só pode assumir dois estados possíveis:
 
 ## &lt;span style="color: #ee6c4d;"&gt;Exemplo prático &lt;/span&gt;
 
-Os dados de pinguins de Palmer contém a informação sobre o estado de saúde dos indivíduos amostrados:
+Os dados de pinguins de Palmer contêm a informação sobre o estado de saúde dos indivíduos amostrados:
   - Cada indivíduo é classificado em **sobrepeso** vs. **saudável** com base na sua massa corporal
 
   &gt; **Pergunta:** A incidência de sobrepeso difere entre as espécies?
@@ -448,9 +448,9 @@ Quando se observa mais de um indivíduo:
 
 `$$\large y_i \sim Binomial(n_i, p_i)$$`
 
-**Média:** `\(E(Y) = \mu = np\)`
+**Média:** `\(E(Y) = \mu = n_ip_i\)`
 
-**Variância:** `\(Var(Y) = np(1-p)\)`
+**Variância:** `\(Var(Y) = n_ip_i(1-p_i)\)`
 
 - `\(\large y_i\)`: numero de indivíduos na categoria *verdadeiro* (sobrepeso)
 - `\(\large n_i\)`: número total de indivíduos
@@ -603,14 +603,14 @@ Em GLMs, muitas vezes é mais conveniente aplicar a função inversa para interp
 
 
 Em modelos com distribuição binomial, a função de ligação logit é a mais amplamente utilizada
-  - Há outras funções de ligações que podem ser testadas:
+  - Há outras funções de ligação que podem ser testadas:
     - probit
     - cloglog
     - cauchit
 
 --
 
-  - Pode-se testar o mesmo modelo usando funções de ligações diferentes
+  - Pode-se testar o mesmo modelo usando funções de ligação diferentes
 
 &lt;p class="comment"&gt;
 &lt;b&gt;ATENÇÃO&lt;/b&gt;
@@ -640,7 +640,7 @@ Dados que podem ser utilizados para elaboração do 1º capítulo do relatório:
 **koalas.rds**
 
 - Presença/ausência de coalas na Austrália
-  - Associar a diferentes fatores de urbanização e quaildade de habitat
+  - Associar a diferentes fatores de urbanização e qualidade de habitat
 
 ----
 
