@@ -301,6 +301,9 @@ ggplot(df_or, aes(y = Diet, x = OR, color = Species)) +
 # Quando a ordem dos níveis é importante
 
 levels(dados$life_stage)
+dados$life_stage <- factor(dados$life_stage, levels = c("chick", "juvenile", "adult"), ordered = T)
+#dados$life_stage <- factor(dados$life_stage, levels = c("adult", "juvenile", "chick"), ordered = T)
+
 
 
 modelo3 <- vglm(life_stage ~ body_mass_g,
@@ -374,7 +377,6 @@ ggplot(preds_full, aes(x = body_mass_g, y = Prob, color = dieta, fill = dieta)) 
   scale_colour_manual(values = c("chick" = "darkorange", "juvenile" = "#d6ccc2", "adult" = "cyan4")) +
   theme(plot.title = element_text(hjust = 0.5))
 
-
-
-
-
+install.packages("sjPlot")
+library(sjPlot)
+plot_model(modelo3, type = 'pred')
