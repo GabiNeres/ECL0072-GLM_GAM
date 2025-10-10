@@ -93,7 +93,7 @@ knitr::include_graphics("../Figuras/Exemplo_GAM2b.png")
 
 ---
 
-#### Para esses caso, pode-se recorrer a um Modelo Aditivo Generalizado (GAM) 
+#### Para esses casos, pode-se recorrer a um Modelo Aditivo Generalizado (GAM) 
 
 
 ```{r echo=FALSE, out.width ="90%", fig.align ='center'}
@@ -131,7 +131,7 @@ $f(x)$: função suavizadora (*spline*)
 ## <span style="color: #ee6c4d;">O que é um GAM? </span>
 
 
-Na essência, o spline é um junção de várias funções base (lineares ou não)
+Na essência, o spline é uma junção de várias funções base (lineares ou não)
 
 
 $$\large \eta = f(x) = \sum_{j=1}^{d}F_j(x)\beta_j$$
@@ -156,7 +156,7 @@ $$\large f(x) = \beta_0 + \beta_1x^{1} + ~... ~+ ~\beta_dx^d$$
 
 --
 
-Imaginemos uma função polinomial de tercerio grau ($d = 3$)
+Imaginemos uma função polinomial de terceiro grau ($d = 3$)
 
 <br>
 
