@@ -175,7 +175,7 @@ knitr::include_graphics("../Figuras/Distribuicao_Multinomial.png")
 ---
 ## <span style="color: #ee6c4d;">Distribuição Multinomial </span>
 
-A distribuição multinomial pode ser considerada uma distribuição conjunta de várias distribuições poisson
+A distribuição multinomial pode ser considerada uma distribuição conjunta de várias distribuições Poisson
 
 <br>
 
@@ -228,7 +228,7 @@ knitr::include_graphics("../Figuras/PoissonMultionomial.png")
 $$\large Y \sim Multinomial(n, \mathbf{p)}$$
 
 
-$$\large E[Y_k] = np_k, ~~~~~Var(Y_k) =np_k(1-p_k)$$
+$$\large E(Y_k) = np_k, ~~~~~Var(Y_k) =np_k(1-p_k)$$
 
 --
 
