@@ -616,7 +616,7 @@ dados %>%
 
 .pull-right[
 
-$\large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 
 ]
@@ -646,15 +646,15 @@ dados %>%
 
 .pull-right[
 
-$\large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
-$$\large  \color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$
+$$\color{#8b8c89}{5330 = \beta_0 + \beta_130.5 + \varepsilon_1}$$
   
-$$\large  \color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$
+$$\color{#8b8c89}{5126 = \beta_0 + \beta_158.3 + \varepsilon_2}$$
     
-$$\large  \color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$
+$$\color{#8b8c89}{3392 = \beta_0 + \beta_133.6 + \varepsilon_3}$$
 ]
 
 ---
@@ -681,7 +681,7 @@ dados %>%
 
 ]
 .pull-right[
-$\large Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
+$Peso_i = \beta_0 + \beta_1CompBico_i + \varepsilon_i$
 
 <br>
 
@@ -805,15 +805,15 @@ dados %>%
 .pull-right[
 
 
-$$Peso_i = \beta_0 + \beta_1\text{Chinstrap}_i + \beta_2  \text{Gentoo}_i + \varepsilon_i$$
+$$Peso_i = \beta_0 + \beta_1\text{Chinstrap}_i + \\ \beta_2\text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
-$\large Adelie$ como nível de referência
+$Adelie$ como nível de referência
 
-$\large Especie_{i,1}$ = 1 se *Chinstrap*, 0 contrário
+$Especie_{i,1}$ = 1 se *Chinstrap*, 0 contrário
 
-$\large Especie_{i,2}$ = 1 se *Gentoo*, 0 contrário
+$Especie_{i,2}$ = 1 se *Gentoo*, 0 contrário
 
 ]
 
@@ -839,16 +839,16 @@ dados %>%
 
 .pull-right[
 
-$$Peso_i = \beta_0 + \beta_1 \text{Chinstrap}_i + \beta_2 \text{Gentoo}_i + \varepsilon_i$$
+$$Peso_i = \beta_0 + \beta_1 \text{Chinstrap}_i + \\ \beta_2 \text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
-$$\large \color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$
+$$\color{#8b8c89}{5330 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 + \varepsilon_1}$$
   
-$$\large \color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$
+$$\color{#8b8c89}{3392 = \beta_0 + \beta_1 \cdot 1 + \beta_2 \cdot 0 + \varepsilon_3}$$
 
 
-$$\large \color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$
+$$\color{#8b8c89}{7482 = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 1 + \varepsilon_5}$$
 
 
 ]
@@ -876,7 +876,7 @@ dados %>%
 
 .pull-right[
 
-$$Peso_i = \beta_0 + \beta_1\text{Chinstrap}_i + \beta_2  \text{Gentoo}_i + \varepsilon_i$$
+$$Peso_i = \beta_0 + \beta_1\text{Chinstrap}_i + \\ \beta_2\text{Gentoo}_i + \varepsilon_i$$
 
 <br>
 
@@ -1014,7 +1014,7 @@ Ecosistema que permite criar documentos *dinâmicos*, misturando códigos de pro
     - Apenas dizem como algo deve ser entendido
       - Não é uma linguagem de *programação* porque não têm capacidade de processamento e execução de funções
 --
-      > Por exemplo: as linguagens HTML e YAML não são liguagens de programação, uma vez que apenas dizem como uma página web está estruturada e "maquiada", mas não executa nenhum processamento
+      > Por exemplo: as linguagens HTML e YAML não são linguagens de programação, uma vez que apenas dizem como uma página web está estruturada e "maquiada", mas não executa nenhum processamento
 
 
 ---
