@@ -92,7 +92,7 @@ knitr::include_graphics("../Figuras/LM_ajustado2.png")
 <br>
 
 - 3) Avaliar a incerteza dos parâmetros estimados
-    - Exploar a função em torno de valores de parâmetros plausíveis (espaço paramétrico; *parameter space*)
+    - Explorar a função em torno de valores de parâmetros plausíveis (espaço paramétrico; *parameter space*)
 
 ---
 ### <span style="color: #ee6c4d;">**Métodos de inferência** </span>
@@ -240,6 +240,8 @@ $$\large \text{SQR} = \underbrace{min \sum_{i=1}^{n} (y_i - f(x_i|\theta))^2}_
 
 **Solução analítica:**
 
+<br>
+
 $$\large \hat{\beta_0} = (X^TX)^{-1}X^Ty ~~\color{gray}{(= \overline{y} - \widehat{\beta_1}~\overline{x})}$$
 --
 
@@ -247,16 +249,12 @@ $$\large \hat{\beta_0} = (X^TX)^{-1}X^Ty ~~\color{gray}{(= \overline{y} - \wideh
 
 $$\large \hat{\beta_1} = X(X^TX)^{-1}X^Ty ~~\color{gray}{(= r \frac{\sigma_y}{\sigma_x})}$$
 
---
-
-<br>
-
-$$\large \hat{y} = Hy ~~\color{gray}{(= \hat{\beta_1})}$$
 
 
 
 
-.footnote[**H** = matriz 'hat'; **r** = coeficiente de correlação;  **σ** = desvio padrão]
+
+.footnote[**r** = coeficiente de correlação;  **σ** = desvio padrão]
 
 
 ---
@@ -845,9 +843,6 @@ $$\large D = 2 \times (logL_{saturado}- logL_{proposto})$$
 
 <br>
 
---
-
-Deviance nula *vs.* deviance residual
 
 ---
 
