@@ -130,7 +130,7 @@ $\large logit(\mu) = log(\frac{\mu}{1-\mu}); \quad \mu = \frac{e^\eta}{1 + e^\et
 ---
 ## <span style="color: #ee6c4d;">Distribuição Beta </span>
 
-A distribuição Beta também pode ser usada para variáveis que estão limiteadas em outro intervalo de valores
+A distribuição Beta também pode ser usada para variáveis que estão limitadas em outro intervalo de valores
 
 - Redimensionar os valores para o intervalo (0,1) conforme:
 
@@ -161,7 +161,7 @@ class: inverse, center, middle
 ## <span style="color: #ee6c4d;">Dados zero-inflacionados </span>
 
 
-Dados de contanges muitas vezes apresentam um excesso de zeros
+Dados de contagens muitas vezes apresentam um excesso de zeros
 
 
 <br>
@@ -281,7 +281,7 @@ onde:
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i}e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i}e^{-\lambda_i}}{y_i!}$$
 --
 
 .pull-left[
@@ -298,7 +298,7 @@ $$P(Y_i = 0) = \pi_i + (1-\pi_i) \times \frac{\lambda^{0} e^{-\lambda_i}}{0!}$$
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$
 
 
 .pull-left[
@@ -319,7 +319,7 @@ $$P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
 Se assumirmos que $Y_i$ segue uma distribuição Poisson, teremos que:
 
 
-$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
+$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$
 
 
 .pull-left[
@@ -335,7 +335,7 @@ $$P(Y_i = 0) = \pi_i + (1-\pi_i) \times  e^{-\lambda_i}$$
 .pull-right[
 **Quando $\large \mathbf{y_i > 0}$ **
 
-$$P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$
+$$P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$
 
 ]
 

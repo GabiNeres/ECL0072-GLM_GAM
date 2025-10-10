@@ -91,7 +91,7 @@ Adequado para variáveis expressas em proporções, frequências relativas ou pr
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Beta &lt;/span&gt;
 
 
-A distribuição Beta é uma distribuição de *probabilidade contínua* definida no intervalo [0, 1]
+A distribuição Beta é uma distribuição de *probabilidade contínua* definida no intervalo (0, 1)
 
 $$\large f(y | \alpha, \beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}y^{\alpha-1}(1-y)^{\beta-1}, \quad 0  &lt; y &lt; 1 $$
 
@@ -111,7 +111,7 @@ $$\large f(y | \alpha, \beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma
 
 --
 
-Versão reparametrizada `\((\mu, \phi)\)`:
+Versão reparametrizada `\((\mu, \tau)\)`:
 
 `$$\large \mu = \frac{\alpha}{\alpha+\beta}, \quad \tau = \alpha + \beta$$`
 `$$\large \alpha = \mu \tau, \quad \beta = \tau(1-\mu)$$`
@@ -138,7 +138,7 @@ Lembrando que:
 ---
 ## &lt;span style="color: #ee6c4d;"&gt;Distribuição Beta &lt;/span&gt;
 
-A distribuição Beta também pode ser usada para variáveis que estão limiteadas em outro intervalo de valores
+A distribuição Beta também pode ser usada para variáveis que estão limitadas em outro intervalo de valores
 
 - Redimensionar os valores para o intervalo (0,1) conforme:
 
@@ -170,7 +170,7 @@ class: inverse, center, middle
 ## &lt;span style="color: #ee6c4d;"&gt;Dados zero-inflacionados &lt;/span&gt;
 
 
-Dados de contanges muitas vezes apresentam um excesso de zeros
+Dados de contagens muitas vezes apresentam um excesso de zeros
 
 
 &lt;br&gt;
@@ -284,7 +284,7 @@ onde:
 Se assumirmos que `\(Y_i\)` segue uma distribuição Poisson, teremos que:
 
 
-`$$\large f(y_i|\theta) = \frac{\lambda^{y_i}e^{\lambda_i}}{y_i!}$$`
+`$$\large f(y_i|\theta) = \frac{\lambda^{y_i}e^{-\lambda_i}}{y_i!}$$`
 --
 
 .pull-left[
@@ -301,7 +301,7 @@ Se assumirmos que `\(Y_i\)` segue uma distribuição Poisson, teremos que:
 Se assumirmos que `\(Y_i\)` segue uma distribuição Poisson, teremos que:
 
 
-`$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$`
+`$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$`
 
 
 .pull-left[
@@ -322,7 +322,7 @@ Portanto:
 Se assumirmos que `\(Y_i\)` segue uma distribuição Poisson, teremos que:
 
 
-`$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$`
+`$$\large f(y_i|\theta) = \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$`
 
 
 .pull-left[
@@ -338,7 +338,7 @@ Portanto:
 .pull-right[
 **Quando `\(\large \mathbf{y_i &gt; 0}\)` **
 
-`$$P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} e^{\lambda_i}}{y_i!}$$`
+`$$P(Y_i = y_i) = (1-\pi_i) \times  \frac{\lambda^{y_i} e^{-\lambda_i}}{y_i!}$$`
 
 ]
 
