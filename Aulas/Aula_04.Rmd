@@ -74,7 +74,7 @@ Distribuições de probabilidade discretas:
 - Multinomial
 - Poisson 
 - Binomial Negativa 
-- Poisson/ Binomial Negativa zero-inflacionado*
+- Poisson/ Binomial Negativa zero-inflacionado
 - Geométrica
 - Hipergeométrica*
 
@@ -87,7 +87,7 @@ Distribuições de probabilidade discretas:
 ## <span style="color: #ee6c4d;">Exemplo prático </span>
 
 A pesca de espinhel costuma ser utilizada para capturar grandes espécies pelágicas, com destaque para os atuns.
-  - Em cada evento de pesca (pescaria) são registrados as espécies que foram capturadas, sejam estas alvo ou não-alvo, além de muitas outras informações auxiliares.  
+  - Em cada evento de pesca (pescaria) são registradas as espécies que foram capturadas, sejam estas alvo ou não-alvo, além de muitas outras informações auxiliares.  
   
     > **Pergunta:** há uma época do ano em que se captura mais atuns?
 
@@ -126,11 +126,11 @@ $$\large y_i \sim Poisson(\lambda_i) ~~~ (\lambda_i  \geq 0)$$
 
 <br>
 
-$$\large E[Y] = \lambda, ~~~~~Var(Y) = \lambda$$
+$$\large E(Y) = \lambda, ~~~~~Var(Y) = \lambda$$
 
 <br>
 
-$\large \lambda_i$: numéro médio de eventos (e.g., abundância média de uma espécie ou número médio de espécies não-alvo por pescaria)
+$\large \lambda_i$: número médio de eventos (e.g., abundância média de uma espécie ou número médio de espécies não-alvo por pescaria)
 
 
 
@@ -289,7 +289,7 @@ knitr::include_graphics("../Figuras/Overdispersion.png")
 -------
 
 **Consequência:**
-  - Erros padrões inflacionados (subestimação da variabilidade)
+  - Erros padrão inflacionados (subestimação da variabilidade)
   
   - Significância estatística equivocada
 
@@ -453,7 +453,7 @@ Podemos resumir o modelo conforme
 
 $$\large Y \sim BN(\mu, k)$$
 
-$$E[Y] = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{k}$$
+$$E(Y) = \mu, ~~~~~Var(Y) = \mu + \frac{\mu^2}{k}$$
 
 onde:
 - $\mu$: média da distribuição BN
