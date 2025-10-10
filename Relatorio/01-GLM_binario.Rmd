@@ -42,7 +42,7 @@ Os dados foram coletados entre os anos `r min(dados$year)` e `r max(dados$year)`
 
 Vejamos as outras informações contidas no banco de dados:
 
-```{r, echo=T}
+```{r, echo=F, eval=F}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 2. Análise exploratória 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~
