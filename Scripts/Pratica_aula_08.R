@@ -124,7 +124,7 @@ ggplot(dados2, aes(x = Year, y = Sources)) +
 # 3.1) GLM com distribuição Guassiana (Normal)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## Modelo com relção puramente linear
+## Modelo com relação puramente linear
 m_glm <- glm(Sources ~ SampleDepth,
              data = dados2,
              family = gaussian)
@@ -187,8 +187,8 @@ check_model(simres5) #Modelo mais simples
 
 ### GAM com distribuição Normal
 m_gam1 <- gam(Sources2 ~ s(SampleDepth, bs = "cr"), #outros suavizadores: tp, ts, cc
-            data = dados2,
-            family = gaussian())
+              data = dados2,
+              family = gaussian())
 
 AIC(m_glm5, m_gam1) #glm5 usa distribuição GAMA, m_gam1 usa distribuição normal
   
@@ -208,13 +208,16 @@ m_gam2 <- gam(Sources2 ~ s(SampleDepth, bs = "cr"),
               data = dados2,
               family = Gamma(link = "log"))
 
-AIC(m_glm5, m_gam2) #O GAM fornece um melhor ajuste comparado ao modelo GLM
+AIC(m_gam1, m_gam2) #O GAM fornece um melhor ajuste comparado ao modelo GLM
 
 
 ## Avaliando os pressupostos
 par(mfrow = c(2,2))
 gam.check(m_gam2) #versão com pacote mgcv
 par(mfrow = c(1,1))
+
+check_model(m_gam2)
+
 
 ### Outra forma de avaliar com o pacote gratia
 gratia::appraise(m_gam2,
